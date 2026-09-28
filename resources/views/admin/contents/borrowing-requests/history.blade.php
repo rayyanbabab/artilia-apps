@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header -->
+
     <div class="mb-8">
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
             <div>
@@ -17,7 +17,7 @@
                 <p class="text-gray-600 mt-2">Lihat riwayat permintaan peminjaman yang telah selesai, ditolak, atau dibatalkan</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <!-- Total Card -->
+
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -34,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Approved Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -51,7 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Rejected Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -68,7 +66,6 @@
                     </div>
                 </div>
 
-                <!-- Completed & Cancelled Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -88,7 +85,6 @@
         </div>
     </div>
 
-    <!-- Filters -->
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
             <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
@@ -110,22 +106,22 @@
                         <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                     </select>
                 </div>
-                
+
                 <div>
                     <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari (Nama User/Barang)</label>
                     <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Masukkan nama user atau barang..." class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
-                
+
                 <div>
                     <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
                     <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
-                
+
                 <div>
                     <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir</label>
                     <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
-                
+
                 <div class="md:col-span-4 flex justify-end gap-3">
                     <a href="{{ route($routePrefix . '.borrowing-requests.history') }}" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg shadow-sm transition duration-200 text-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +140,6 @@
         </div>
     </div>
 
-    <!-- Content -->
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
             <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
@@ -363,7 +358,7 @@
                                         @endswitch
                                     </td>
                                     <td class="px-4 py-3 whitespace-nowrap text-xs font-medium space-x-1">
-                                        <a href="{{ route($routePrefix . '.borrowing-requests.show', $request->id) }}" 
+                                        <a href="{{ route($routePrefix . '.borrowing-requests.show', $request->id) }}"
                                            class="inline-flex items-center px-2 py-1 bg-white border border-gray-300 rounded-md text-[10px] font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-colors">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -378,7 +373,6 @@
                     </table>
                 </div>
 
-                <!-- Pagination -->
                 <div class="mt-6">
                     {{ $requests->links() }}
                 </div>

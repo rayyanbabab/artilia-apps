@@ -1,16 +1,15 @@
-﻿@extends('admin.layouts.dashboard')
+@extends('admin.layouts.dashboard')
 
 @section('content')
 <div class="p-6">
-    {{-- Simple Header --}}
+
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">📊 Business Reports</h1>
         <p class="text-gray-600">Generate comprehensive business insights and analytics</p>
     </div>
 
-    {{-- Report Cards --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {{-- Inventory Report --}}
+
         <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -30,7 +29,6 @@
             </a>
         </div>
 
-        {{-- Outgoing Items Report --}}
         <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -50,7 +48,6 @@
             </a>
         </div>
 
-        {{-- Incoming Items Report --}}
         <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -70,7 +67,6 @@
             </a>
         </div>
 
-        {{-- Suppliers Report --}}
         <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
@@ -90,7 +86,6 @@
             </a>
         </div>
 
-        {{-- Borrowing Report --}}
         <div class="bg-white rounded-lg shadow-md border border-purple-200 p-6 hover:shadow-lg transition-shadow">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -107,6 +102,25 @@
             <p class="text-gray-600 text-sm mb-4">Riwayat & status peminjaman barang</p>
             <a href="{{ route($routePrefix . '.reports.borrowing') }}" class="w-full inline-flex justify-center items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white text-sm font-medium transition-colors">
                 Generate Report
+            </a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md border border-emerald-200 p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold text-emerald-600">ISO 45001</div>
+                    <div class="text-xs text-gray-500">SMK3 AUDIT</div>
+                </div>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">🛡️ Audit K3 & Zero Accident</h3>
+            <p class="text-gray-600 text-sm mb-4">Rekapitulasi kepatuhan APD, matriks risiko & nihil insiden</p>
+            <a href="{{ route('admin.safety.export-pdf') }}" target="_blank" class="w-full inline-flex justify-center items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-white text-sm font-medium transition-colors">
+                Ekspor PDF Resmi
             </a>
         </div>
 

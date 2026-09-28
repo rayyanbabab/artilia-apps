@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form mx-auto space-y-6 p-4 max-w-4xl">
-        {{-- Header Section --}}
+
         <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">User Details</h1>
@@ -34,7 +34,6 @@
             </div>
         @endif
 
-        {{-- User Profile Card --}}
         <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
             <div class="border-b border-gray-200 px-6 py-4">
                 <div class="flex items-center space-x-4">
@@ -154,7 +153,6 @@
             </div>
         </div>
 
-        {{-- Action Buttons --}}
         <div class="flex justify-end space-x-3">
             @if(($user->role->value ?? (string) $user->role) !== 'admin')
                 <form action="{{ route($routePrefix . '.content.togglestatususers', $user->id) }}" method="POST" class="inline">
@@ -168,7 +166,7 @@
                         @endif
                     </button>
                 </form>
-                
+
                 <button type="button"
                     onclick="openModal('delete-modal')"
                     class="inline-flex items-center rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">

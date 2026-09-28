@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- ===== PAGE HEADER ===== -->
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div class="mb-4 sm:mb-0">
@@ -15,7 +15,7 @@
                 <p class="text-gray-600 mt-2">Buat data supplier dan vendor perusahaan yang baru</p>
             </div>
             <div>
-                <a href="{{ route($routePrefix . '.suppliers.index') }}" 
+                <a href="{{ route($routePrefix . '.suppliers.index') }}"
                    class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -26,9 +26,8 @@
         </div>
     </div>
 
-    <!-- ===== MAIN FORM CARD ===== -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-        <!-- Card Header -->
+
         <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-medium text-gray-900 flex items-center">
                 <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +37,6 @@
                     </h3>
                 </div>
 
-        <!-- Alert Messages -->
                     @if($errors->any())
             <div class="mx-6 mt-4 bg-red-50 border border-red-200 rounded-md p-4">
                 <div class="flex">
@@ -63,12 +61,10 @@
                         </div>
                     @endif
 
-        <!-- Form Content -->
         <div class="p-6">
             <form action="{{ route($routePrefix . '.suppliers.store') }}" method="POST" class="space-y-6">
                         @csrf
-                        
-                <!-- Company Information Section -->
+
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
                         <svg class="w-4 h-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,18 +72,18 @@
                         </svg>
                         Informasi Perusahaan
                     </h4>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Nama Supplier/Perusahaan -->
+
                         <div>
                             <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">
                                 Nama Supplier/Perusahaan <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" 
-                                   id="nama" 
-                                   name="nama" 
-                                   value="{{ old('nama') }}" 
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('nama') border-red-300 @enderror" 
+                            <input type="text"
+                                   id="nama"
+                                   name="nama"
+                                   value="{{ old('nama') }}"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('nama') border-red-300 @enderror"
                                    placeholder="Masukkan nama supplier/perusahaan"
                                    required>
                             @error('nama')
@@ -97,14 +93,13 @@
                                 Nama supplier atau nama perusahaan
                             </p>
                         </div>
-                            
-                        <!-- Status -->
+
                         <div>
                             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
                                 Status <span class="text-red-500">*</span>
                                     </label>
-                            <select id="status" 
-                                            name="status" 
+                            <select id="status"
+                                            name="status"
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('status') border-red-300 @enderror"
                                             required>
                                 <option value="">Pilih Status</option>
@@ -118,7 +113,6 @@
                             </div>
                         </div>
 
-                <!-- Contact Information Section -->
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
                         <svg class="w-4 h-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,34 +120,33 @@
                         </svg>
                         Informasi Kontak
                     </h4>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Contact Person -->
+
                         <div>
                             <label for="contact_person" class="block text-sm font-medium text-gray-700 mb-2">
                                 Contact Person
                                     </label>
-                                    <input type="text" 
-                                           id="contact_person" 
-                                           name="contact_person" 
-                                           value="{{ old('contact_person') }}" 
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('contact_person') border-red-300 @enderror" 
+                                    <input type="text"
+                                           id="contact_person"
+                                           name="contact_person"
+                                           value="{{ old('contact_person') }}"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('contact_person') border-red-300 @enderror"
                                    placeholder="Masukkan nama contact person">
                                     @error('contact_person')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                             </div>
-                            
-                        <!-- Phone -->
+
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
                                 Nomor Telepon
                                     </label>
-                                    <input type="tel" 
-                                           id="phone" 
-                                           name="phone" 
-                                           value="{{ old('phone') }}" 
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('phone') border-red-300 @enderror" 
+                                    <input type="tel"
+                                           id="phone"
+                                           name="phone"
+                                           value="{{ old('phone') }}"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('phone') border-red-300 @enderror"
                                    placeholder="Masukkan nomor telepon">
                                     @error('phone')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -161,16 +154,15 @@
                             </div>
                         </div>
 
-                    <!-- Email -->
                     <div class="mt-6">
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                             Email
                             </label>
-                            <input type="email" 
-                                   id="email" 
-                                   name="email" 
-                                   value="{{ old('email') }}" 
-                               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('email') border-red-300 @enderror" 
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('email') border-red-300 @enderror"
                                placeholder="Masukkan alamat email">
                             @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -178,7 +170,6 @@
                         </div>
                 </div>
 
-                <!-- Address Section -->
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
                         <svg class="w-4 h-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,15 +178,15 @@
                         </svg>
                         Alamat
                     </h4>
-                    
+
                     <div>
                         <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
                             Alamat Perusahaan
                             </label>
-                        <textarea id="address" 
-                                      name="address" 
-                                      rows="3" 
-                                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('address') border-red-300 @enderror" 
+                        <textarea id="address"
+                                      name="address"
+                                      rows="3"
+                                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('address') border-red-300 @enderror"
                                   placeholder="Masukkan alamat lengkap perusahaan">{{ old('address') }}</textarea>
                             @error('address')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -203,10 +194,9 @@
                         </div>
                 </div>
 
-                <!-- Form Actions -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-6 border-t border-gray-200">
                     <div class="mb-4 sm:mb-0">
-                        <button type="reset" 
+                        <button type="reset"
                                 class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -214,17 +204,17 @@
                             Reset Form
                         </button>
                     </div>
-                    
+
                     <div class="flex space-x-3">
-                        <a href="{{ route($routePrefix . '.suppliers.index') }}" 
+                        <a href="{{ route($routePrefix . '.suppliers.index') }}"
                            class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                             Batal
                         </a>
-                        
-                        <button type="submit" 
+
+                        <button type="submit"
                                 class="create-supplier-button">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -237,7 +227,7 @@
                 </div>
             </div>
         </div>
-<!-- ===== STYLES ===== -->
+
 <style>
     .create-supplier-button {
         display: inline-flex !important;
@@ -263,5 +253,3 @@
 </style>
 
 @endsection
-
-

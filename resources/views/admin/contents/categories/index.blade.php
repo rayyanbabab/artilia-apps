@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Header Section -->
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="mb-0">
@@ -15,7 +15,7 @@
                 <p class="text-gray-600 mt-1 text-sm">Kelola kategori barang dan lokasi rak penyimpanan</p>
             </div>
             <div>
-                <a href="{{ route($routePrefix . '.categories.create') }}" 
+                <a href="{{ route($routePrefix . '.categories.create') }}"
                    class="add-category-button">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -27,11 +27,10 @@
         </div>
     </div>
 
-    <!-- Stats Cards -->
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div class="flex items-center">
-                <div class="flex-shrink-0"> 
+                <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
@@ -44,7 +43,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
@@ -80,7 +79,6 @@
         </div>
     </div>
 
-    <!-- Categories Table -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-4 sm:px-6 py-4 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -94,7 +92,7 @@
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2">
                     <form method="GET" action="{{ route($routePrefix . '.categories.index') }}" class="flex items-center gap-2" id="categorySearchForm">
-                       
+
                         <input type="text"
                                id="searchInput"
                                name="search"
@@ -107,9 +105,9 @@
                                 title="Reset pencarian">
                             Reset
                         </button>
-                       
+
                     </form>
-                    <a href="{{ route($routePrefix . '.categories.create') }}" 
+                    <a href="{{ route($routePrefix . '.categories.create') }}"
                        class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -120,7 +118,6 @@
             </div>
         </div>
 
-        <!-- Flash Messages -->
         @if(session('success'))
             <div class="mx-6 mt-4 bg-green-50 border border-green-200 rounded-md p-4">
                 <div class="flex">
@@ -155,7 +152,6 @@
             </div>
         @endif
 
-        <!-- Categories Table -->
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200" id="categoriesTable">
                 <thead class="bg-gray-50">
@@ -208,7 +204,7 @@
                         </td>
                         <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-center text-sm font-medium">
                             <div class="flex items-center justify-center space-x-1">
-                                <a href="{{ route($routePrefix . '.categories.show', $category) }}" 
+                                <a href="{{ route($routePrefix . '.categories.show', $category) }}"
                                    class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-1.5 rounded-md transition-colors duration-200"
                                    title="Lihat Detail">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,14 +212,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                     </svg>
                                 </a>
-                                <a href="{{ route($routePrefix . '.categories.edit', $category) }}" 
+                                <a href="{{ route($routePrefix . '.categories.edit', $category) }}"
                                    class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-1.5 rounded-md transition-colors duration-200"
                                    title="Edit Kategori">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                 </a>
-                                <button type="button" 
+                                <button type="button"
                                         onclick="openModal('del-cat-{{ $category->id }}')"
                                         class="delete-category-button"
                                         title="Hapus Kategori">
@@ -244,7 +240,7 @@
                                 <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada kategori</h3>
                                 <p class="mt-1 text-sm text-gray-500">Mulai dengan membuat kategori pertama Anda.</p>
                                 <div class="mt-6">
-                                    <a href="{{ route($routePrefix . '.categories.create') }}" 
+                                    <a href="{{ route($routePrefix . '.categories.create') }}"
                                        class="create-first-category-button">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -261,7 +257,6 @@
         </div>
     </div>
 
-    <!-- Pagination -->
     @if($categories->hasPages())
     <div class="bg-white px-4 py-3 border border-gray-200 rounded-lg shadow-sm">
         {{ $categories->appends(request()->query())->links() }}
@@ -270,7 +265,7 @@
 </div>
 
 <style>
-    /* Button Styles */
+
     .delete-category-button {
         display: inline-flex !important;
         color: #dc2626 !important;
@@ -280,13 +275,13 @@
         border-radius: 0.375rem !important;
         transition: all 0.2s ease-in-out !important;
     }
-    
+
     .delete-category-button:hover {
         color: #991b1b !important;
         background-color: #fee2e2 !important;
         transform: translateY(-1px) !important;
     }
-    
+
     .create-first-category-button, .add-category-button {
         display: inline-flex !important;
         background-color: #2563eb !important;
@@ -300,7 +295,7 @@
         transition: all 0.2s ease-in-out !important;
         text-decoration: none !important;
     }
-    
+
     .create-first-category-button:hover, .add-category-button:hover {
         background-color: #1d4ed8 !important;
         transform: translateY(-1px) !important;

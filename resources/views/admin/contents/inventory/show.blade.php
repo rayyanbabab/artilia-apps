@@ -3,7 +3,6 @@
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
 
-    {{-- Header --}}
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-xl font-bold text-gray-900">Item Details</h1>
@@ -23,11 +22,9 @@
         $isPeminjaman = $typeVal === 'peminjaman';
     @endphp
 
-    {{-- Main Content --}}
     <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-2">
 
-            {{-- Left: Image --}}
             <div class="border-b lg:border-b-0 lg:border-r border-gray-100">
                 @if($item->gambar)
                     <img src="{{ asset($item->gambar) }}"
@@ -45,9 +42,8 @@
                 @endif
             </div>
 
-            {{-- Right: Details --}}
             <div class="p-6 space-y-5">
-                {{-- Name & Badges --}}
+
                 <div>
                     <div class="flex flex-wrap items-center gap-2 mb-2">
                         <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md tracking-wide">
@@ -63,7 +59,6 @@
                     <h2 class="text-xl font-bold text-gray-900">{{ $item->nama }}</h2>
                 </div>
 
-                {{-- Stock --}}
                 <div class="bg-gray-50 rounded-xl p-4">
                     <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Stock Information</p>
                     <div class="space-y-2">
@@ -94,7 +89,6 @@
                     </div>
                 </div>
 
-                {{-- Details Grid --}}
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Category</p>
@@ -118,7 +112,6 @@
                     </div>
                 </div>
 
-                {{-- Location --}}
                 @if($item->location)
                 <div class="bg-indigo-50 rounded-xl p-3 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
@@ -146,7 +139,6 @@
                 </div>
                 @endif
 
-                {{-- Price --}}
                 @if(!$isPeminjaman && $item->harga > 0)
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Price</p>
@@ -154,7 +146,6 @@
                     </div>
                 @endif
 
-                {{-- Description --}}
                 @if($item->keterangan)
                     <div>
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Description</p>
@@ -162,7 +153,6 @@
                     </div>
                 @endif
 
-                {{-- Timestamps --}}
                 <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                     <div>
                         <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Created</p>
@@ -176,7 +166,6 @@
             </div>
         </div>
 
-        {{-- Actions --}}
         <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 bg-gray-50 border-t border-gray-100">
             <button type="button" onclick="openModal('delete-modal-{{ $item->id }}')"
                 class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-200 hover:bg-red-50 rounded-xl transition-colors">
@@ -186,7 +175,7 @@
                 Delete
             </button>
             <div class="flex flex-wrap gap-2">
-                {{-- Print Label --}}
+
                 <a href="{{ route($routePrefix . '.inventory.print-label', $item->id) }}" target="_blank"
                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -194,7 +183,7 @@
                     </svg>
                     Print Label QR
                 </a>
-                {{-- Quick Scan --}}
+
                 <a href="{{ route('scanner.handle', $item->kode) }}"
                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-violet-700 bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-xl transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -202,7 +191,7 @@
                     </svg>
                     Quick Scan
                 </a>
-                {{-- Edit --}}
+
                 <a href="{{ route($routePrefix . '.inventory.edit', $item->id) }}"
                    class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -215,7 +204,6 @@
     </div>
 </div>
 
-{{-- Delete Modal --}}
 <x-popup id="delete-modal-{{ $item->id }}" title="Delete Item"
     message="Are you sure you want to delete '{{ $item->nama }}'? This action cannot be undone."
     :formId="'delete-form-' . $item->id" confirmText="Delete"
@@ -226,7 +214,6 @@
     @method('DELETE')
 </form>
 
-{{-- Maintenance History --}}
 @php $maintenanceHistory = $item->maintenances()->with('user')->latest('started_at')->get(); @endphp
 @if($maintenanceHistory->count() > 0)
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">

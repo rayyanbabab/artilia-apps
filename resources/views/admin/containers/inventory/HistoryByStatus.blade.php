@@ -39,7 +39,6 @@
                                         class="label border border-red-200 bg-red-100 text-red-500">{{ $history->tipe }}</span>
                                 @endif
 
-
                             </td>
                             <td class="px-4 py-3">
                                 <span

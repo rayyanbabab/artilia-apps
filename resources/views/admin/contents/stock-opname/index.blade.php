@@ -4,7 +4,6 @@
 @endphp
 @section('content')
 
-{{-- ═══ Background Orbs ═══ --}}
 <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
     <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
     <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-cyan-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
@@ -12,7 +11,7 @@
 </div>
 
 <div class="space-y-6">
-    {{-- Header --}}
+
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Stock Opname</h1>
@@ -26,7 +25,6 @@
         </a>
     </div>
 
-    {{-- Main Card --}}
     <div class="bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl overflow-hidden">
         <div class="p-6 border-b border-gray-100/50 flex justify-between items-center">
             <h2 class="text-lg font-bold text-gray-900">Riwayat Stock Opname</h2>
@@ -96,7 +94,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="px-6 py-4 border-t border-gray-100/50">
             {{ $stockOpnames->links() }}
         </div>

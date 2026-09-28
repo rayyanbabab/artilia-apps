@@ -13,7 +13,7 @@
                 <p class="text-gray-600 mt-2">Perbarui data kategori untuk mengorganisir produk dan inventori</p>
             </div>
             <div>
-                <a href="{{ route($routePrefix . '.categories.index') }}" 
+                <a href="{{ route($routePrefix . '.categories.index') }}"
                    class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -61,7 +61,7 @@
             <form id="update-form-{{ $category->id }}" action="{{ route($routePrefix . '.categories.update', $category) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
-                
+
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
                         <svg class="w-4 h-4 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,17 +69,17 @@
                         </svg>
                         Informasi Dasar
                     </h4>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
                                 Nama Kategori <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" 
-                                   id="name" 
-                                   name="name" 
-                                   value="{{ old('name', $category->name) }}" 
-                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('name') border-red-300 @enderror" 
+                            <input type="text"
+                                   id="name"
+                                   name="name"
+                                   value="{{ old('name', $category->name) }}"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('name') border-red-300 @enderror"
                                    placeholder="Contoh: Elektronik, Pakaian, Buku"
                                    required>
                             @error('name')
@@ -94,8 +94,8 @@
                             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
                                 Status <span class="text-red-500">*</span>
                             </label>
-                            <select id="status" 
-                                    name="status" 
+                            <select id="status"
+                                    name="status"
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('status') border-red-300 @enderror"
                                     required>
                                 <option value="">Pilih Status</option>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
                         <svg class="w-4 h-4 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,15 +119,15 @@
                         </svg>
                         Deskripsi
                     </h4>
-                    
+
                     <div>
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
                             Deskripsi Kategori
                         </label>
-                        <textarea id="description" 
-                                  name="description" 
-                                  rows="4" 
-                                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('description') border-red-300 @enderror" 
+                        <textarea id="description"
+                                  name="description"
+                                  rows="4"
+                                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm @error('description') border-red-300 @enderror"
                                   placeholder="Jelaskan apa yang termasuk dalam kategori ini (opsional)&#10;Contoh: Kategori Elektronik mencakup smartphone, laptop, aksesoris, dan perangkat elektronik lainnya.">{{ old('description', $category->description) }}</textarea>
                         @error('description')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -145,7 +145,7 @@
                         </svg>
                         Informasi Kategori Saat Ini
                     </h4>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <p class="text-xs font-medium text-blue-600 uppercase tracking-wide">Nama Saat Ini</p>
@@ -168,14 +168,14 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     @if($category->description)
                         <div class="mt-4">
                             <p class="text-xs font-medium text-blue-600 uppercase tracking-wide">Deskripsi Saat Ini</p>
                             <p class="text-sm text-blue-900">{{ $category->description }}</p>
                         </div>
                     @endif
-                    
+
                     <div class="mt-4">
                         <p class="text-xs font-medium text-blue-600 uppercase tracking-wide">Jumlah Item</p>
                         <p class="text-sm text-blue-900 font-medium">{{ $category->items->count() }} item</p>
@@ -183,7 +183,7 @@
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-6 border-t border-gray-200">
                     <div class="mb-4 sm:mb-0">
-                        <button type="reset" 
+                        <button type="reset"
                                 class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -191,16 +191,16 @@
                             Reset Form
                         </button>
                     </div>
-                    
+
                     <div class="flex space-x-3">
-                        <a href="{{ route($routePrefix . '.categories.index') }}" 
+                        <a href="{{ route($routePrefix . '.categories.index') }}"
                            class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                             Batal
                         </a>
-                        
+
                         <button type="button" onclick="openModal('update-modal-{{ $category->id }}')"
                                 class="update-category-button">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,4 +262,3 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelText="Batal"
         icon="info" />
 @endpush
-

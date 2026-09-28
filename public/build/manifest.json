@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-D2S6pCoW.css",
+    "file": "assets/app-De3Y22Ud.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -73,12 +73,12 @@
     "src": "resources/font/Geist-ThinItalic.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-KUBWchS-.js",
+    "file": "assets/app-DJXP9N5_.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-D2S6pCoW.css"
+      "assets/app-De3Y22Ud.css"
     ],
     "assets": [
       "assets/Geist-Thin-BeHGVWDJ.woff2",

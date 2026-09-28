@@ -1,17 +1,8 @@
-{{-- ════════════════════════════════════════════════════
-     Item Barcode Scanner Modal — Shared Partial
-     Digunakan di: incoming/create, outgoing/create, borrowings/create
-
-     allowedType: 'peminjaman' | 'stok' | null (semua tipe)
-     Callback: window._isSelectCallback(item_data) dipanggil saat match
-════════════════════════════════════════════════════ --}}
-
 <div id="itemScanModal"
      style="display:none; position:fixed; inset:0; z-index:9200; background:rgba(15,23,42,0.85); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:12px; box-sizing:border-box;">
 
     <div style="background:#0f172a; border-radius:24px; width:100%; max-width:480px; height:calc(100dvh - 24px); max-height:680px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6);">
 
-        {{-- Header --}}
         <div style="background:linear-gradient(135deg,#6d28d9 0%,#4f46e5 100%); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div>
                 <h3 style="color:#fff; font-weight:700; font-size:15px; margin:0;">📷 Scan Barcode Barang</h3>
@@ -24,12 +15,10 @@
             </button>
         </div>
 
-        {{-- Type filter badge --}}
         <div id="isTypeBadgeWrap" style="display:none; padding:6px 16px; background:#1e293b; flex-shrink:0;">
             <div id="isTypeBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:.04em;"></div>
         </div>
 
-        {{-- Camera — fills all remaining space --}}
         <div style="position:relative; flex:1; overflow:hidden; background:#000;">
             <div id="isReaderContainer" style="width:100%; height:100%; position:relative; overflow:hidden;">
                 <div id="is-reader" style="width:100%; height:100%;"></div>
@@ -49,19 +38,18 @@
             </div>
         </div>
 
-        {{-- Bottom controls panel --}}
         <div style="background:#1e293b; padding:14px 16px; flex-shrink:0;">
-            {{-- Scanning status --}}
+
             <div id="isStateScanning" style="display:flex; align-items:center; gap:8px; padding:9px 12px; background:#0f172a; border-radius:10px; border:1px solid #334155; margin-bottom:10px;">
                 <span style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; animation:isBlink 1s ease-in-out infinite; flex-shrink:0;"></span>
                 <span id="isStatusTxt" style="font-size:13px; color:#94a3b8;">Menunggu kode...</span>
             </div>
-            {{-- Error --}}
+
             <div id="isStateError" style="display:none; padding:9px 12px; background:#450a0a; border:1px solid #7f1d1d; border-radius:10px; margin-bottom:10px;">
                 <p id="isErrMsg" style="font-size:13px; color:#fca5a5; margin:0;"></p>
                 <button onclick="isResetScan()" style="margin-top:5px; font-size:12px; color:#818cf8; background:none; border:none; cursor:pointer; font-weight:600; padding:0;">↩ Coba lagi</button>
             </div>
-            {{-- Success --}}
+
             <div id="isStateSuccess" style="display:none; padding:9px 12px; background:#052e16; border:1px solid #166534; border-radius:10px; margin-bottom:10px;">
                 <div style="display:flex; align-items:center; gap:8px;">
                     <div style="width:28px; height:28px; border-radius:50%; background:#166534; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -73,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Manual input --}}
+
             <div style="display:flex; gap:8px; margin-bottom:10px;">
                 <input id="is-manual" type="text" placeholder="Input kode manual (ITM-XXXX)" autocomplete="off"
                     style="flex:1; padding:9px 12px; border:1px solid #334155; border-radius:10px; font-size:13px; font-family:monospace; outline:none; text-transform:uppercase; background:#0f172a; color:#e2e8f0;"
@@ -81,7 +69,7 @@
                 <button onclick="isLookup(document.getElementById('is-manual').value)"
                     style="padding:9px 16px; background:#6d28d9; color:#fff; border:none; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; flex-shrink:0;">Cari</button>
             </div>
-            {{-- Footer --}}
+
             <div style="display:flex; gap:8px;">
                 <button onclick="closeItemScan()"
                         style="flex:1; padding:10px; border:1px solid #334155; border-radius:10px; background:#0f172a; font-size:13px; font-weight:600; color:#94a3b8; cursor:pointer;">
@@ -96,7 +84,6 @@
 @keyframes isScanMove { 0%,100%{top:8px} 50%{top:calc(100% - 10px)} }
 @keyframes isBlink    { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-/* ── Hide ALL html5-qrcode internal UI ── */
 #is-reader > img,
 #is-reader > div[style*="text-align"],
 #is-reader button, #is-reader select, #is-reader span,
@@ -107,7 +94,6 @@
 #is-reader__filescan_input,
 #is-reader__scan_region > div:not(video) { display: none !important; }
 
-/* ── Video fills camera area completely ── */
 #is-reader, #is-reader__scan_region {
     width: 100% !important; height: 100% !important;
     border: none !important; padding: 0 !important; margin: 0 !important;
@@ -132,7 +118,6 @@
     var _isLookupUrl   = "{{ route('inventory.lookup.shared') }}";
 
     window.openItemScan = function(cnt, allowedType) {
-        // Escape any CSS transform parent — move to body root
         var modal = document.getElementById('itemScanModal');
         if (modal.parentElement !== document.body) document.body.appendChild(modal);
         _isTargetCnt   = cnt;

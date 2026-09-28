@@ -10,7 +10,6 @@
 
         body { font-family: 'Inter', sans-serif; }
 
-        /* ─── Print-only: hide controls, reset margins ─── */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; padding: 0 !important; }
@@ -19,12 +18,10 @@
             .label-card { page-break-inside: avoid; }
         }
 
-        /* ─── Label size presets ─── */
         .size-sm  { width: 40mm; min-height: 30mm; }
         .size-md  { width: 60mm; min-height: 44mm; }
         .size-lg  { width: 80mm; min-height: 60mm; }
 
-        /* ─── QR Scaling inside container ─── */
         .label-card svg {
             display: block;
             width: 100% !important;
@@ -32,7 +29,6 @@
             max-width: 100%;
         }
 
-        /* ─── Animated gradient border effect for controls ─── */
         .gradient-border {
             background: linear-gradient(white, white) padding-box,
                         linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4) border-box;
@@ -48,12 +44,10 @@
       }"
       x-cloak>
 
-    <!-- ─── Controls Panel (no-print) ─── -->
     <div class="no-print max-w-4xl mx-auto mb-8">
         <div class="gradient-border bg-white rounded-2xl shadow-xl p-6">
             <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-end">
 
-                <!-- Item Info -->
                 <div class="flex-1">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
@@ -69,9 +63,8 @@
                     <p class="text-xs text-gray-400 mt-1">Pilih ukuran & jumlah label, kemudian klik tombol Print.</p>
                 </div>
 
-                <!-- Controls -->
                 <div class="flex flex-wrap gap-4 items-end">
-                    <!-- Size -->
+
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Ukuran Label</label>
                         <div class="flex gap-2">
@@ -84,7 +77,6 @@
                         </div>
                     </div>
 
-                    <!-- Count -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Jumlah Label</label>
                         <div class="flex items-center gap-2 border border-gray-200 rounded-lg p-1 bg-white shadow-sm">
@@ -94,7 +86,6 @@
                         </div>
                     </div>
 
-                    <!-- Print button -->
                     <button onclick="window.print()"
                         class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl font-semibold text-sm shadow-lg shadow-indigo-500/30 transition-all hover:shadow-indigo-500/50 hover:-translate-y-0.5 active:translate-y-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,19 +98,18 @@
         </div>
     </div>
 
-    <!-- ─── Label Grid (printed) ─── -->
     <div id="label-grid" class="max-w-4xl mx-auto flex flex-wrap gap-4 justify-start">
         <template x-for="i in countArr" :key="i">
             <div :class="`label-card ${size} flex flex-col items-center justify-between p-2 rounded-lg border-2 border-dashed border-gray-300 bg-white shadow-sm`">
-                <!-- Brand header -->
+
                 <div class="w-full text-center">
                     <span class="text-[7px] font-black uppercase tracking-[0.2em] text-indigo-400">ARTILIA INVENTORY</span>
                 </div>
-                <!-- QR Code SVG (rendered server-side, one copy) -->
+
                 <div class="qr-wrapper flex-1 flex items-center justify-center w-full py-1 px-2">
                     {!! QrCode::size(120)->margin(1)->errorCorrection('H')->generate(route('scanner.handle', $item->kode)) !!}
                 </div>
-                <!-- Item info footer -->
+
                 <div class="w-full text-center border-t border-gray-100 pt-1">
                     <div class="text-[9px] font-bold leading-tight text-gray-800 truncate px-1" title="{{ $item->nama }}">{{ Str::limit($item->nama, 30) }}</div>
                     <div class="text-[8px] font-mono text-gray-500 tracking-wide">{{ $item->kode }}</div>
@@ -128,7 +118,6 @@
         </template>
     </div>
 
-    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
     <style>[x-cloak] { display: none !important; }</style>
 </body>

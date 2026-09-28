@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 @section('content')
 <style>
-/* Searchable Select Component */
+
 .search-select-wrapper { position: relative; }
 .search-select-input {
     width: 100%; padding: 8px 36px 8px 12px; border: 1px solid #D1D5DB;
@@ -86,7 +86,7 @@
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {{-- Barang (Searchable + Scan) --}}
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Barang <span class="text-red-500">*</span>
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Scan Button --}}
+
                             <button type="button" onclick="openItemScan(null, 'peminjaman')" title="Scan Barcode Barang Peminjaman"
                                 class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-violet-600 text-white text-xs font-semibold rounded-lg hover:bg-violet-700 transition-colors shadow-sm"
                                 style="height:38px;">
@@ -143,7 +143,6 @@
                         </div>
                     </div>
 
-                    {{-- ── PEMINJAM (Searchable + QR Scan) ── --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Peminjam <span class="text-red-500">*</span>
@@ -176,7 +175,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- QR Scan Button --}}
+
                             <button type="button" onclick="openQrScanner('borrowing')"
                                 title="Scan QR Code Peminjam"
                                 class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-150 shadow-sm"
@@ -192,7 +191,6 @@
                         @enderror
                     </div>
 
-                    {{-- Jumlah --}}
                     <div>
                         <label for="jumlah" class="block text-sm font-medium text-gray-700 mb-2">Jumlah <span class="text-red-500">*</span></label>
                         <input type="number" name="jumlah" id="jumlah" min="1" value="{{ old('jumlah', 1) }}" required
@@ -202,7 +200,6 @@
                         @enderror
                     </div>
 
-                    {{-- Tanggal Pinjam --}}
                     <div>
                         <label for="tanggal_pinjam" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pinjam <span class="text-red-500">*</span></label>
                         <input type="date" name="tanggal_pinjam" id="tanggal_pinjam"
@@ -217,7 +214,6 @@
                         @enderror
                     </div>
 
-                    {{-- Tanggal Rencana Kembali --}}
                     <div>
                         <label for="tanggal_kembali_rencana" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Rencana Kembali <span class="text-red-500">*</span></label>
                         <input type="date" name="tanggal_kembali_rencana" id="tanggal_kembali_rencana"
@@ -232,7 +228,6 @@
                         @enderror
                     </div>
 
-                    {{-- Kondisi Saat Dipinjam --}}
                     <div>
                         <label for="kondisi_pinjam" class="block text-sm font-medium text-gray-700 mb-2">Kondisi Saat Dipinjam</label>
                         <textarea name="kondisi_pinjam" id="kondisi_pinjam" rows="3"
@@ -244,7 +239,6 @@
                     </div>
                 </div>
 
-                {{-- Item Detail Card --}}
                 <div id="itemDetails" class="hidden bg-purple-50 border border-purple-200 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-purple-900 mb-3">Detail Barang</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
@@ -257,7 +251,7 @@
                             <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">PEMINJAMAN</span>
                         </div>
                     </div>
-                    {{-- Location row --}}
+
                     <div id="itemLocationRow" class="hidden mt-3 pt-3 border-t border-purple-200">
                         <div class="flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,7 +269,6 @@
                     </div>
                 </div>
 
-                {{-- Keterangan --}}
                 <div>
                     <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
                     <textarea name="keterangan" id="keterangan" rows="3"
@@ -307,9 +300,7 @@
 </div>
 
 <script>
-/* =============================================
-   Generic Searchable Select Builder
-   ============================================= */
+
 function buildSearchSelect({ wrapperId, dropdownId, listId, searchId, displayId, hiddenId, onSelect }) {
     const wrapper  = document.getElementById(wrapperId);
     const dropdown = document.getElementById(dropdownId);
@@ -339,7 +330,6 @@ function buildSearchSelect({ wrapperId, dropdownId, listId, searchId, displayId,
             opt.style.display = show ? '' : 'none';
             if (show) hasVisible = true;
         });
-        // Empty state
         let emptyEl = list.querySelector('.search-select-empty');
         if (!hasVisible) {
             if (!emptyEl) {
@@ -368,27 +358,21 @@ function buildSearchSelect({ wrapperId, dropdownId, listId, searchId, displayId,
         if (onSelect) onSelect(opt);
     }
 
-    // Store placeholder
     display.dataset.placeholder = display.placeholder;
 
-    // Toggle dropdown
     display.addEventListener('click', () => dropdown.classList.contains('open') ? closeDropdown() : openDropdown());
 
-    // Search filter
     search.addEventListener('input', () => filterOptions(search.value));
 
-    // Option click
     list.addEventListener('click', e => {
         const opt = e.target.closest('.search-select-option');
         if (opt) selectOption(opt);
     });
 
-    // Close on outside click
     document.addEventListener('click', e => {
         if (!wrapper.contains(e.target)) closeDropdown();
     });
 
-    // Keyboard navigation
     search.addEventListener('keydown', e => {
         const visible = allOpts.filter(o => o.style.display !== 'none');
         let idx = visible.findIndex(o => o.classList.contains('focused'));
@@ -400,7 +384,6 @@ function buildSearchSelect({ wrapperId, dropdownId, listId, searchId, displayId,
         if (visible[idx]) { visible[idx].classList.add('focused'); visible[idx].scrollIntoView({ block: 'nearest' }); }
     });
 
-    // Pre-select old value
     const preVal = hidden.value;
     if (preVal) {
         const preOpt = allOpts.find(o => o.dataset.value == preVal);
@@ -408,9 +391,6 @@ function buildSearchSelect({ wrapperId, dropdownId, listId, searchId, displayId,
     }
 }
 
-/* =============================================
-   Item Details Panel
-   ============================================= */
 function handleItemSelect(opt) {
     const stock      = opt.dataset.stock;
     const stockInfo  = document.getElementById('stock-info');
@@ -430,7 +410,6 @@ function handleItemSelect(opt) {
         document.getElementById('availableStockDetail').textContent = stock + ' unit';
         document.getElementById('itemDescription').textContent      = opt.dataset.desc || 'Tidak ada deskripsi';
 
-        // Location badge
         const locRow   = document.getElementById('itemLocationRow');
         const locLabel = opt.dataset.locationLabel || '';
         const locKode  = opt.dataset.locationKode  || '';
@@ -450,9 +429,6 @@ function handleItemSelect(opt) {
     }
 }
 
-/* =============================================
-   Date validation
-   ============================================= */
 function handleDateValidation() {
     const borrow = document.getElementById('tanggal_pinjam');
     const ret    = document.getElementById('tanggal_kembali_rencana');
@@ -473,9 +449,6 @@ function handleDateValidation() {
     if (ret.value && ret.value > max) ret.value = max;
 }
 
-/* =============================================
-   Init
-   ============================================= */
 document.addEventListener('DOMContentLoaded', function () {
     buildSearchSelect({
         wrapperId:  'itemSelectWrapper',
@@ -500,7 +473,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('tanggal_pinjam').addEventListener('change', handleDateValidation);
     handleDateValidation();
 
-    // Validate before submit
     document.getElementById('borrowingForm').addEventListener('submit', function(e) {
         const itemVal = document.getElementById('item_id').value;
         const userVal = document.getElementById('user_id').value;
@@ -522,15 +494,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-{{-- ═══════════════════════════════════════════
-     QR SCANNER MODAL
-═══════════════════════════════════════════ --}}
 @include('admin.components.partials.qr-scanner-modal')
 
 @push('scripts')
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
-/* Users data map: id → {name, email} */
+
 var qrUsersMap = {};
 @foreach($users as $u)
 qrUsersMap[{{ $u->id }}] = { name: @json($u->name), email: @json($u->email) };
@@ -559,14 +528,10 @@ window.onQrUserFound = function(userData) {
 @endpush
 @endsection
 
-{{-- Item Scan Modal (hanya tipe peminjaman) --}}
 @include('admin.components.partials.item-scan-modal')
 
 <script>
-/**
- * Callback dipanggil oleh item-scan-modal setelah barcode ditemukan & lolos filter tipe.
- * Untuk borrowings: tidak ada cnt (null), langsung trigger opsi di #itemList.
- */
+
 window._isSelectCallback = function(item, cnt) {
     var allOpts = document.querySelectorAll('#itemList .search-select-option');
     var found   = null;
@@ -574,9 +539,8 @@ window._isSelectCallback = function(item, cnt) {
         if (String(opt.dataset.value) === String(item.id)) found = opt;
     });
     if (found) {
-        found.click(); // triggers handleItemSelect via buildSearchSelect
+        found.click();
     } else {
-        // Fallback: inject & click a new option
         var el = document.createElement('div');
         el.className = 'search-select-option';
         el.dataset.value         = item.id;

@@ -2,7 +2,6 @@
 @section('content')
     <div class="space-y-6">
 
-        {{-- Header --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
@@ -22,7 +21,6 @@
             </div>
         </div>
 
-        {{-- Current info card --}}
         <div class="bg-blue-50 rounded-lg border border-blue-200">
             <div class="px-6 py-4">
                 <h3 class="text-lg font-medium text-blue-900 mb-2">Informasi Saat Ini</h3>
@@ -38,7 +36,6 @@
             </div>
         </div>
 
-        {{-- Form --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
             <form id="update-form-{{ $incomingItem->id }}" action="{{ route($routePrefix . '.incoming.update', $incomingItem) }}" method="POST">
                 @csrf
@@ -50,7 +47,6 @@
 
                 <div class="px-6 py-6 space-y-6">
 
-                    {{-- Searchable Item Select --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Pilih Barang <span class="text-red-500">*</span>
@@ -105,7 +101,6 @@
                         @enderror
                     </div>
 
-                    {{-- Item detail card --}}
                     <div id="itemDetails"
                         class="{{ old('item_id', $incomingItem->item_id) ? '' : 'hidden' }} bg-green-50 border border-green-200 rounded-lg p-4">
                         <h4 class="text-sm font-medium text-green-900 mb-3">Detail Barang</h4>
@@ -144,7 +139,6 @@
                         </div>
                     </div>
 
-                    {{-- Quantity --}}
                     <div>
                         <label for="jumlah" class="block text-sm font-medium text-gray-700 mb-2">
                             Jumlah Masuk <span class="text-red-500">*</span>
@@ -160,7 +154,6 @@
                             stok barang secara otomatis.</p>
                     </div>
 
-                    {{-- Stock impact --}}
                     <div id="stockImpact" class="hidden bg-yellow-50 rounded-lg p-4">
                         <h4 class="text-sm font-medium text-yellow-800 mb-2">Dampak Perubahan Stok</h4>
                         <div class="text-sm text-yellow-700 space-y-1">
@@ -170,7 +163,6 @@
                         </div>
                     </div>
 
-                    {{-- Total value --}}
                     <div id="totalValueCard" class="hidden bg-green-50 rounded-lg p-4">
                         <div class="flex items-center justify-between">
                             <span class="text-sm font-medium text-green-700">Total Nilai Barang Masuk:</span>
@@ -178,7 +170,6 @@
                         </div>
                     </div>
 
-                    {{-- Keterangan --}}
                     <div>
                         <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan
                             (Opsional)</label>
@@ -336,7 +327,6 @@
             let currentPrice = 0;
             let currentType = '';
 
-            /* ===== Searchable Dropdown ===== */
             const wrapper = document.getElementById('item-ssd-wrapper');
             const display = wrapper.querySelector('.ssd-display');
             const dropdown = wrapper.querySelector('.ssd-dropdown');
@@ -399,7 +389,6 @@
                 }
             });
 
-            /* ===== Item Selection Logic ===== */
             function onItemSelect(val, dataset) {
                 const detailsDiv = document.getElementById('itemDetails');
                 if (!val) { detailsDiv.classList.add('hidden'); currentPrice = 0; currentType = ''; calculateTotal(); return; }
@@ -429,7 +418,6 @@
                 calculateTotal(); calculateStockImpact();
             }
 
-            /* ===== Quantity Events ===== */
             document.getElementById('jumlah').addEventListener('input', function () {
                 calculateTotal(); calculateStockImpact();
             });
@@ -457,7 +445,6 @@
                 } else { card.classList.add('hidden'); }
             }
 
-            // Init selected item on load
             if (hiddenInp.value) {
                 const sel = optsArea.querySelector(`.ssd-option[data-value="${hiddenInp.value}"]`);
                 if (sel) onItemSelect(hiddenInp.value, sel.dataset);

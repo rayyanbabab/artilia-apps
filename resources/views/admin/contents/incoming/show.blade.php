@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-    {{-- Header --}}
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -11,14 +11,14 @@
                     <p class="text-sm text-gray-600 mt-1">Informasi lengkap barang masuk</p>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <a href="{{ route($routePrefix . '.incoming.edit', $incomingItem) }}" 
+                    <a href="{{ route($routePrefix . '.incoming.edit', $incomingItem) }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                         Edit
                     </a>
-                    <a href="{{ route($routePrefix . '.incoming.index') }}" 
+                    <a href="{{ route($routePrefix . '.incoming.index') }}"
                        class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -31,9 +31,9 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {{-- Main Information --}}
+
         <div class="lg:col-span-2 space-y-6">
-            {{-- Item Information --}}
+
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Informasi Barang</h3>
@@ -92,7 +92,6 @@
                 </div>
             </div>
 
-            {{-- Transaction Details --}}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Detail Transaksi</h3>
@@ -121,7 +120,6 @@
                 </div>
             </div>
 
-            {{-- Description --}}
             @if($incomingItem->keterangan)
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
@@ -134,9 +132,8 @@
             @endif
         </div>
 
-        {{-- Sidebar --}}
         <div class="space-y-6">
-            {{-- Quick Stats --}}
+
             <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-sm text-white">
                 <div class="px-6 py-6">
                     <div class="flex items-center">
@@ -153,21 +150,20 @@
                 </div>
             </div>
 
-            {{-- Actions --}}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Aksi</h3>
                 </div>
                 <div class="px-6 py-6 space-y-3">
-                    <a href="{{ route($routePrefix . '.incoming.edit', $incomingItem) }}" 
+                    <a href="{{ route($routePrefix . '.incoming.edit', $incomingItem) }}"
                        class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                         Edit Data
                     </a>
-                    
-                    <button type="button" 
+
+                    <button type="button"
                             onclick="openModal('del-inc-{{ $incomingItem->id }}')"
                             class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,7 +174,6 @@
                 </div>
             </div>
 
-            {{-- Related Item Info --}}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Info Barang</h3>
@@ -207,7 +202,6 @@
                 </div>
             </div>
 
-            {{-- Timeline --}}
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Timeline</h3>

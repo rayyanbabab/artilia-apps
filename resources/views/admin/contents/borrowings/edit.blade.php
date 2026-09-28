@@ -8,7 +8,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">Edit Peminjaman</h1>
                     <p class="text-sm text-gray-600 mt-1">Update data peminjaman barang</p>
                 </div>
-                <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}" 
+                <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}"
                    class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -27,7 +27,7 @@
             <form id="update-form-{{ $borrowing->id }}" action="{{ route($routePrefix . '.borrowings.update', $borrowing) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
-                
+
                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <h4 class="text-sm font-medium text-gray-900 mb-3">Informasi Peminjaman</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -79,8 +79,8 @@
 
                     <div>
                         <label for="tanggal_kembali_aktual" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Kembali Aktual</label>
-                        <input type="date" name="tanggal_kembali_aktual" id="tanggal_kembali_aktual" 
-                               value="{{ old('tanggal_kembali_aktual', $borrowing->tanggal_kembali_aktual?->format('Y-m-d')) }}" 
+                        <input type="date" name="tanggal_kembali_aktual" id="tanggal_kembali_aktual"
+                               value="{{ old('tanggal_kembali_aktual', $borrowing->tanggal_kembali_aktual?->format('Y-m-d')) }}"
                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('tanggal_kembali_aktual') border-red-300 @enderror">
                         @error('tanggal_kembali_aktual')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -90,7 +90,7 @@
 
                     <div>
                         <label for="kondisi_kembali" class="block text-sm font-medium text-gray-700 mb-2">Kondisi Saat Dikembalikan</label>
-                        <textarea name="kondisi_kembali" id="kondisi_kembali" rows="3" 
+                        <textarea name="kondisi_kembali" id="kondisi_kembali" rows="3"
                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('kondisi_kembali') border-red-300 @enderror"
                                   placeholder="Contoh: Baik, tidak ada kerusakan / Ada sedikit goresan">{{ old('kondisi_kembali', $borrowing->kondisi_kembali) }}</textarea>
                         @error('kondisi_kembali')
@@ -100,7 +100,7 @@
 
                     <div>
                         <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
-                        <textarea name="keterangan" id="keterangan" rows="3" 
+                        <textarea name="keterangan" id="keterangan" rows="3"
                                   class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('keterangan') border-red-300 @enderror"
                                   placeholder="Catatan tambahan">{{ old('keterangan', $borrowing->keterangan) }}</textarea>
                         @error('keterangan')
@@ -117,7 +117,7 @@
                 @endif
 
                 <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                    <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}" 
+                    <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}"
                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         Batal
                     </a>

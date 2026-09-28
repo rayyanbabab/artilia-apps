@@ -3,7 +3,6 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    {{-- Header --}}
     <div class="mb-6 flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -17,7 +16,6 @@
         </a>
     </div>
 
-    {{-- Flash Messages --}}
     @if(session('success'))
         <div class="mb-4 flex items-center gap-3 bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl">
             <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -38,10 +36,8 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- ── Left: Item Info ── --}}
         <div class="lg:col-span-1 space-y-4">
 
-            {{-- Item Card --}}
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
                 <div class="p-5 flex flex-col items-center text-center">
                     @if($item->gambar)
@@ -85,10 +81,8 @@
             </div>
         </div>
 
-        {{-- ── Right: Actions & History ── --}}
         <div class="lg:col-span-2 space-y-5">
 
-            {{-- Quick Return --}}
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
@@ -138,7 +132,6 @@
                 @endif
             </div>
 
-            {{-- Quick Maintenance --}}
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
@@ -183,7 +176,6 @@
                 </div>
             </div>
 
-            {{-- History Tabs --}}
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden"
                  x-data="{ tab: 'borrowing' }">
                 <div class="flex border-b border-gray-100 dark:border-gray-700">
@@ -199,7 +191,6 @@
                     </button>
                 </div>
 
-                {{-- Borrowing History --}}
                 <div x-show="tab==='borrowing'" class="overflow-x-auto">
                     @if($borrowingHistory->count())
                         <table class="w-full text-sm">
@@ -231,7 +222,6 @@
                     @endif
                 </div>
 
-                {{-- Maintenance History --}}
                 <div x-show="tab==='maintenance'" class="overflow-x-auto">
                     @if($maintenanceHistory->count())
                         <table class="w-full text-sm">

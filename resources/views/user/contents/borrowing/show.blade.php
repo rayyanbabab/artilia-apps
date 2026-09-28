@@ -40,21 +40,15 @@
 
 @push('styles')
 <style>
-/* Sembunyikan receipt di layar biasa */
+
 #print-receipt { display: none; }
 </style>
 @endpush
 
 @section('user')
 
-{{-- ══════════════════════════════════════════════════════════
-     PRINT-ONLY: STRUK / RECEIPT PROFESIONAL
-══════════════════════════════════════════════════════════ --}}
 <div id="print-receipt" style="font-family:'Arial',Helvetica,sans-serif; font-size:10pt; color:#1a1a1a; background:#fff; padding:0; margin:0;">
 
-    {{-- ══════════════════════════════════════
-         HEADER: Logo + Company + Doc Number
-    ══════════════════════════════════════ --}}
     <table style="width:100%; border-collapse:collapse; padding-bottom:10px; border-bottom:3px solid #1e40af; margin-bottom:12px;">
         <tr>
             <td style="vertical-align:middle; width:70px; padding:0;">
@@ -89,7 +83,6 @@
         </tr>
     </table>
 
-    {{-- ══════ DOCUMENT TITLE ══════ --}}
     <div style="text-align:center; margin-bottom:10px; position:relative;">
         <div style="font-size:13pt; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:#111827;">BUKTI PEMINJAMAN BARANG</div>
         <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:4px;">
@@ -99,17 +92,15 @@
         </div>
     </div>
 
-    {{-- ══════ STATUS BADGE ══════ --}}
     <div style="text-align:center; margin-bottom:10px;">
         <span style="display:inline-block; padding:5px 20px; background:{{ $statusBg }}; color:{{ $statusColor }}; border:2px solid {{ $statusBorder }}; border-radius:100px; font-size:10pt; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;">
             ● {{ $statusLabel }}
         </span>
     </div>
 
-    {{-- ══════ TWO COLUMN: Peminjam + Persetujuan ══════ --}}
     <table style="width:100%; border-collapse:collapse; margin-bottom:10px;">
         <tr>
-            {{-- PEMINJAM --}}
+
             <td style="width:50%; vertical-align:top; padding-right:6px;">
                 <div style="border:1.5px solid #bfdbfe; border-radius:8px; overflow:hidden;">
                     <div style="background:#1e3a8a; padding:6px 10px;">
@@ -139,7 +130,7 @@
                     </div>
                 </div>
             </td>
-            {{-- PERSETUJUAN --}}
+
             <td style="width:50%; vertical-align:top; padding-left:6px;">
                 <div style="border:1.5px solid #bbf7d0; border-radius:8px; overflow:hidden;">
                     <div style="background:#166534; padding:6px 10px;">
@@ -170,7 +161,6 @@
         </tr>
     </table>
 
-    {{-- ══════ DETAIL BARANG ══════ --}}
     <div style="margin-bottom:10px;">
         <div style="font-size:8pt; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#1e40af; margin-bottom:5px; display:flex; align-items:center; gap:6px;">
             <span>📦</span> <span>Detail Barang yang Dipinjam</span>
@@ -193,7 +183,7 @@
                     <td style="padding:9px 10px; font-size:9pt; color:#374151; border-bottom:1px solid #f1f5f9;">{{ $request->item->supplier?->nama ?? '—' }}</td>
                     <td style="padding:9px 10px; font-size:12pt; font-weight:900; color:#1e40af; text-align:center; border-bottom:1px solid #f1f5f9;">{{ $request->jumlah }}<span style="font-size:8pt; font-weight:400; color:#6b7280;"> unit</span></td>
                 </tr>
-                {{-- Lokasi & Keterangan --}}
+
                 <tr style="background:#f8fafc;">
                     <td colspan="3" style="padding:7px 10px; font-size:9pt; color:#4b5563;">
                         <span style="font-weight:700;">📍 Lokasi:</span>
@@ -220,7 +210,6 @@
         </table>
     </div>
 
-    {{-- ══════ JADWAL PEMINJAMAN ══════ --}}
     <div style="margin-bottom:10px;">
         <div style="font-size:8pt; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#1e40af; margin-bottom:5px;">📅 Jadwal Peminjaman</div>
         <table style="width:100%; border-collapse:collapse;">
@@ -265,7 +254,6 @@
         </table>
     </div>
 
-    {{-- ══════ CATATAN ══════ --}}
     @if($request->keterangan || $request->admin_notes)
     <table style="width:100%; border-collapse:collapse; margin-bottom:10px;">
         <tr>
@@ -297,7 +285,6 @@
     </table>
     @endif
 
-    {{-- ══════ SYARAT & KETENTUAN ══════ --}}
     <div style="border:1.5px solid #fde68a; border-radius:8px; padding:7px 12px; background:#fffbeb; margin-bottom:12px;">
         <div style="font-size:8pt; color:#92400e; font-weight:800; margin-bottom:4px;">⚠️ Syarat & Ketentuan Peminjaman</div>
         <ol style="margin:0; padding-left:16px; font-size:8.5pt; color:#78350f; line-height:1.7;">
@@ -308,7 +295,6 @@
         </ol>
     </div>
 
-    {{-- ══════ TANDA TANGAN ══════ --}}
     <div style="border-top:2px solid #1e40af; padding-top:10px; margin-bottom:4px;">
         <table style="width:100%; border-collapse:collapse;">
             <tr>
@@ -340,7 +326,6 @@
         </table>
     </div>
 
-    {{-- ══════ FOOTER ══════ --}}
     <div style="text-align:center; border-top:1px solid #e2e8f0; padding-top:8px; margin-top:10px;">
         <div style="font-size:7.5pt; color:#9ca3af; line-height:1.6;">
             Dokumen ini diterbitkan secara otomatis oleh sistem <strong style="color:#6b7280;">{{ $companyName }}</strong>
@@ -354,17 +339,11 @@
 
 </div>
 
-
-{{-- ══════════════════════════════════════════════════════════
-     SCREEN VIEW — tampilan asli
-══════════════════════════════════════════════════════════ --}}
-
-
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header -->
+
     <div class="mb-8">
         <div class="flex items-center space-x-4">
-            <a href="{{ route('user.borrowing.my-requests') }}" 
+            <a href="{{ route('user.borrowing.my-requests') }}"
                class="text-gray-600 hover:text-gray-900 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -378,9 +357,9 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Request Information -->
+
         <div class="lg:col-span-2 space-y-6">
-            <!-- Main Info Card -->
+
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -434,7 +413,7 @@
                     </div>
                 </div>
                 <div class="p-6">
-                    <!-- Item Info -->
+
                     <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-6 pb-6 border-b border-gray-200">
                         <div class="flex-shrink-0">
                             <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -445,7 +424,7 @@
                         </div>
                         <div class="flex-1">
                             <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $request->item->nama }}</h4>
-                            <!-- Item Code and Category -->
+
                             <div class="flex flex-wrap gap-2 mb-3">
                                 @if($request->item->id)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -478,7 +457,6 @@
                         </div>
                     </div>
 
-                    <!-- Request Details -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Request ID</span>
@@ -506,7 +484,6 @@
                 </div>
             </div>
 
-            <!-- Timeline Section -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-900 flex items-center">
@@ -519,7 +496,7 @@
                 <div class="p-6">
                     <div class="flow-root">
                         <ul class="-mb-8">
-                            <!-- Request Submitted -->
+
                             <li>
                                 <div class="relative pb-8">
                                     @if($request->approved_at || $request->status !== 'pending')
@@ -546,7 +523,6 @@
                                 </div>
                             </li>
 
-                            <!-- Approved/Rejected -->
                             @if($request->approved_at)
                             <li>
                                 <div class="relative pb-8">
@@ -588,7 +564,6 @@
                             </li>
                             @endif
 
-                            <!-- Completed -->
                             @if($request->status === 'completed')
                             <li>
                                 <div class="relative pb-8">
@@ -614,7 +589,6 @@
                             </li>
                             @endif
 
-                            <!-- Cancelled -->
                             @if($request->status === 'cancelled')
                             <li>
                                 <div class="relative pb-8">
@@ -645,9 +619,8 @@
             </div>
         </div>
 
-        <!-- Sidebar -->
         <div class="space-y-6">
-            <!-- Notes Section -->
+
             @if($request->keterangan)
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
@@ -664,7 +637,6 @@
             </div>
             @endif
 
-            <!-- Admin Notes -->
             @if($request->admin_notes)
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-red-50 to-orange-50">
@@ -681,7 +653,6 @@
             </div>
             @endif
 
-            <!-- Action Buttons -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-900">Actions</h3>
@@ -693,7 +664,7 @@
                             @csrf
                             @method('DELETE')
                         </form>
-                        <button type="button" 
+                        <button type="button"
                                 class="w-full inline-flex justify-center items-center px-4 py-2 border border-red-300 text-sm font-medium rounded-md text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onclick="openModal('modal-cancel-request')">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -702,7 +673,7 @@
                             Cancel Request
                         </button>
                         @endif
-                        
+
                         <a href="/user/borrowing/show/{{ $request->id }}/print" target="_blank"
                            class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -710,7 +681,7 @@
                             </svg>
                             Print Details
                         </a>
-                        
+
                         <a href="{{ route('user.borrowing.my-requests') }}" class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -727,10 +698,8 @@
 @push('scripts')
 <script>
 function printReceipt() {
-    // Ambil konten receipt
     var content = document.getElementById('print-receipt').innerHTML;
 
-    // Buka window baru khusus untuk print
     var pw = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
     pw.document.write(
         '<!DOCTYPE html>'
@@ -753,7 +722,6 @@ function printReceipt() {
     pw.document.close();
     pw.focus();
 
-    // Tunggu konten selesai dimuat lalu print
     pw.onload = function() {
         setTimeout(function() {
             pw.print();
@@ -761,7 +729,6 @@ function printReceipt() {
         }, 400);
     };
 
-    // Fallback jika onload tidak trigger
     setTimeout(function() {
         if (!pw.closed) {
             pw.print();

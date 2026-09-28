@@ -78,7 +78,6 @@
     };
 @endphp
 
-{{-- HEADER --}}
 <table style="border-bottom: 3px solid #1e40af; padding-bottom: 10px; margin-bottom: 12px;">
     <tr>
         <td style="width: 70px; vertical-align: middle;">
@@ -111,20 +110,17 @@
     </tr>
 </table>
 
-{{-- TITLE --}}
 <div style="text-align:center; margin-bottom:10px;">
     <div style="font-size:13pt; font-weight:900; letter-spacing:2px; text-transform:uppercase;">BUKTI PEMINJAMAN BARANG</div>
     <div style="width:60px; height:3px; background:#1e40af; margin:4px auto;"></div>
 </div>
 
-{{-- STATUS --}}
 <div style="text-align:center; margin-bottom:10px;">
     <span style="display:inline-block; padding:5px 20px; background:{{ $statusBg }}; color:{{ $statusColor }}; border:2px solid {{ $statusBorder }}; border-radius:100px; font-size:10pt; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;">
         ● {{ $statusLabel }}
     </span>
 </div>
 
-{{-- INFO BOXES: Peminjam + Persetujuan --}}
 <table style="margin-bottom:10px;">
     <tr>
         <td style="width:50%; vertical-align:top; padding-right:6px;">
@@ -162,7 +158,6 @@
     </tr>
 </table>
 
-{{-- DETAIL BARANG --}}
 <div style="font-size:8pt; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#1e40af; margin-bottom:5px;">📦 Detail Barang yang Dipinjam</div>
 <table style="border:1.5px solid #bfdbfe; margin-bottom:10px;">
     <thead>
@@ -199,7 +194,6 @@
     </tbody>
 </table>
 
-{{-- JADWAL --}}
 <div style="font-size:8pt; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#1e40af; margin-bottom:5px;">📅 Jadwal Peminjaman</div>
 <table style="margin-bottom:10px;">
     <tr>
@@ -237,7 +231,6 @@
     </tr>
 </table>
 
-{{-- CATATAN --}}
 @if($request->keterangan || $request->admin_notes)
 <table style="margin-bottom:10px;">
     <tr>
@@ -261,7 +254,6 @@
 </table>
 @endif
 
-{{-- SYARAT --}}
 <div style="border:1.5px solid #fde68a; border-radius:8px; padding:7px 12px; background:#fffbeb; margin-bottom:12px;">
     <div style="font-size:8pt; color:#92400e; font-weight:800; margin-bottom:4px;">⚠️ Syarat &amp; Ketentuan Peminjaman</div>
     <ol style="margin:0; padding-left:16px; font-size:8.5pt; color:#78350f; line-height:1.7;">
@@ -272,7 +264,6 @@
     </ol>
 </div>
 
-{{-- TANDA TANGAN --}}
 <div style="border-top:2px solid #1e40af; padding-top:10px; margin-bottom:8px;">
     <table>
         <tr>
@@ -304,7 +295,6 @@
     </table>
 </div>
 
-{{-- FOOTER --}}
 <div style="text-align:center; border-top:1px solid #e2e8f0; padding-top:8px; margin-top:10px; font-size:7.5pt; color:#9ca3af; line-height:1.6;">
     Dokumen ini diterbitkan secara otomatis oleh sistem <strong style="color:#6b7280;">{{ $companyName }}</strong>
     &nbsp;·&nbsp; Ref: <strong style="color:#6b7280; font-family:monospace;">{{ $docNumber }}</strong>

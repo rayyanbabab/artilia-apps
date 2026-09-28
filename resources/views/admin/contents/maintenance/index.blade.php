@@ -1,7 +1,12 @@
 @extends('admin.layouts.dashboard')
 
 @section('content')
-@php $isOp = Auth::user()->role->value === 'operator'; @endphp
+@php
+    $role = Auth::user()?->role;
+    $roleVal = $role instanceof \App\Enums\UsersRole ? $role->value : (string) ($role ?? 'admin');
+    $isOp = $roleVal === 'operator';
+    $routePrefix = $routePrefix ?? ($isOp ? 'staff' : 'admin');
+@endphp
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6"
      x-data="{
         completeModal: { open: false, id: null, name: '', jumlah: 0, action: '' },
@@ -14,7 +19,6 @@
         }
      }">
 
-    {{-- ═══════════════════ HEADER ═══════════════════ --}}
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="flex items-center gap-3">
@@ -41,7 +45,6 @@
         </div>
     </div>
 
-    {{-- ═══════════════════ STAT CARDS ═══════════════════ --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div class="bg-white rounded-xl border border-orange-100 shadow-sm p-4 sm:p-5 flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
@@ -93,7 +96,6 @@
         </div>
     </div>
 
-    {{-- ═══════════════════ FILTER ═══════════════════ --}}
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4">
         <form method="GET" action="{{ route($routePrefix . '.maintenance.index') }}" class="flex flex-wrap gap-3 items-end">
             <div class="flex-1 min-w-[180px]">
@@ -139,7 +141,6 @@
         </form>
     </div>
 
-    {{-- ═══════════════════ TABLE ═══════════════════ --}}
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
             <h3 class="text-sm font-semibold text-gray-800">Daftar Maintenance</h3>
@@ -189,7 +190,7 @@
                         </td>
                         <td class="px-4 py-4">
                             <div class="flex items-center justify-center gap-1.5">
-                                {{-- Detail --}}
+
                                 <a href="{{ route($routePrefix . '.maintenance.show', $m) }}"
                                    class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                                    title="Detail">
@@ -200,7 +201,7 @@
                                 </a>
 
                                 @if($m->status === 'in_repair' && $isOp)
-                                {{-- Selesai Button --}}
+
                                 <button type="button"
                                         @click="openComplete({{ $m->id }}, '{{ addslashes($m->item?->nama) }}', {{ $m->jumlah }}, '{{ route($routePrefix . '.maintenance.complete', $m) }}')"
                                         class="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
@@ -210,7 +211,6 @@
                                     </svg>
                                 </button>
 
-                                {{-- Scrap Button --}}
                                 <button type="button"
                                         @click="openScrap({{ $m->id }}, '{{ addslashes($m->item?->nama) }}', {{ $m->jumlah }}, '{{ route($routePrefix . '.maintenance.scrap', $m) }}')"
                                         class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -258,139 +258,187 @@
     </div>
 
     @if($isOp)
-    {{-- ═══════════════════ MODAL SELESAI (Operator only) ═══════════════════ --}}
-    <div x-show="completeModal.open"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         @keydown.escape.window="completeModal.open = false"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4"
-         style="background: rgba(0,0,0,0.45); display: none;">
-        <div @click.outside="completeModal.open = false"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-            {{-- Modal Header --}}
-            <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
-                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+
+    <template x-teleport="body">
+        <div x-show="completeModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="completeModal.open = false">
+
+            <div x-show="completeModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="completeModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="completeModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-md w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Tandai Selesai Servis</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">Stok akan dikembalikan ke inventori</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="completeModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form method="POST" :action="completeModal.action"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf @method('PATCH')
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <div class="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-3.5 flex items-start gap-3 border border-emerald-100 dark:border-emerald-800/40">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-xs text-emerald-800 dark:text-emerald-300 leading-relaxed">
+                                    Barang <strong x-text="completeModal.name"></strong>
+                                    sebanyak <strong x-text="completeModal.jumlah + ' unit'"></strong>
+                                    akan ditandai selesai dan stok dikembalikan.
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Catatan Hasil Servis <span class="font-normal text-gray-400">(opsional)</span></label>
+                                <textarea name="catatan_selesai" rows="3"
+                                          placeholder="Contoh: Layar berhasil diganti, semua fungsi berjalan normal..."
+                                          class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"></textarea>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="completeModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 rounded-xl shadow-md shadow-emerald-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Selesai & Kembalikan Stok
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="flex-1">
-                    <h3 class="text-base font-bold text-gray-900">Tandai Selesai Servis</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">Stok akan dikembalikan ke inventori</p>
-                </div>
-                <button @click="completeModal.open = false" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
             </div>
-            {{-- Modal Body --}}
-            <form method="POST" :action="completeModal.action" class="p-6 space-y-4">
-                @csrf @method('PATCH')
-                <div class="bg-green-50 rounded-xl p-3.5 flex items-start gap-3">
-                    <svg class="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <p class="text-sm text-green-700">
-                        Barang <strong x-text="completeModal.name"></strong>
-                        sebanyak <strong x-text="completeModal.jumlah + ' unit'"></strong>
-                        akan ditandai selesai dan stok dikembalikan.
-                    </p>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Catatan Hasil Servis <span class="font-normal text-gray-400">(opsional)</span></label>
-                    <textarea name="catatan_selesai" rows="3"
-                              placeholder="Contoh: Layar berhasil diganti, semua fungsi berjalan normal..."
-                              class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 resize-none placeholder-gray-400"></textarea>
-                </div>
-                <div class="flex gap-2.5 pt-1">
-                    <button type="submit"
-                            class="flex-1 py-2.5 text-sm font-semibold bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors shadow-sm">
-                        Selesai & Kembalikan Stok
-                    </button>
-                    <button type="button" @click="completeModal.open = false"
-                            class="px-5 py-2.5 text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors">
-                        Batal
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     @if($isOp)
-    {{-- ═══════════════════ MODAL SCRAP (Operator only) ═══════════════════ --}}
-    <div x-show="scrapModal.open"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         @keydown.escape.window="scrapModal.open = false"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4"
-         style="background: rgba(0,0,0,0.45); display: none;">
-        <div @click.outside="scrapModal.open = false"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-            {{-- Modal Header --}}
-            <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
-                <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg>
+
+    <template x-teleport="body">
+        <div x-show="scrapModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="scrapModal.open = false">
+
+            <div x-show="scrapModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="scrapModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="scrapModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-md w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-red-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Konfirmasi Scrap / Afkir</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">Tindakan ini tidak dapat dibatalkan</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="scrapModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form method="POST" :action="scrapModal.action"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf @method('PATCH')
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <div class="bg-red-50 dark:bg-red-950/30 rounded-xl p-3.5 flex items-start gap-3 border border-red-100 dark:border-red-800/40">
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                                <p class="text-xs text-red-700 dark:text-red-300 leading-relaxed">
+                                    Barang <strong x-text="scrapModal.name"></strong>
+                                    (<span x-text="scrapModal.jumlah"></span> unit) akan di-scrap.
+                                    <span class="font-bold text-red-600 dark:text-red-400">Stok TIDAK akan dikembalikan.</span>
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Alasan Scrap <span class="font-normal text-gray-400">(opsional)</span></label>
+                                <textarea name="catatan_selesai" rows="3"
+                                          placeholder="Contoh: Barang tidak dapat diperbaiki, kerusakan terlalu parah..."
+                                          class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"></textarea>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="scrapModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 active:scale-95 rounded-xl shadow-md shadow-red-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                Ya, Scrap Barang Ini
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="flex-1">
-                    <h3 class="text-base font-bold text-gray-900">Konfirmasi Scrap</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">Tindakan ini tidak dapat dibatalkan</p>
-                </div>
-                <button @click="scrapModal.open = false" class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
             </div>
-            {{-- Modal Body --}}
-            <form method="POST" :action="scrapModal.action" class="p-6 space-y-4">
-                @csrf @method('PATCH')
-                <div class="bg-red-50 rounded-xl p-3.5 flex items-start gap-3">
-                    <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg>
-                    <p class="text-sm text-red-700">
-                        Barang <strong x-text="scrapModal.name"></strong>
-                        (<span x-text="scrapModal.jumlah"></span> unit) akan di-scrap.
-                        <span class="font-semibold">Stok TIDAK akan dikembalikan.</span>
-                    </p>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Alasan Scrap <span class="font-normal text-gray-400">(opsional)</span></label>
-                    <textarea name="catatan_selesai" rows="3"
-                              placeholder="Contoh: Barang tidak dapat diperbaiki, kerusakan terlalu parah..."
-                              class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-red-400 resize-none placeholder-gray-400"></textarea>
-                </div>
-                <div class="flex gap-2.5 pt-1">
-                    <button type="submit"
-                            class="flex-1 py-2.5 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-xl transition-colors shadow-sm">
-                        Ya, Scrap Barang Ini
-                    </button>
-                    <button type="button" @click="scrapModal.open = false"
-                            class="px-5 py-2.5 text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors">
-                        Batal
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
 </div>

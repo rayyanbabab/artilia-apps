@@ -41,7 +41,7 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900">Basic Information</h2>
                 </div>
-                
+
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-3 border-b border-gray-100">
                         <span class="text-sm font-medium text-gray-500">Category ID</span>
@@ -85,11 +85,11 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900">Statistics</h2>
                 </div>
-                
+
                 <div class="text-center">
                     <div class="text-4xl font-bold text-blue-600 mb-2">{{ $category->items->count() }}</div>
                     <p class="text-gray-500 mb-6">Total Items</p>
-                    
+
                     @if($category->items->count() === 0)
                         <div class="bg-green-50 border border-green-200 rounded-lg p-4">
                             <div class="flex items-center">
@@ -121,7 +121,7 @@
                 <h2 class="text-lg font-semibold text-gray-900">Items in this Category ({{ $category->items->count() }})</h2>
             </div>
         </div>
-        
+
         <div class="p-6">
             @if($category->items->count() > 0)
                 <div class="overflow-x-auto">
@@ -210,5 +210,3 @@
     </div>
 </div>
 @endsection
-
-

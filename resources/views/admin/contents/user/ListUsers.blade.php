@@ -24,7 +24,6 @@
             </div>
         </div>
 
-        {{-- Search and Filter Section --}}
         <div class="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
             <form method="GET" action="{{ route($routePrefix . '.content.listusers') }}" class="space-y-4">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
@@ -73,7 +72,6 @@
             </div>
         @endif
 
-        {{-- Import Errors (from CSV import) --}}
         @if(session('import_errors') && count(session('import_errors')) > 0)
         <div class="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-4">
             <div class="flex items-start gap-3">
@@ -92,7 +90,6 @@
         </div>
         @endif
 
-        {{-- Bulk Actions --}}
         <div class="mb-4 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <button type="button" id="select-all" class="text-sm text-gray-600 hover:text-gray-900">
@@ -271,7 +268,6 @@
             </form>
         </div>
 
-        {{-- Pagination --}}
         @if($users->hasPages())
             <div class="mt-6">
                 {{ $users->appends(request()->query())->links() }}
@@ -281,13 +277,12 @@
 
     @include('admin.components.partials.import-users-modal')
 
-    {{-- ══════════ Edit Role Modal ══════════ --}}
     <div id="edit-role-modal"
          style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px);"
          class="flex items-center justify-center p-4"
          onclick="if(event.target===this) closeEditRoleModal()">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden" onclick="event.stopPropagation()">
-            {{-- Header --}}
+
             <div class="bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-4 flex items-center justify-between">
                 <div>
                     <h3 class="text-white font-bold text-base">Edit Role User</h3>
@@ -299,7 +294,7 @@
                     </svg>
                 </button>
             </div>
-            {{-- Body --}}
+
             <form id="edit-role-form" method="POST" action="">
                 @csrf
                 @method('PATCH')
@@ -338,11 +333,10 @@
         </div>
     </div>
 
-
 @endsection
 
 @push('scripts')
-    {{-- Individual Delete Modals --}}
+
     @foreach ($users as $user)
         <x-popup id="modal-{{ $user->id }}" title="Delete User"
             message="Are you sure want to delete this user? All data will be permanently removed."
@@ -350,14 +344,13 @@
             confirmText="Delete"
             confirmClass="text-sm link-primary delete-btn-color"
             cancelText="Cancel" />
-        
+
         <form id="delete-form-{{ $user->id }}" action="{{ route($routePrefix . '.content.deleteusers', $user->id) }}" method="POST" style="display: none;">
             @csrf
             @method('DELETE')
         </form>
     @endforeach
 
-    {{-- Bulk Delete Modal --}}
     <x-popup id="bulk-delete-modal" title="Delete Selected Users"
         message="Are you sure you want to delete the selected users? All data will be permanently removed and cannot be recovered."
         formId="bulk-form"
@@ -372,7 +365,6 @@
             const selectAllButton = document.getElementById('select-all');
             const bulkDeleteButton = document.getElementById('bulk-delete');
 
-            // Select all functionality
             selectAllCheckbox.addEventListener('change', function() {
                 userCheckboxes.forEach(checkbox => {
                     checkbox.checked = this.checked;
@@ -380,7 +372,6 @@
                 toggleBulkActions();
             });
 
-            // Individual checkbox change
             userCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     const checkedBoxes = document.querySelectorAll('.user-checkbox:checked');
@@ -390,7 +381,6 @@
                 });
             });
 
-            // Select all button
             selectAllButton.addEventListener('click', function() {
                 const allChecked = document.querySelectorAll('.user-checkbox:checked').length === userCheckboxes.length;
                 userCheckboxes.forEach(checkbox => {
@@ -401,7 +391,6 @@
                 toggleBulkActions();
             });
 
-            // Bulk delete button
             bulkDeleteButton.addEventListener('click', function() {
                 const checkedBoxes = document.querySelectorAll('.user-checkbox:checked');
                 if (checkedBoxes.length > 0) {
@@ -423,15 +412,12 @@
     </script>
 
     <script>
-        // ── Edit Role Modal ──────────────────────────
         var _ermUserId = null;
 
         function openEditRoleModal(userId, currentRole, userName) {
             _ermUserId = userId;
             document.getElementById('erm-subtitle').textContent = 'User: ' + userName;
-            // Set form action (relative path works on any host including ngrok)
             document.getElementById('edit-role-form').action = '/admin/content/update-users/' + userId;
-            // Check the current role radio
             var radios = document.querySelectorAll('#edit-role-form input[name="role"]');
             radios.forEach(function(r) { r.checked = (r.value === currentRole); });
             document.getElementById('edit-role-modal').style.display = 'flex';

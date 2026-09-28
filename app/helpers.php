@@ -5,18 +5,41 @@ if (! function_exists('panel_route')) {
     /**
      * Generate a URL for a named route using the correct panel prefix
      * (admin or staff) based on the authenticated user's role.
-     *
-     * Usage in controllers:
-     *   return redirect()->to(panel_route('inventory.index'));
-     *   return redirect()->to(panel_route('inventory.show', ['id' => $id]));
+     * Includes intelligent fallbacks to admin.* or direct route name if staff.* is not registered.
      */
     function panel_route(string $name, array $params = []): string
     {
         $user = auth()->user();
-        $role = $user?->role?->value ?? 'admin';
+        $role = $user?->role instanceof \App\Enums\UsersRole ? $user->role->value : (string) ($user?->role ?? 'admin');
         $prefix = $role === 'operator' ? 'staff' : 'admin';
 
-        return route($prefix . '.' . $name, $params);
+        // If $name already starts with admin. or staff.
+        if (str_starts_with($name, 'admin.') || str_starts_with($name, 'staff.')) {
+            if (\Illuminate\Support\Facades\Route::has($name)) {
+                return route($name, $params);
+            }
+            if ($prefix === 'staff' && str_starts_with($name, 'admin.')) {
+                $staffName = 'staff.' . substr($name, 6);
+                if (\Illuminate\Support\Facades\Route::has($staffName)) {
+                    return route($staffName, $params);
+                }
+            }
+        }
+
+        $targetRoute = $prefix . '.' . $name;
+        if (\Illuminate\Support\Facades\Route::has($targetRoute)) {
+            return route($targetRoute, $params);
+        }
+
+        if (\Illuminate\Support\Facades\Route::has('admin.' . $name)) {
+            return route('admin.' . $name, $params);
+        }
+
+        if (\Illuminate\Support\Facades\Route::has($name)) {
+            return route($name, $params);
+        }
+
+        return route($targetRoute, $params);
     }
 }
 
@@ -24,11 +47,6 @@ if (! function_exists('panel_redirect')) {
     /**
      * Create a redirect response to a panel route (role-aware).
      * Replaces redirect()->route('admin.xxx') in controllers.
-     *
-     * Usage:
-     *   return panel_redirect('inventory.index');
-     *   return panel_redirect('inventory.show', ['id' => $id]);
-     *   return panel_redirect('inventory.index')->with('success', 'Done!');
      */
     function panel_redirect(string $name, array $params = []): \Illuminate\Http\RedirectResponse
     {

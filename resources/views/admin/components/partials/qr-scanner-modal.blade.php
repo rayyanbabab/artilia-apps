@@ -1,16 +1,8 @@
-{{-- ============================================================
-     Shared QR Scanner Modal — Scan User QR Code
-     Digunakan di: borrowings/create, outgoing/create
-     Requires: html5-qrcode lib loaded by the including page
-     Callback: window.onQrUserFound(userData) dipanggil setelah scan berhasil
-============================================================ --}}
-
 <div id="qrScannerModal"
      style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(15,23,42,0.85); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:12px; box-sizing:border-box;">
 
     <div style="background:#0f172a; border-radius:24px; width:100%; max-width:480px; height:calc(100dvh - 24px); max-height:640px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6);">
 
-        {{-- Header --}}
         <div style="background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div>
                 <h3 style="color:#fff; font-weight:700; font-size:15px; margin:0;">🪪 Scan QR Code User</h3>
@@ -23,7 +15,6 @@
             </button>
         </div>
 
-        {{-- Camera — fills all remaining space --}}
         <div style="position:relative; flex:1; overflow:hidden; background:#000;">
             <div id="qrReaderContainer" style="width:100%; height:100%; position:relative; overflow:hidden;">
                 <div id="qrReader" style="width:100%; height:100%;"></div>
@@ -43,21 +34,18 @@
             </div>
         </div>
 
-        {{-- Bottom controls panel --}}
         <div style="background:#1e293b; padding:14px 16px; flex-shrink:0;">
-            {{-- Scanning status --}}
+
             <div id="qrStatusScanning" style="display:flex; align-items:center; gap:8px; padding:9px 12px; background:#0f172a; border-radius:10px; border:1px solid #334155; margin-bottom:10px;">
                 <span style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; animation:qrBlink 1s ease-in-out infinite;"></span>
                 <span style="font-size:13px; color:#94a3b8;">Menunggu QR code...</span>
             </div>
 
-            {{-- Error state --}}
             <div id="qrStatusError" style="display:none; padding:9px 12px; background:#450a0a; border:1px solid #7f1d1d; border-radius:10px; margin-bottom:10px;">
                 <p style="font-size:13px; color:#fca5a5; margin:0;" id="qrErrorText">QR tidak valid.</p>
                 <button onclick="resetQrScanner()" style="margin-top:5px; font-size:12px; color:#818cf8; background:none; border:none; cursor:pointer; padding:0; font-weight:600;">↩ Coba lagi</button>
             </div>
 
-            {{-- Success: user card --}}
             <div id="qrStatusSuccess" style="display:none; padding:10px 12px; background:#052e16; border:1px solid #166534; border-radius:10px; margin-bottom:10px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
                     <div style="width:32px; height:32px; border-radius:50%; background:#166534; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -90,7 +78,6 @@
                 </div>
             </div>
 
-            {{-- Footer actions --}}
             <div style="display:flex; gap:8px;">
                 <button onclick="closeQrScanner()"
                         style="flex:1; padding:10px; border:1px solid #334155; border-radius:10px; background:#0f172a; font-size:13px; font-weight:600; color:#94a3b8; cursor:pointer;">
@@ -116,7 +103,6 @@
     50%       { opacity: 0.3; }
 }
 
-/* ── Hide ALL html5-qrcode internal UI ── */
 #qrReader > img,
 #qrReader > div[style*="text-align"],
 #qrReader button, #qrReader select, #qrReader span,
@@ -131,7 +117,6 @@
 #qrReader__filescan_input,
 #qrReader__scan_region > div:not(video) { display: none !important; }
 
-/* ── Video fills camera area completely ── */
 #qrReader, #qrReader__scan_region {
     width: 100% !important; height: 100% !important;
     border: none !important; padding: 0 !important; margin: 0 !important;
@@ -154,7 +139,6 @@
     var _currentContext = null;
 
     window.openQrScanner = function(context) {
-        // Escape any CSS transform parent — move to body root
         var qrModal = document.getElementById('qrScannerModal');
         if (qrModal.parentElement !== document.body) document.body.appendChild(qrModal);
         _currentContext = context || 'default';

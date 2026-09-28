@@ -3,7 +3,6 @@
 @section('content')
 <div class="form mx-auto space-y-4 p-4 max-w-4xl">
 
-    {{-- Header Section --}}
     <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Add New Item</h1>
@@ -20,7 +19,6 @@
         </div>
     </div>
 
-    {{-- Error Messages --}}
     @if ($errors->any())
         <div class="rounded-md bg-red-50 p-4 border border-red-200">
             <div class="flex">
@@ -44,7 +42,6 @@
         </div>
     @endif
 
-    {{-- Main Form --}}
     <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
         <form method="POST" action="{{ route($routePrefix . '.inventory.store') }}"
               enctype="multipart/form-data"
@@ -52,14 +49,12 @@
               @click.outside.window="catOpen = false; supOpen = false">
             @csrf
 
-            {{-- ── Section: Item Information ── --}}
             <div class="border-b border-gray-200 px-4 py-3">
                 <h3 class="text-lg font-semibold text-gray-900">Item Information</h3>
             </div>
 
             <div class="space-y-4 p-4">
 
-                {{-- Name & Type --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label for="nama" class="block text-sm font-medium text-gray-700">
@@ -88,10 +83,8 @@
                     </div>
                 </div>
 
-                {{-- Category & Supplier --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                    {{-- ── CATEGORY DROPDOWN ── --}}
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label class="block text-sm font-medium text-gray-700">
@@ -105,7 +98,6 @@
                         <input type="hidden" name="category_id" :value="catId">
                         <div class="relative">
 
-                            {{-- Trigger --}}
                             <button type="button"
                                     @click="catOpen = !catOpen; supOpen = false"
                                     class="relative w-full flex items-center gap-2 px-3 py-2.5 text-sm bg-white border rounded-lg text-left transition-all duration-150
@@ -113,23 +105,22 @@
                                     :class="catOpen
                                         ? 'border-blue-500 ring-2 ring-blue-100 shadow-sm'
                                         : 'hover:border-gray-400 hover:shadow-sm'">
-                                {{-- Icon --}}
+
                                 <span class="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center"
                                       :class="catId ? 'bg-blue-50' : 'bg-gray-50'">
                                     <svg class="w-3.5 h-3.5" :class="catId ? 'text-blue-500' : 'text-gray-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                                     </svg>
                                 </span>
-                                {{-- Label --}}
+
                                 <span class="flex-1 truncate" :class="catId ? 'text-gray-900 font-medium' : 'text-gray-400'" x-text="catLabel || 'Pilih kategori...'"></span>
-                                {{-- Chevron --}}
+
                                 <svg class="w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-200" :class="catOpen ? 'rotate-180 text-blue-500' : ''"
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
 
-                            {{-- Dropdown Panel --}}
                             <div x-show="catOpen"
                                  @click.outside="catOpen = false"
                                  x-transition:enter="transition ease-out duration-150"
@@ -141,10 +132,9 @@
                                  class="absolute z-50 w-full mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden"
                                  style="transform-origin: top;">
 
-                                {{-- Search --}}
                                 <div class="p-2 bg-gray-50 border-b border-gray-100">
                                     <div class="relative">
-                                        
+
                                         <input type="text"
                                                x-model="catSearch"
                                                x-init="$watch('catOpen', v => v && $nextTick(() => $refs.catInput.focus()))"
@@ -158,15 +148,14 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    {{-- Result count --}}
+
                                     <p class="mt-1.5 text-xs text-gray-400 px-1">
                                         <span x-text="filteredCats.length"></span> kategori ditemukan
                                     </p>
                                 </div>
 
-                                {{-- List --}}
                                 <ul class="overflow-y-auto dropdown-scroll" style="max-height: 200px;">
-                                    {{-- Clear option --}}
+
                                     <li @click="catId = ''; catLabel = ''; catOpen = false; catSearch = ''"
                                         class="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer border-b border-gray-50"
                                         :class="!catId ? 'bg-gray-50 text-gray-500' : 'text-gray-400 hover:bg-gray-50'">
@@ -178,7 +167,6 @@
                                         <span class="italic">Tidak ada</span>
                                     </li>
 
-                                    {{-- Kategori items --}}
                                     <template x-for="cat in filteredCats" :key="cat.id">
                                         <li @click="catId = cat.id; catLabel = cat.name; catOpen = false; catSearch = ''"
                                             class="flex items-center gap-2 px-3 py-2.5 text-sm cursor-pointer transition-colors duration-100"
@@ -200,7 +188,6 @@
                                         </li>
                                     </template>
 
-                                    {{-- Empty state --}}
                                     <li x-show="filteredCats.length === 0" class="py-6 text-center">
                                         <svg class="w-8 h-8 text-gray-200 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -218,7 +205,6 @@
                         @enderror
                     </div>
 
-                    {{-- ── SUPPLIER DROPDOWN ── --}}
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label class="block text-sm font-medium text-gray-700">
@@ -232,7 +218,6 @@
                         <input type="hidden" name="supplier_id" :value="supId">
                         <div class="relative">
 
-                            {{-- Trigger --}}
                             <button type="button"
                                     @click="supOpen = !supOpen; catOpen = false"
                                     class="relative w-full flex items-center gap-2 px-3 py-2.5 text-sm bg-white border rounded-lg text-left transition-all duration-150
@@ -253,7 +238,6 @@
                                 </svg>
                             </button>
 
-                            {{-- Dropdown Panel --}}
                             <div x-show="supOpen"
                                  @click.outside="supOpen = false"
                                  x-transition:enter="transition ease-out duration-150"
@@ -265,10 +249,9 @@
                                  class="absolute z-50 w-full mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden"
                                  style="transform-origin: top;">
 
-                                {{-- Search --}}
                                 <div class="p-2 bg-gray-50 border-b border-gray-100">
                                     <div class="relative">
-                                       
+
                                         <input type="text"
                                                x-model="supSearch"
                                                x-init="$watch('supOpen', v => v && $nextTick(() => $refs.supInput.focus()))"
@@ -287,7 +270,6 @@
                                     </p>
                                 </div>
 
-                                {{-- List --}}
                                 <ul class="overflow-y-auto dropdown-scroll" style="max-height: 200px;">
                                     <li @click="supId = ''; supLabel = ''; supOpen = false; supSearch = ''"
                                         class="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer border-b border-gray-50"
@@ -340,7 +322,6 @@
 
                 </div>
 
-                {{-- Location (optional) --}}
                 <div class="space-y-1.5" x-data="{
                     locOpen: false,
                     locId: {{ Js::from(old('location_id', '')) }},
@@ -433,7 +414,6 @@
                     @enderror
                 </div>
 
-                {{-- Price (only for stok) --}}
                 <div x-show="selectedType === 'stok'" x-transition class="space-y-2">
                     <label for="harga" class="block text-sm font-medium text-gray-700">
                         Price <span class="text-red-500">*</span>
@@ -453,7 +433,6 @@
                     @enderror
                 </div>
 
-                {{-- Description --}}
                 <div class="space-y-2">
                     <label for="keterangan" class="block text-sm font-medium text-gray-700">
                         Description <span class="text-gray-400 font-normal text-xs">(optional)</span>
@@ -465,7 +444,6 @@
 
             </div>
 
-            {{-- ── Section: Product Image ── --}}
             <div class="border-t border-b border-gray-200 px-4 py-3">
                 <h3 class="text-lg font-semibold text-gray-900">Product Image</h3>
                 <p class="text-sm text-gray-500 mt-0.5">Optional — upload a single image for this item</p>
@@ -496,7 +474,6 @@
                 @enderror
             </div>
 
-            {{-- ── Info Note ── --}}
             <div class="mx-4 mb-4 flex items-start gap-3 px-4 py-3 bg-blue-50 border border-blue-100 rounded-lg">
                 <svg class="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
@@ -506,7 +483,6 @@
                 </p>
             </div>
 
-            {{-- Form Footer --}}
             <div class="rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3">
                 <div class="flex items-center justify-between">
                     <a href="{{ route($routePrefix . '.inventory.index') }}"

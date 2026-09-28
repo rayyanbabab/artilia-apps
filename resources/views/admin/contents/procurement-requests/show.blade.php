@@ -3,7 +3,6 @@
 @section('content')
 <div class="max-w-3xl mx-auto space-y-5">
 
-    {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
             <div class="flex items-center gap-2 text-xs text-gray-400 mb-1">
@@ -20,7 +19,6 @@
         </a>
     </div>
 
-    {{-- Request Info Card --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div class="h-1.5
             @if($procurement->status === 'pending')  bg-gradient-to-r from-yellow-400 to-amber-400
@@ -57,7 +55,6 @@
                 @endif
             </div>
 
-            {{-- Info grid --}}
             <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                 <div>
                     <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Pemohon</p>
@@ -86,7 +83,6 @@
         </div>
     </div>
 
-    {{-- If already reviewed --}}
     @if($procurement->status !== 'pending')
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
             <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Keputusan Admin</p>
@@ -117,10 +113,8 @@
         </div>
     @endif
 
-    {{-- Action Forms (only if pending) --}}
     @if($procurement->status === 'pending')
 
-        {{-- APPROVE FORM --}}
         <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden" id="approveForm">
             <div class="px-6 py-4 border-b border-gray-100 bg-emerald-50/60 flex items-center gap-3">
                 <div class="w-9 h-9 bg-emerald-100 rounded-xl flex items-center justify-center">
@@ -135,7 +129,6 @@
             <form method="POST" action="{{ route('admin.procurement-requests.approve', $procurement->id) }}" class="px-6 py-5 space-y-4">
                 @csrf
 
-                {{-- Action Type Toggle --}}
                 <div x-data="{ actionType: '{{ old('action_type', 'existing') }}' }" class="space-y-4">
 
                     <div class="space-y-1.5">
@@ -164,7 +157,6 @@
                         </div>
                     </div>
 
-                    {{-- Existing item dropdown --}}
                     <div x-show="actionType === 'existing'" x-transition class="space-y-1.5">
                         <label for="item_id" class="block text-sm font-semibold text-gray-700">Pilih Item Inventaris <span class="text-red-500">*</span></label>
                         <select name="item_id" id="item_id"
@@ -183,7 +175,6 @@
                         @enderror
                     </div>
 
-                    {{-- New item name --}}
                     <div x-show="actionType === 'new'" x-transition class="space-y-1.5">
                         <label for="new_item_name" class="block text-sm font-semibold text-gray-700">Nama Item Baru <span class="text-red-500">*</span></label>
                         <input type="text" name="new_item_name" id="new_item_name"
@@ -197,7 +188,6 @@
                     </div>
                 </div>
 
-                {{-- Admin Notes --}}
                 <div class="space-y-1.5">
                     <label for="approve_notes" class="block text-sm font-semibold text-gray-700">
                         Catatan <span class="text-xs font-normal text-gray-400">(opsional)</span>
@@ -216,7 +206,6 @@
             </form>
         </div>
 
-        {{-- REJECT FORM --}}
         <div class="bg-white rounded-2xl border border-red-100 shadow-sm overflow-hidden" id="rejectForm">
             <div class="px-6 py-4 border-b border-gray-100 bg-red-50/60 flex items-center gap-3">
                 <div class="w-9 h-9 bg-red-100 rounded-xl flex items-center justify-center">

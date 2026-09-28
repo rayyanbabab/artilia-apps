@@ -13,7 +13,7 @@
                 <p class="text-gray-600 mt-1 text-sm">Kelola data supplier dan vendor perusahaan</p>
             </div>
             <div>
-                <a href="{{ route($routePrefix . '.suppliers.create') }}" 
+                <a href="{{ route($routePrefix . '.suppliers.create') }}"
                    class="add-supplier-button">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -112,7 +112,7 @@
                             Reset
                         </button>
                     </form>
-                    <a href="{{ route($routePrefix . '.suppliers.create') }}" 
+                    <a href="{{ route($routePrefix . '.suppliers.create') }}"
                        class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -249,7 +249,7 @@
                                     </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                             <div class="flex items-center justify-center space-x-2">
-                                            <a href="{{ route($routePrefix . '.suppliers.show', $supplier) }}" 
+                                            <a href="{{ route($routePrefix . '.suppliers.show', $supplier) }}"
                                    class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-md transition-colors duration-200"
                                    title="Lihat Detail">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,14 +257,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                     </svg>
                                             </a>
-                                            <a href="{{ route($routePrefix . '.suppliers.edit', $supplier) }}" 
+                                            <a href="{{ route($routePrefix . '.suppliers.edit', $supplier) }}"
                                    class="text-yellow-600 hover:text-yellow-900 bg-yellow-50 hover:bg-yellow-100 p-2 rounded-md transition-colors duration-200"
                                                title="Edit Supplier">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                             </a>
-                                            <button type="button" 
+                                            <button type="button"
                                                 onclick="openModal('del-sup-{{ $supplier->id }}')"
                                                 class="delete-supplier-button"
                                                 title="Hapus Supplier">
@@ -285,7 +285,7 @@
                                 <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada supplier</h3>
                                 <p class="mt-1 text-sm text-gray-500">Mulai dengan membuat supplier pertama Anda.</p>
                                 <div class="mt-6">
-                                    <a href="{{ route($routePrefix . '.suppliers.create') }}" 
+                                    <a href="{{ route($routePrefix . '.suppliers.create') }}"
                                        class="create-first-supplier-button">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

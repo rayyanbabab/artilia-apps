@@ -1,7 +1,7 @@
 @extends('admin.layouts.dashboard')
 @section('content')
 <div class="space-y-6">
-    <!-- Summary Section -->
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <h2 class="text-xl font-bold text-gray-900">Ringkasan Peminjaman</h2>
@@ -22,13 +22,13 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="border border-gray-200 rounded-lg p-4">
                     <div class="text-sm text-gray-500">Peminjam</div>
                     <div class="font-medium text-gray-900 mt-1">{{ $borrowing->user->name }}</div>
                     <div class="text-sm text-gray-500 mt-1">{{ $borrowing->user->email }}</div>
                 </div>
-                
+
                 <div class="border border-gray-200 rounded-lg p-4">
                     <div class="text-sm text-gray-500">Status</div>
                     <div class="mt-1">
@@ -49,7 +49,7 @@
                         </div>
                     @endif
                 </div>
-                
+
                 <div class="border border-gray-200 rounded-lg p-4">
                     <div class="text-sm text-gray-500">Tanggal Kembali</div>
                     <div class="font-medium text-gray-900 mt-1">{{ $borrowing->tanggal_kembali_rencana->format('d F Y') }}</div>
@@ -62,8 +62,7 @@
             </div>
         </div>
     </div>
-    
-    <!-- Action Buttons -->
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -80,14 +79,14 @@
                             Kembalikan
                         </button>
                     @endif
-                    <a href="{{ route($routePrefix . '.borrowings.edit', $borrowing) }}" 
+                    <a href="{{ route($routePrefix . '.borrowings.edit', $borrowing) }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                         Edit
                     </a>
-                    <a href="{{ route($routePrefix . '.borrowings.index') }}" 
+                    <a href="{{ route($routePrefix . '.borrowings.index') }}"
                        class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -98,7 +97,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -111,29 +110,29 @@
                             <label class="block text-sm font-medium text-gray-500">Jumlah</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $borrowing->jumlah }} unit</p>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Tanggal Pinjam</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $borrowing->tanggal_pinjam->format('d F Y') }}</p>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Tanggal Rencana Kembali</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $borrowing->tanggal_kembali_rencana->format('d F Y') }}</p>
                         </div>
-                        
+
                         @if($borrowing->tanggal_kembali_aktual)
                             <div>
                                 <label class="block text-sm font-medium text-gray-500">Tanggal Kembali Aktual</label>
                                 <p class="mt-1 text-sm text-gray-900">{{ $borrowing->tanggal_kembali_aktual->format('d F Y H:i') }}</p>
                             </div>
                         @endif
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Dicatat pada</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $borrowing->created_at->format('d F Y H:i:s') }}</p>
                         </div>
-                        
+
                         @if($borrowing->updated_at != $borrowing->created_at)
                             <div>
                                 <label class="block text-sm font-medium text-gray-500">Terakhir Diubah</label>
@@ -143,7 +142,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Kondisi & Catatan</h3>
@@ -157,14 +156,14 @@
                                     <p class="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-lg">{{ $borrowing->kondisi_pinjam }}</p>
                                 </div>
                             @endif
-                            
+
                             @if($borrowing->kondisi_kembali)
                                 <div>
                                     <label class="block text-sm font-medium text-gray-500">Kondisi Saat Dikembalikan</label>
                                     <p class="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-lg">{{ $borrowing->kondisi_kembali }}</p>
                                 </div>
                             @endif
-                            
+
                             @if($borrowing->keterangan)
                                 <div>
                                     <label class="block text-sm font-medium text-gray-500">Keterangan</label>
@@ -178,7 +177,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="space-y-6">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
@@ -189,7 +188,7 @@
                         <label class="block text-sm font-medium text-gray-500">Nama Barang</label>
                         <p class="mt-1 text-sm text-gray-900 font-medium">{{ $borrowing->item->nama }}</p>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-500">Kode Barang</label>
                         <p class="mt-1 text-sm text-gray-900">
@@ -198,7 +197,7 @@
                             </span>
                         </p>
                     </div>
-                    
+
                     @if($borrowing->item->category)
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Kategori</label>
@@ -209,19 +208,19 @@
                             </p>
                         </div>
                     @endif
-                    
+
                     @if($borrowing->item->supplier)
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Supplier</label>
                             <p class="mt-1 text-sm text-gray-900">{{ $borrowing->item->supplier->nama ?? 'N/A' }}</p>
                         </div>
                     @endif
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-500">Stok Saat Ini</label>
                         <p class="mt-1 text-sm text-gray-900">{{ $borrowing->item->stok }} unit</p>
                     </div>
-                    
+
                     @if($borrowing->item->keterangan)
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Deskripsi Barang</label>
@@ -230,7 +229,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Informasi Peminjam</h3>
@@ -240,17 +239,17 @@
                         <label class="block text-sm font-medium text-gray-500">Nama</label>
                         <p class="mt-1 text-sm text-gray-900 font-medium">{{ $borrowing->user->name }}</p>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-500">Email</label>
                         <p class="mt-1 text-sm text-gray-900">{{ $borrowing->user->email }}</p>
                     </div>
-                    
+
                     <div>
                         <label class="block text-sm font-medium text-gray-500">Role</label>
                         <p class="mt-1 text-sm text-gray-900 capitalize">{{ $borrowing->user->role }}</p>
                     </div>
-                    
+
                     @if($borrowing->user->bio)
                         <div>
                             <label class="block text-sm font-medium text-gray-500">Bio</label>

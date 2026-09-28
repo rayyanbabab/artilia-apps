@@ -18,7 +18,6 @@
         $rp . '.maintenance.*',
         $rp . '.stock-opnames.*',
         $rp . '.calibration.*',
-        $rp . '.logistics.*',
         $rp . '.tooling-kits.*',
         $rp . '.bap.*',
         $rp . '.borrowing-requests.bap',
@@ -350,6 +349,24 @@
                     </div>
                 </a>
 
+                @php $isAct = Route::is($rp . '.logistics.*'); @endphp
+                <a href="{{ route($rp . '.logistics.index') }}" @click="mobileMenuOpen = false"
+                   @if($isAct) data-active="true" @endif
+                   class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-all border-l-[3px]
+                          {{ $isAct ? $navActive : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;flex-shrink:0;" class="{{ $isAct ? $ic6 : 'text-gray-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                        </svg>
+                        <span>Smart Logistics (EOQ/ROP)</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase bg-emerald-100 text-emerald-700 tracking-wide">EOQ</span>
+                        @if($isAct)<span class="w-1.5 h-1.5 rounded-full {{ $ic6 }} flex-shrink-0 animate-pulse"></span>@endif
+                    </div>
+                </a>
+
                 @php $isAct = Route::is($rp . '.tooling-kits.*'); @endphp
                 <a href="{{ route($rp . '.tooling-kits.index') }}" @click="mobileMenuOpen = false"
                    @if($isAct) data-active="true" @endif
@@ -626,20 +643,7 @@
                         </div>
                     </a>
 
-                    @php $isAct = Route::is($rp . '.logistics.*'); @endphp
-                    <a href="{{ route($rp . '.logistics.index') }}" @click="mobileMenuOpen = false"
-                       @if($isAct) data-active="true" @endif
-                       class="flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-all border-l-[3px]
-                              {{ $isAct ? $navActiveM : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <div class="flex items-center gap-2.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;" class="{{ $isAct ? $ic5 : 'text-gray-400' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
-                            </svg>
-                            <span>Smart Logistics (EOQ/ROP)</span>
-                        </div>
-                        @if($isAct)<span class="w-1.5 h-1.5 rounded-full {{ $ic6 }} flex-shrink-0 animate-pulse"></span>@endif
-                    </a>
+
 
                     @php $isAct = Route::is($rp . '.tooling-kits.*'); @endphp
                     <a href="{{ route($rp . '.tooling-kits.index') }}" @click="mobileMenuOpen = false"

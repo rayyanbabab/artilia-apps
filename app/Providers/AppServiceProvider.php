@@ -41,7 +41,8 @@ class AppServiceProvider extends ServiceProvider
                     ->groupBy('status')
                     ->pluck('total', 'status');
 
-                $userRole = Auth::user()->role->value ?? 'admin';
+                $role = Auth::user()->role;
+                $userRole = $role instanceof \App\Enums\UsersRole ? $role->value : (string) ($role ?? 'admin');
                 $routePrefix = $userRole === 'operator' ? 'staff' : 'admin';
 
                 $view->with([
@@ -66,8 +67,11 @@ class AppServiceProvider extends ServiceProvider
             if (! Auth::check()) {
                 return;
             }
-            $userRole = Auth::user()->role->value ?? 'admin';
-            $view->with('routePrefix', $userRole === 'operator' ? 'staff' : 'admin');
+            $role = Auth::user()->role;
+            $userRole = $role instanceof \App\Enums\UsersRole ? $role->value : (string) ($role ?? 'admin');
+            if (! array_key_exists('routePrefix', $view->getData())) {
+                $view->with('routePrefix', $userRole === 'operator' ? 'staff' : 'admin');
+            }
         });
 
         // ── User sidebar badge counts ─────────────────────────────────────────────

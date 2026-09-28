@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form mx-auto space-y-4 p-4 max-w-4xl">
-        {{-- Header Section --}}
+
         <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Edit User</h1>
@@ -21,7 +21,7 @@
         </div>
 
         @if (session('success'))
-            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition 
+            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition
                 class="rounded-md bg-green-50 p-3 border border-green-200">
                 <div class="flex">
                     <div class="flex-shrink-0">
@@ -37,7 +37,6 @@
             </div>
         @endif
 
-        {{-- Main Form --}}
         <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
             <form id="update-form-{{ $user->id }}" action="{{ route($routePrefix . '.content.updateusers', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -82,23 +81,22 @@
                     </div>
                 </div>
 
-                {{-- Form Content --}}
                 <div class="space-y-4 p-4">
                     <div class="space-y-4">
-                        {{-- Profile Photo Section --}}
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {{-- Current Profile Photo --}}
+
                             <div class="space-y-2">
                                 <label class="block text-sm font-medium text-gray-700">Current Profile Photo</label>
                                 <div class="flex items-center space-x-3">
                                     <div class="flex-shrink-0">
                                         @if($user->profil && file_exists(public_path($user->profil)))
-                                            <img src="{{ asset($user->profil) }}" alt="Current Profile" 
+                                            <img src="{{ asset($user->profil) }}" alt="Current Profile"
                                                 class="h-16 w-16 rounded-full object-cover border-2 border-gray-200">
                                         @else
                                             <div class="h-16 w-16 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                                                 <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
                                             </div>
@@ -110,7 +108,6 @@
                                 </div>
                             </div>
 
-                            {{-- New Profile Photo Upload --}}
                             <div class="space-y-2">
                                 <label for="profil" class="block text-sm font-medium text-gray-700">
                                     Update Profile Photo
@@ -118,18 +115,18 @@
                                 <div class="flex items-center space-x-3">
                                     <div class="flex-shrink-0">
                                         <div id="imagePreview" class="hidden">
-                                            <img id="previewImg" src="" alt="Preview" 
+                                            <img id="previewImg" src="" alt="Preview"
                                                 class="h-16 w-16 rounded-full object-cover border-2 border-gray-200">
                                         </div>
                                         <div id="defaultAvatar" class="h-16 w-16 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                                             <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                             </svg>
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <input type="file" id="profil" name="profil" accept="image/*" 
+                                        <input type="file" id="profil" name="profil" accept="image/*"
                                             class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                             onchange="previewImage(this)">
                                         <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
@@ -147,11 +144,10 @@
                             </div>
                         </div>
 
-                        {{-- User Details --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                                <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" 
+                                <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
                                     class="input-form" required>
                                 @error('name')
                                     <p class="flex items-center text-sm text-red-600">
@@ -166,7 +162,7 @@
 
                             <div class="space-y-2">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                                <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" 
+                                <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
                                     class="input-form" required>
                                 @error('email')
                                     <p class="flex items-center text-sm text-red-600">
@@ -180,12 +176,11 @@
                             </div>
                         </div>
 
-                        {{-- Bio Field --}}
                         <div class="space-y-2">
                             <label for="bio" class="block text-sm font-medium text-gray-700">
                                 Bio (Optional)
                             </label>
-                            <textarea id="bio" name="bio" rows="3" class="input-form" 
+                            <textarea id="bio" name="bio" rows="3" class="input-form"
                                 placeholder="Enter a brief description about the user...">{{ old('bio', $user->bio) }}</textarea>
                             @error('bio')
                                 <p class="flex items-center text-sm text-red-600">
@@ -198,7 +193,6 @@
                             @enderror
                         </div>
 
-                        {{-- WhatsApp Number Field --}}
                         <div class="space-y-2">
                             <label for="whatsapp_number" class="block text-sm font-medium text-gray-700">
                                 Nomor WhatsApp
@@ -211,9 +205,9 @@
                                         <path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.107 1.523 5.832L.051 23.999l6.333-1.462A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 01-5.001-1.368l-.359-.214-3.721.975.993-3.62-.234-.371A9.818 9.818 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.418 0 9.818 4.4 9.818 9.818 0 5.419-4.4 9.818-9.818 9.818z"/>
                                     </svg>
                                 </span>
-                                <input type="text" id="whatsapp_number" name="whatsapp_number" 
+                                <input type="text" id="whatsapp_number" name="whatsapp_number"
                                     value="{{ old('whatsapp_number', $user->whatsapp_number) }}"
-                                    class="input-form pl-9" 
+                                    class="input-form pl-9"
                                     placeholder="Contoh: 08123456789 atau 628123456789">
                             </div>
                             @error('whatsapp_number')
@@ -221,7 +215,6 @@
                             @enderror
                         </div>
 
-                        {{-- Status Field --}}
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-700">
                                 Account Status
@@ -246,7 +239,6 @@
                             @enderror
                         </div>
 
-                        {{-- Password Fields --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="password" class="block text-sm font-medium text-gray-700">
@@ -254,8 +246,8 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" id="password" name="password" class="input-form pr-12">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -282,8 +274,8 @@
                                 </label>
                                 <div class="relative">
                                     <input type="password" id="password_confirmation" name="password_confirmation" class="input-form pr-12">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password_confirmation')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -296,7 +288,6 @@
                             </div>
                         </div>
 
-                        {{-- Role Field --}}
                         <div class="space-y-2">
                             <label for="role" class="block text-sm font-medium text-gray-700">User Role</label>
                             @php
@@ -325,7 +316,6 @@
                     </div>
                 </div>
 
-                {{-- Form Footer --}}
                 <div class="rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-4">
                     <div class="flex items-center justify-between">
                         <a href="{{ route($routePrefix . '.content.listusers') }}"
@@ -375,16 +365,16 @@
             const preview = document.getElementById('imagePreview');
             const previewImg = document.getElementById('previewImg');
             const defaultAvatar = document.getElementById('defaultAvatar');
-            
+
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     previewImg.src = e.target.result;
                     preview.classList.remove('hidden');
                     defaultAvatar.classList.add('hidden');
                 }
-                
+
                 reader.readAsDataURL(input.files[0]);
             } else {
                 preview.classList.add('hidden');
@@ -392,11 +382,10 @@
             }
         }
 
-        // Toggle password visibility
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const eyeIcon = document.getElementById(inputId + '_eye');
-            
+
             if (input.type === 'password') {
                 input.type = 'text';
                 eyeIcon.innerHTML = `

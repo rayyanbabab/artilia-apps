@@ -1,15 +1,9 @@
-{{-- ============================================================
-     Import Items Modal
-     Include di: admin/contents/inventory/index.blade.php
-============================================================ --}}
-
 <div id="importItemsModal"
-     style="display:none; position:fixed; inset:0; z-index:9500; background:rgba(15,23,42,0.7); backdrop-filter:blur(4px);"
+     style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(3,7,18,0.6); backdrop-filter:blur(4px);"
      class="flex items-center justify-center p-4">
 
     <div style="background:#fff; border-radius:20px; width:100%; max-width:520px; overflow:hidden; box-shadow:0 25px 60px rgba(0,0,0,0.3);">
 
-        {{-- Header --}}
         <div style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%); padding:20px 24px; display:flex; align-items:center; justify-content:space-between;">
             <div>
                 <h3 style="color:#fff; font-weight:700; font-size:16px; margin:0;">Import Data Barang</h3>
@@ -25,7 +19,6 @@
 
         <div style="padding:24px;">
 
-            {{-- Download template --}}
             <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:14px 16px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
                 <div>
                     <p style="font-size:13px; font-weight:600; color:#0c4a6e; margin:0;">Download Template CSV</p>
@@ -40,7 +33,6 @@
                 </a>
             </div>
 
-            {{-- Format info --}}
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:20px;">
                 <p style="font-size:12px; font-weight:600; color:#475569; margin:0 0 8px;">Kolom CSV yang didukung:</p>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
@@ -53,7 +45,6 @@
                 <p style="font-size:11px; color:#94a3b8; margin:8px 0 0;"><span style="color:#dc2626;">*</span> wajib &nbsp;|&nbsp; tipe: <code>stok</code> atau <code>peminjaman</code></p>
             </div>
 
-            {{-- Upload form --}}
             <form action="{{ route('admin.import.items') }}" method="POST" enctype="multipart/form-data" id="importItemsForm">
                 @csrf
                 <div id="importItemsDropzone"
@@ -99,7 +90,12 @@
 
 <script>
 function openImportItemsModal() {
-    document.getElementById('importItemsModal').style.display = 'flex';
+    var el = document.getElementById('importItemsModal');
+    if (!el) return;
+    if (el.parentElement !== document.body) {
+        document.body.appendChild(el);
+    }
+    el.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 function showItemsFileName(input) {

@@ -8,7 +8,7 @@
             size: A4 landscape;
             margin: 15mm;
         }
-        
+
         body {
             font-family: 'DejaVu Sans', sans-serif;
             font-size: 10px;
@@ -17,7 +17,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .header {
             margin-bottom: 18px;
             border-bottom: 2.5px solid #495057;
@@ -80,7 +80,7 @@
             color: #7f8c8d;
             margin-bottom: 14px;
         }
-        
+
         .summary-section {
             background-color: #f8f9fa;
             padding: 12px;
@@ -88,12 +88,12 @@
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
         }
-        
+
         .summary-grid {
             display: table;
             width: 100%;
         }
-        
+
         .summary-item {
             display: table-cell;
             text-align: center;
@@ -101,11 +101,11 @@
             border-right: 1px solid #ced4da;
             vertical-align: middle;
         }
-        
+
         .summary-item:last-child {
             border-right: none;
         }
-        
+
         .summary-label {
             font-size: 8px;
             color: #6c757d;
@@ -114,23 +114,23 @@
             margin-bottom: 4px;
             letter-spacing: 0.5px;
         }
-        
+
         .summary-value {
             font-size: 14px;
             font-weight: bold;
             color: #2c3e50;
         }
-        
+
         .table-container {
             margin-top: 15px;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 15px;
         }
-        
+
         th {
             background-color: #495057;
             color: #ffffff;
@@ -142,18 +142,18 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         td {
             padding: 6px;
             border: 1px solid #dee2e6;
             font-size: 9px;
             vertical-align: middle;
         }
-        
+
         tr:nth-child(even) {
             background-color: #f8f9fa;
         }
-        
+
         .status-badge {
             padding: 3px 6px;
             border-radius: 10px;
@@ -163,26 +163,25 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .status-in-stock {
             background-color: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        
+
         .status-low-stock {
             background-color: #fff3cd;
             color: #856404;
             border: 1px solid #ffeaa7;
         }
-        
+
         .status-out-stock {
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        
-        /* ── SIGNATURE ── */
+
         .signature-section {
             margin-top: 26px;
             page-break-inside: avoid;
@@ -244,7 +243,7 @@
             color: #6c757d;
             margin-top: 2px;
         }
-        /* ── FOOTER ── */
+
         .footer {
             margin-top: 14px;
             padding-top: 7px;
@@ -256,27 +255,27 @@
         }
         .footer-left  { display: table-cell; text-align: left; }
         .footer-right { display: table-cell; text-align: right; }
-        
+
         .text-right {
             text-align: right;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .font-bold {
             font-weight: bold;
         }
-        
+
         .currency {
             font-family: 'Courier New', monospace;
         }
-        
+
         .page-break {
             page-break-before: always;
         }
-        
+
         .filter-info {
             background-color: #e3f2fd;
             padding: 8px;
@@ -285,7 +284,7 @@
             font-size: 9px;
             border-left: 4px solid #2196f3;
         }
-        
+
         .filter-info strong {
             color: #1976d2;
         }
@@ -407,7 +406,6 @@
         </table>
     </div>
 
-    {{-- ── SIGNATURE ── --}}
     <div class="signature-section">
         <div class="sig-label">Lembar Pengesahan</div>
         <div class="sig-date-row">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>

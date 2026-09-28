@@ -8,14 +8,13 @@
 
 @section('content')
 
-{{-- ═══ Background Orbs ═══ --}}
 <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
     <div class="absolute top-[10%] left-[10%] w-96 h-96 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
     <div class="absolute bottom-[10%] right-[10%] w-96 h-96 bg-indigo-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 </div>
 
 <div class="space-y-6">
-    {{-- Header --}}
+
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center gap-4">
             <a href="{{ route($routePrefix . '.stock-opnames.index') }}" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors flex-shrink-0">
@@ -64,14 +63,12 @@
     </div>
     @endif
 
-{{-- 2-column layout: table + sticky sidebar --}}
 <div class="flex gap-6 items-start">
 
-    {{-- ─── Items Table ─── --}}
     <div class="flex-1 min-w-0">
     <div class="bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl overflow-hidden"
          x-data="stockOpnameItems()">
-        
+
         <div class="p-4 border-b border-gray-100/50 flex justify-between items-center bg-gray-50/50">
             <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Daftar Barang Audit</h2>
             <div class="text-sm text-gray-500 font-medium">
@@ -122,7 +119,7 @@
                                 @if($isReadonly)
                                     <span class="text-sm font-bold text-gray-900">{{ $opnameItem->actual_stok ?? '-' }}</span>
                                 @else
-                                    <input type="number" min="0" x-model="actualStok" @blur="save()" @keydown.enter.prevent="save()" 
+                                    <input type="number" min="0" x-model="actualStok" @blur="save()" @keydown.enter.prevent="save()"
                                            class="w-full text-center text-sm font-bold rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-shadow bg-white/50 py-1.5"
                                            placeholder="?">
                                 @endif
@@ -146,12 +143,12 @@
                                 @if($isReadonly)
                                     <p class="text-xs text-gray-600 truncate max-w-[200px]" title="{{ $opnameItem->notes }}">{{ $opnameItem->notes ?? '-' }}</p>
                                 @else
-                                    <input type="text" x-model="notes" @blur="save()" @keydown.enter.prevent="save()" 
+                                    <input type="text" x-model="notes" @blur="save()" @keydown.enter.prevent="save()"
                                            class="w-full text-xs rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-shadow bg-white/50 py-1.5"
                                            placeholder="Keterangan...">
                                 @endif
                             </td>
-                            
+
                             @if(!$isReadonly)
                             <td class="px-4 py-3 text-center">
                                 <div class="flex items-center justify-center">
@@ -183,30 +180,28 @@
             </table>
         </div>
     </div>
-    </div>{{-- end flex-1 --}}
+    </div>
 
-    {{-- ─── Sticky Sidebar ─── --}}
     <div class="w-72 flex-shrink-0" x-data="stockOpnameItems()">
         <div class="sticky top-6 space-y-4">
 
-            {{-- Progress card — gradient header --}}
             <div class="rounded-2xl overflow-hidden shadow-xl border border-indigo-200/60">
-                {{-- Gradient header --}}
+
                 <div style="background:linear-gradient(135deg,#4f46e5 0%,#6d28d9 60%,#7c3aed 100%); padding:16px 18px 14px;">
                     <h3 style="color:rgba(255,255,255,0.75); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin:0 0 12px;">Progress Audit</h3>
-                    {{-- Completed fraction --}}
+
                     <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
                         <span style="color:#e0e7ff; font-size:11px;">Diperiksa</span>
                         <span style="color:#fff; font-size:13px; font-weight:700;"><span x-text="completedCount"></span> / {{ count($stockOpname->items) }}</span>
                     </div>
-                    {{-- Progress bar --}}
+
                     <div style="background:rgba(255,255,255,0.2); border-radius:999px; height:8px; overflow:hidden; margin-bottom:4px;">
                         <div style="height:100%; border-radius:999px; background:linear-gradient(90deg,#a5b4fc,#e0e7ff); transition:width .5s ease;"
                              :style="'width:' + (completedCount / {{ count($stockOpname->items) }} * 100) + '%'"></div>
                     </div>
                     <p style="color:rgba(255,255,255,0.55); font-size:10px; margin:0;" x-text="Math.round(completedCount / {{ count($stockOpname->items) }} * 100) + '% selesai'"></p>
                 </div>
-                {{-- Stats row --}}
+
                 @php
                     $totalItems   = count($stockOpname->items);
                     $checkedItems = $stockOpname->items->whereNotNull('actual_stok')->count();
@@ -230,7 +225,6 @@
                 </div>
             </div>
 
-            {{-- Info card --}}
             <div class="rounded-2xl overflow-hidden shadow-xl border border-violet-200/60">
                 <div style="background:linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%); padding:12px 18px 10px;">
                     <h3 style="color:rgba(255,255,255,0.75); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin:0;">Informasi Sesi</h3>
@@ -263,7 +257,6 @@
                 </div>
             </div>
 
-            {{-- Action buttons --}}
             @if(!$isReadonly)
             <div style="display:flex; flex-direction:column; gap:8px;">
                 <button type="button" onclick="openModal('modal-complete-audit')"
@@ -281,7 +274,6 @@
             </div>
             @endif
 
-            {{-- Back link --}}
             <a href="{{ route($routePrefix . '.stock-opnames.index') }}"
                style="width:100%; padding:11px; background:rgba(255,255,255,0.7); border:1px solid #e5e7eb; color:#4b5563; border-radius:12px; font-size:13px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; backdrop-filter:blur(8px); transition:background .15s; box-sizing:border-box;"
                onmouseover="this.style.background='rgba(249,250,251,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.7)'">
@@ -290,9 +282,9 @@
             </a>
 
         </div>
-    </div>{{-- end sticky sidebar --}}
+    </div>
 
-</div>{{-- end flex --}}
+</div>
 
 <script>
     document.addEventListener('alpine:init', () => {
@@ -315,12 +307,11 @@
 
             async save() {
                 if (this.actualStok === '' || this.actualStok === null) return;
-                
-                // Prevent unnecessary saves
+
                 if (this.actualStok == this.lastSavedStok && this.notes == this.lastSavedNotes) return;
-                
+
                 let isFirstTimeSave = this.lastSavedStok === null;
-                
+
                 this.state = 'saving';
                 this.variance = this.actualStok - this.systemStok;
 
@@ -345,7 +336,6 @@
                         this.lastSavedNotes = this.notes;
 
                         if (isFirstTimeSave) {
-                            // Find parent component and increment
                             this.$el.closest('[x-data^="stockOpnameItems"]').__x.$data.incrementCompleted();
                         }
                     } else {
@@ -362,7 +352,7 @@
 
 @if(!$isReadonly)
 @push('scripts')
-    {{-- Cancel Session Modal --}}
+
     <x-popup id="modal-cancel-session" title="Batalkan Sesi"
         message="Yakin ingin membatalkan audit ini? Semua progress audit yang belum diselesaikan akan hilang."
         formId="cancel-session-form"
@@ -374,7 +364,6 @@
         @csrf
     </form>
 
-    {{-- Complete Audit Modal --}}
     <x-popup id="modal-complete-audit" title="Selesaikan Audit"
         message="Selesaikan audit? Stok pada sistem akan disesuaikan secara permanen berdasarkan input aktual Anda."
         formId="complete-audit-form"
@@ -385,6 +374,7 @@
 
     <form id="complete-audit-form" action="{{ route($routePrefix . '.stock-opnames.complete', $stockOpname->id) }}" method="POST" style="display: none;">
         @csrf
+        <input type="hidden" name="force" value="1">
     </form>
 @endpush
 @endif

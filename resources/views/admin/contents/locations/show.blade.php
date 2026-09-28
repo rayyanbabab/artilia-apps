@@ -3,7 +3,6 @@
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
 
-    {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
             <div class="flex items-center gap-2 text-xs text-gray-400 mb-1">
@@ -32,7 +31,6 @@
         </div>
     </div>
 
-    {{-- Location Info Card --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div class="p-6">
             <div class="flex items-start gap-4">
@@ -74,7 +72,6 @@
                     @endif
                 </div>
 
-                {{-- Quick stats --}}
                 <div class="hidden sm:flex items-center gap-4 flex-shrink-0">
                     <div class="text-center">
                         <p class="text-2xl font-bold text-gray-900">{{ $items->total() }}</p>
@@ -89,7 +86,6 @@
                 </div>
             </div>
 
-            {{-- Sub-locations --}}
             @if($location->children->count())
                 <div class="mt-5 pt-5 border-t border-gray-100">
                     <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Sub-Lokasi ({{ $location->children->count() }})</p>
@@ -111,7 +107,6 @@
         </div>
     </div>
 
-    {{-- Items Table --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <div>

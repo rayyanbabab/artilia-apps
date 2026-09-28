@@ -74,7 +74,6 @@
             padding: 40px 20px;
         }
 
-        /* ─── Screen toolbar ──────────────────────────── */
         .screen-toolbar {
             display: flex;
             align-items: center;
@@ -116,7 +115,6 @@
         }
         .btn-back:hover { background: #e2e8f0; }
 
-        /* ─── Cards wrapper ───────────────────────────── */
         .cards-wrapper {
             display: flex;
             gap: 32px;
@@ -124,7 +122,6 @@
             justify-content: center;
         }
 
-        /* ─── ID Card ──────────────────────────────────── */
         .id-card {
             width: 340px;
             border-radius: 20px;
@@ -134,10 +131,8 @@
             background: #fff;
         }
 
-        /* Front card */
         .card-front { }
 
-        /* Header band */
         .card-header {
             background: linear-gradient(135deg, {{ $roleConfig['color1'] }} 0%, {{ $roleConfig['color3'] }} 100%);
             padding: 24px 24px 20px;
@@ -231,7 +226,6 @@
             z-index: 1;
         }
 
-        /* Photo + name strip */
         .card-body {
             background: #fff;
             padding: 0;
@@ -304,7 +298,6 @@
             stroke-linejoin: round;
         }
 
-        /* Info grid */
         .info-grid {
             padding: 18px 20px;
             display: grid;
@@ -326,7 +319,6 @@
             margin-top: 2px;
         }
 
-        /* Barcode strip */
         .barcode-strip {
             background: linear-gradient(135deg, {{ $roleConfig['color1'] }} 0%, {{ $roleConfig['color2'] }} 100%);
             padding: 14px 20px;
@@ -362,7 +354,6 @@
             border-radius: 2px;
         }
 
-        /* Stripe decoration */
         .stripe-row {
             height: 6px;
             display: flex;
@@ -375,7 +366,6 @@
         .stripe-row span:nth-child(2n) { opacity: 0.7; }
         .stripe-row span:nth-child(3n) { opacity: 1; }
 
-        /* QR code */
         .qr-wrap {
             background: #fff;
             border-radius: 6px;
@@ -412,7 +402,6 @@
             line-height: 1.4;
         }
 
-        /* ─── Back card ──────────────────────────────── */
         .card-back {
             margin-top: 12px;
         }
@@ -477,7 +466,6 @@
             margin-top: 2px;
         }
 
-        /* ─── Card label ─────────────────────────────── */
         .card-label {
             text-align: center;
             color: #64748b;
@@ -487,9 +475,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* ─── Print styles ───────────────────────────── */
-
-        /* Force color printing for ALL elements */
         * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
@@ -528,12 +513,11 @@
             .id-card {
                 box-shadow: none;
                 border: 0.5pt solid #d1d5db;
-                width: 85.6mm; /* standard ID card width */
+                width: 85.6mm;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
 
-            /* Ensure all colored elements print correctly */
             .card-header,
             .barcode-strip,
             .back-header,
@@ -552,7 +536,6 @@
 </head>
 <body>
 
-    {{-- Screen Toolbar --}}
     <div class="screen-toolbar">
         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="{{ $roleConfig['color3'] }}" stroke-width="2" style="flex-shrink:0">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/>
@@ -572,21 +555,16 @@
         </button>
     </div>
 
-    {{-- Cards --}}
     <div class="cards-wrapper">
 
-        {{-- ════ CARD GROUP ════ --}}
         <div class="card-group">
 
-            {{-- ── Front Card ── --}}
             <div class="id-card card-front">
 
-                {{-- Stripe decoration --}}
                 <div class="stripe-row">
                     @for($i=0;$i<20;$i++)<span></span>@endfor
                 </div>
 
-                {{-- Header --}}
                 <div class="card-header">
                     <div class="org-row">
                         <div class="org-logo">
@@ -608,10 +586,8 @@
                     <div class="card-type-title">{{ $roleConfig['label'] }}</div>
                 </div>
 
-                {{-- Body --}}
                 <div class="card-body">
 
-                    {{-- Photo + name --}}
                     <div class="photo-strip">
                         <div class="photo-container">
                             <div class="photo-frame">
@@ -638,7 +614,6 @@
                         </div>
                     </div>
 
-                    {{-- Info grid --}}
                     <div class="info-grid">
                         <div class="info-item">
                             <div class="info-label">ID Pengguna</div>
@@ -660,19 +635,17 @@
                         </div>
                     </div>
 
-                    {{-- Barcode / QR strip --}}
                     <div class="barcode-strip">
                         <div class="barcode-left">
                             <div class="id-number">Nomor Kartu</div>
                             <div class="id-value">ID-{{ $userId }}-{{ strtoupper(substr($role, 0, 3)) }}</div>
                         </div>
-                        {{-- QR Code (small, on front card) --}}
+
                         <div class="qr-wrap" id="qr-front-wrap">
                             <canvas id="qr-front"></canvas>
                         </div>
                     </div>
 
-                    {{-- Bottom stripe --}}
                     <div class="stripe-row">
                         @for($i=0;$i<20;$i++)<span></span>@endfor
                     </div>
@@ -681,7 +654,6 @@
             </div>
             <div class="card-label">Tampak Depan</div>
 
-            {{-- ── Back Card ── --}}
             <div class="id-card card-back" style="margin-top: 16px;">
 
                 <div class="stripe-row">
@@ -748,7 +720,6 @@
                     @endif
                 </div>
 
-                {{-- QR Code section (back card) --}}
                 <div class="back-qr-section">
                     <div class="qr-wrap" id="qr-back-wrap">
                         <canvas id="qr-back"></canvas>
@@ -774,12 +745,11 @@
             </div>
             <div class="card-label">Tampak Belakang</div>
 
-        </div>{{-- /card-group --}}
+        </div>
 
-    </div>{{-- /cards-wrapper --}}
+    </div>
 
 <script>
-    // Data identitas user yang di-encode ke QR
     var qrData = JSON.stringify({
         id:    {{ $user->id }},
         name:  @json($user->name),
@@ -789,7 +759,6 @@
         app:   'artilia'
     });
 
-    // Helper: render QR ke canvas lalu ganti dengan <img> agar bisa tercetak
     function renderQr(canvasId, wrapId, size, fg, bg) {
         var canvas = document.getElementById(canvasId);
         if (!canvas) return;
@@ -803,7 +772,6 @@
             level:      'H'
         });
 
-        // Ganti canvas → img agar print-safe
         var img   = document.createElement('img');
         img.src   = canvas.toDataURL('image/png');
         img.width  = size;
@@ -818,8 +786,6 @@
         }
     }
 
-    // Kedua QR: gelap di atas putih agar mudah di-scan kamera
-    // (.qr-wrap sudah punya background #fff, jadi tetap terlihat bagus di strip gelap)
     renderQr('qr-front', 'qr-front-wrap', 90, '{{ $roleConfig["color1"] }}', '#ffffff');
     renderQr('qr-back',  'qr-back-wrap',  110, '{{ $roleConfig["color1"] }}', '#ffffff');
 </script>

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-    {{-- Header --}}
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -10,7 +10,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">Barang Masuk</h1>
                     <p class="text-sm text-gray-600 mt-1">Kelola data barang yang masuk ke inventory</p>
                 </div>
-                <a href="{{ route($routePrefix . '.incoming.create') }}" 
+                <a href="{{ route($routePrefix . '.incoming.create') }}"
                    class="inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150 whitespace-nowrap">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -21,7 +21,6 @@
             </div>
         </div>
 
-        {{-- Statistics --}}
         <div class="px-6 py-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -91,7 +90,6 @@
         </div>
     </div>
 
-    {{-- Flash Messages --}}
     @if (session('success'))
         <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
             <div class="flex">
@@ -133,7 +131,6 @@
         </div>
     @endif
 
-    {{-- Filters --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4">
             <form method="GET" action="{{ route($routePrefix . '.incoming.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -195,7 +192,6 @@
         </div>
     </div>
 
-    {{-- Table --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         @if($incomingItems->count() > 0)
             <div class="px-6 py-4 border-b border-gray-200">
@@ -273,7 +269,6 @@
                 </table>
             </div>
 
-            {{-- Pagination --}}
             <div class="px-6 py-4 border-t border-gray-200">
                 {{ $incomingItems->links() }}
             </div>
@@ -297,7 +292,6 @@
     </div>
 </div>
 
-{{-- Bulk Delete Form --}}
 <form id="bulkDeleteForm" action="{{ route($routePrefix . '.incoming.bulk-delete') }}" method="POST" style="display: none;">
     @csrf
     @method('DELETE')
@@ -311,7 +305,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
     const itemCheckboxes = document.querySelectorAll('.item-checkbox');
     const selectAllBtn = document.getElementById('selectAllBtn');
@@ -321,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateTo = document.getElementById('date_to');
     const filterForm = document.querySelector('form[method="GET"]');
 
-    // Date validation
     if (dateFrom && dateTo) {
         dateFrom.addEventListener('change', function() {
             if (dateTo.value && new Date(this.value) > new Date(dateTo.value)) {
@@ -329,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.value = '';
             }
         });
-        
+
         dateTo.addEventListener('change', function() {
             if (dateFrom.value && new Date(this.value) < new Date(dateFrom.value)) {
                 alert('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai');
@@ -338,7 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Form submission with loading state
     if (filterForm) {
         filterForm.addEventListener('submit', function(e) {
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -355,16 +346,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Select all functionality
     function updateSelectAllState() {
-        const allChecked = itemCheckboxes.length > 0 && 
+        const allChecked = itemCheckboxes.length > 0 &&
                           Array.from(itemCheckboxes).every(checkbox => checkbox.checked);
         const someChecked = Array.from(itemCheckboxes).some(checkbox => checkbox.checked);
-        
+
         selectAllCheckbox.checked = allChecked;
         selectAllCheckbox.indeterminate = someChecked && !allChecked;
-        
-        // Toggle buttons
+
         if (someChecked) {
             selectAllBtn.style.display = 'none';
             deselectAllBtn.style.display = 'inline-flex';
@@ -376,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Select all checkboxes
     selectAllCheckbox.addEventListener('change', function() {
         const isChecked = this.checked;
         itemCheckboxes.forEach(checkbox => {
@@ -385,7 +373,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSelectAllState();
     });
 
-    // Select all button
     selectAllBtn.addEventListener('click', function(e) {
         e.preventDefault();
         itemCheckboxes.forEach(checkbox => {
@@ -394,7 +381,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSelectAllState();
     });
 
-    // Deselect all button
     deselectAllBtn.addEventListener('click', function(e) {
         e.preventDefault();
         itemCheckboxes.forEach(checkbox => {
@@ -403,15 +389,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSelectAllState();
     });
 
-    // Individual checkbox change
     itemCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateSelectAllState);
     });
 
-    // Bulk delete
     bulkDeleteBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        
+
         const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
         if (checkedBoxes.length === 0) {
             alert('Silakan pilih setidaknya satu item untuk dihapus');
@@ -427,15 +411,13 @@ document.addEventListener('DOMContentLoaded', function() {
             input.value = checkbox.value;
             container.appendChild(input);
         });
-        
+
         openModal('bulk-del-modal');
     });
 
-    // Initialize
     updateSelectAllState();
 });
 </script>
-
 
 @endsection
 

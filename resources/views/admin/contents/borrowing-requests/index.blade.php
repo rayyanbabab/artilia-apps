@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header -->
+
     <div class="mb-8">
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
             <div>
@@ -17,7 +17,7 @@
                 <p class="text-gray-600 mt-2">Manage user borrowing requests easily and efficiently</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Pending Card -->
+
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -34,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Approved Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -51,7 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Rejected Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -68,7 +66,6 @@
                     </div>
                 </div>
 
-                <!-- Completed Card -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -88,7 +85,6 @@
         </div>
     </div>
 
-    <!-- Content -->
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
             <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
@@ -285,7 +281,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route($routePrefix . '.borrowing-requests.show', $request->id) }}" 
+                                            <a href="{{ route($routePrefix . '.borrowing-requests.show', $request->id) }}"
                                                class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150">
                                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -294,7 +290,7 @@
                                                 Detail
                                             </a>
                                             @if($request->status === 'pending')
-                                                <button type="button" 
+                                                <button type="button"
                                                         onclick="openApproveModal({{ $request->id }}, '{{ addslashes($request->user->name) }}', '{{ addslashes($request->item->nama) }}')"
                                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-150">
                                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +298,7 @@
                                                     </svg>
                                                     Approve
                                                 </button>
-                                                <button type="button" 
+                                                <button type="button"
                                                         onclick="openRejectModal({{ $request->id }}, '{{ addslashes($request->user->name) }}', '{{ addslashes($request->item->nama) }}')"
                                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-150">
                                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,7 +307,7 @@
                                                     Reject
                                                 </button>
                                             @elseif($request->status === 'approved')
-                                                <button type="button" 
+                                                <button type="button"
                                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150"
                                                         onclick="openModal('complete-req-{{ $request->id }}')">
                                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -347,158 +343,144 @@
 </div>
 @endsection
 
-<!-- Approve Modal -->
-<div id="approveModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 backdrop-blur-sm">
-    <div class="relative top-20 mx-auto p-0 border-0 w-full max-w-lg shadow-2xl">
-        <div class="bg-white rounded-2xl overflow-hidden">
-            <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-5">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Setujui Permintaan</h3>
-                            <p class="text-green-100 text-sm">Konfirmasi persetujuan peminjaman</p>
-                        </div>
-                    </div>
-                    <button type="button" onclick="closeApproveModal()" class="text-white hover:text-gray-200 transition-colors p-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+<div id="approveModal" class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm overflow-y-auto hidden z-[9999]">
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+        <div class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+            <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                         </svg>
-                    </button>
+                    </div>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Setujui Permintaan</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">Konfirmasi persetujuan peminjaman barang</p>
+                    </div>
                 </div>
+                <button type="button" onclick="closeApproveModal()"
+                        class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                        title="Tutup Modal (Esc)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-            
-            <!-- Modal Body -->
-            <div class="p-6">
-                <form id="approveForm" method="POST">
-                    @csrf
-                    <div class="mb-6">
-                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
-                            <div class="flex items-start space-x-3">
-                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-green-800 mb-2">Konfirmasi Persetujuan</p>
-                                    <p id="approveText" class="text-sm text-green-700"></p>
-                                </div>
+
+            <form id="approveForm" method="POST" class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                @csrf
+                <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                    <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-800/40 rounded-xl p-3.5">
+                        <div class="flex items-start gap-3">
+                            <div class="w-7 h-7 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-emerald-900 dark:text-emerald-300">Konfirmasi Persetujuan</p>
+                                <p id="approveText" class="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5"></p>
                             </div>
                         </div>
-                        
-                        <label for="approve_admin_notes" class="block text-sm font-bold text-gray-700 mb-3">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Catatan Admin <span class="text-red-500 font-bold">*</span>
+                    </div>
+
+                    <div>
+                        <label for="approve_admin_notes" class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1.5">
+                            Catatan Admin <span class="text-rose-500 font-bold">*</span>
                         </label>
-                        <textarea id="approve_admin_notes" name="admin_notes" rows="4" required
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 resize-none"
+                        <textarea id="approve_admin_notes" name="admin_notes" rows="3" required
+                                  class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition resize-none"
                                   placeholder="Tambahkan catatan atau instruksi khusus untuk peminjam..."></textarea>
-                        <p class="text-xs text-gray-500 mt-2">Catatan ini akan dikirimkan kepada peminjam sebagai notifikasi.</p>
+                        <p class="text-[11px] text-gray-400 mt-1">Catatan ini akan dikirimkan kepada peminjam sebagai notifikasi.</p>
                     </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="closeApproveModal()" 
-                                class="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                            Batal
-                        </button>
-                        <button type="submit" 
-                                class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 shadow-lg">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Setujui Permintaan
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                    <button type="button" onclick="closeApproveModal()"
+                            class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                        Batal
+                    </button>
+                    <button type="submit"
+                            class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 rounded-xl shadow-md shadow-emerald-500/25 transition">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Setujui Permintaan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Reject Modal -->
-<div id="rejectModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 backdrop-blur-sm">
-    <div class="relative top-20 mx-auto p-0 border-0 w-full max-w-lg shadow-2xl">
-        <div class="bg-white rounded-2xl overflow-hidden">
-            <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-red-500 to-red-600 px-6 py-5">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Tolak Permintaan</h3>
-                            <p class="text-red-100 text-sm">Berikan alasan penolakan</p>
-                        </div>
-                    </div>
-                    <button type="button" onclick="closeRejectModal()" class="text-white hover:text-gray-200 transition-colors p-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+<div id="rejectModal" class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm overflow-y-auto hidden z-[9999]">
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+        <div class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+            <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-rose-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
-                    </button>
+                    </div>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Tolak Permintaan</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">Berikan alasan resmi penolakan peminjaman</p>
+                    </div>
                 </div>
+                <button type="button" onclick="closeRejectModal()"
+                        class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                        title="Tutup Modal (Esc)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-            
-            <!-- Modal Body -->
-            <div class="p-6">
-                <form id="rejectForm" method="POST">
-                    @csrf
-                    <div class="mb-6">
-                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-                            <div class="flex items-start space-x-3">
-                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"/>
-                                    </svg>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-red-800 mb-2">Konfirmasi Penolakan</p>
-                                    <p id="rejectText" class="text-sm text-red-700"></p>
-                                </div>
+
+            <form id="rejectForm" method="POST" class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                @csrf
+                <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                    <div class="bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-800/40 rounded-xl p-3.5">
+                        <div class="flex items-start gap-3">
+                            <div class="w-7 h-7 bg-rose-100 dark:bg-rose-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg class="w-4 h-4 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-rose-900 dark:text-rose-300">Konfirmasi Penolakan</p>
+                                <p id="rejectText" class="text-xs text-rose-700 dark:text-rose-400 mt-0.5"></p>
                             </div>
                         </div>
-                        
-                        <label for="reject_admin_notes" class="block text-sm font-bold text-gray-700 mb-3">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"/>
-                            </svg>
-                            Alasan Penolakan <span class="text-red-500 font-bold">*</span>
+                    </div>
+
+                    <div>
+                        <label for="reject_admin_notes" class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1.5">
+                            Alasan Penolakan <span class="text-rose-500 font-bold">*</span>
                         </label>
-                        <textarea id="reject_admin_notes" name="admin_notes" rows="4" required
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
+                        <textarea id="reject_admin_notes" name="admin_notes" rows="3" required
+                                  class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition resize-none"
                                   placeholder="Jelaskan dengan detail alasan penolakan permintaan ini..."></textarea>
-                        <p class="text-xs text-gray-500 mt-2">Alasan ini akan dikirimkan kepada peminjam sebagai notifikasi.</p>
+                        <p class="text-[11px] text-gray-400 mt-1">Alasan ini akan dikirimkan kepada peminjam sebagai notifikasi.</p>
                     </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="closeRejectModal()" 
-                                class="px-6 py-3 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                            Batal
-                        </button>
-                        <button type="submit" 
-                                class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200 shadow-lg">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                            Tolak Permintaan
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                    <button type="button" onclick="closeRejectModal()"
+                            class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                        Batal
+                    </button>
+                    <button type="submit"
+                            class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 active:scale-95 rounded-xl shadow-md shadow-rose-500/25 transition">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Tolak Permintaan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -520,26 +502,36 @@
 
 <script>
 function openApproveModal(id, userName, itemName) {
+    const modal = document.getElementById('approveModal');
+    if (modal && modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+    }
     const form = document.getElementById('approveForm');
     form.action = `/admin/borrowing-requests/${id}/approve`;
     document.getElementById('approveText').textContent = `Setujui permintaan peminjaman dari ${userName} untuk ${itemName}?`;
-    document.getElementById('approveModal').classList.remove('hidden');
+    modal.classList.remove('hidden');
 }
 
 function closeApproveModal() {
-    document.getElementById('approveModal').classList.add('hidden');
+    const modal = document.getElementById('approveModal');
+    if (modal) modal.classList.add('hidden');
     document.getElementById('approve_admin_notes').value = '';
 }
 
 function openRejectModal(id, userName, itemName) {
+    const modal = document.getElementById('rejectModal');
+    if (modal && modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+    }
     const form = document.getElementById('rejectForm');
     form.action = `/admin/borrowing-requests/${id}/reject`;
     document.getElementById('rejectText').textContent = `Tolak permintaan peminjaman dari ${userName} untuk ${itemName}?`;
-    document.getElementById('rejectModal').classList.remove('hidden');
+    modal.classList.remove('hidden');
 }
 
 function closeRejectModal() {
-    document.getElementById('rejectModal').classList.add('hidden');
+    const modal = document.getElementById('rejectModal');
+    if (modal) modal.classList.add('hidden');
     document.getElementById('reject_admin_notes').value = '';
 }
 </script>

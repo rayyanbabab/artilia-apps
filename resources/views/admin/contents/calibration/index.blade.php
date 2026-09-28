@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-/* ══ Calibration — Premium UI ══ */
+
 html.dark .cal-card  { background-color: #1e293b !important; border-color: #334155 !important; }
 html.dark .cal-title { color: #f1f5f9 !important; }
 html.dark .cal-sub   { color: #94a3b8 !important; }
@@ -25,6 +25,13 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         openCalibration(id, name, date, cert, notes) {
             this.calibrationModal = { open: true, id, name, date, cert, notes };
         },
+        generateCertNumber() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const idPart = this.calibrationModal.id ? String(this.calibrationModal.id).padStart(4, '0') : Math.floor(1000 + Math.random() * 9000);
+            this.calibrationModal.cert = `CAL-LAB/${yyyy}${mm}/${idPart}`;
+        },
         openToolLife(id, name, current_hours, max_hours) {
             this.toolLifeModal = { open: true, id, name, current_hours, max_hours };
         },
@@ -33,7 +40,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         }
      }">
 
-    {{-- ═══ PAGE HEADER ═══ --}}
     <div class="cal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-500"></div>
         <div class="p-5 sm:p-6">
@@ -65,7 +71,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         </div>
     </div>
 
-    {{-- Alert --}}
     @if(session('success'))
         <div class="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
             <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -73,7 +78,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         </div>
     @endif
 
-    {{-- ═══ KPI CARDS ═══ --}}
     <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
         <div class="cal-card bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-3 hover:shadow-md transition-shadow">
             <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
@@ -111,7 +115,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         </div>
     </div>
 
-    {{-- ═══ FILTER & SEARCH ═══ --}}
     <div class="cal-card bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
         <form method="GET" action="{{ route($routePrefix . '.calibration.index') }}" class="flex flex-col md:flex-row items-center gap-3">
             <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
@@ -145,7 +148,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         </form>
     </div>
 
-    {{-- ═══ MAIN TABLE ═══ --}}
     <div class="cal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-100 text-left text-xs">
@@ -162,12 +164,12 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                 <tbody class="divide-y divide-gray-100">
                     @forelse($items as $item)
                     <tr class="cal-tr hover:bg-indigo-50/20 transition-colors duration-150">
-                        {{-- Name & Code --}}
+
                         <td class="px-5 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     @if($item->gambar)
-                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
                                     @else
                                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                     @endif
@@ -182,7 +184,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                             </div>
                         </td>
 
-                        {{-- Tool Type Badge --}}
                         <td class="px-4 py-4">
                             @if($item->tool_type === 'measuring_tool')
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
@@ -203,7 +204,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                             @endif
                         </td>
 
-                        {{-- Calibration Status --}}
                         <td class="px-4 py-4">
                             @if($item->tool_type === 'measuring_tool')
                                 @if($item->calibration_status === 'calibrated')
@@ -226,7 +226,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                             @endif
                         </td>
 
-                        {{-- Certificate / Due Date --}}
                         <td class="px-4 py-4">
                             @if($item->tool_type === 'measuring_tool')
                                 <p class="cal-td-text font-medium text-gray-900 text-xs leading-snug">{{ $item->calibration_certificate_number ?? '—' }}</p>
@@ -238,7 +237,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                             @endif
                         </td>
 
-                        {{-- Tool Life Progress Bar --}}
                         <td class="px-4 py-4">
                             @if($item->tool_type === 'cutting_tool')
                                 @php
@@ -260,7 +258,6 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
                             @endif
                         </td>
 
-                        {{-- Actions --}}
                         <td class="px-5 py-4 text-right">
                             <div class="flex items-center justify-end gap-1.5">
                                 @if($item->tool_type === 'measuring_tool')
@@ -301,137 +298,295 @@ html.dark .cal-modal-bg { background-color: #1e293b !important; border-color: #3
         @endif
     </div>
 
-    {{-- ═══ MODAL: UPDATE KALIBRASI ═══ --}}
-    <div x-show="calibrationModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-        <div @click.away="calibrationModal.open = false" class="cal-modal-bg bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden">
-            <div class="h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-            <div class="p-6 space-y-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="cal-title text-base font-bold text-gray-900">Update Sertifikat Kalibrasi</h3>
-                        <p class="cal-sub text-xs text-gray-400 mt-0.5" x-text="calibrationModal.name"></p>
-                    </div>
-                    <button @click="calibrationModal.open = false" class="text-gray-300 hover:text-gray-600 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <form :action="'{{ route($routePrefix . '.calibration.update-cert', ':id') }}'.replace(':id', calibrationModal.id)" method="POST" class="space-y-3.5">
-                    @csrf
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tanggal Jatuh Tempo Kalibrasi *</label>
-                        <input type="date" name="calibration_due_date" x-model="calibrationModal.date" required
-                               class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                        <p class="text-[11px] text-gray-400 mt-1">Jika lewat, alat otomatis terkunci dari peminjaman.</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Nomor Sertifikat (KAN / Metrologi)</label>
-                        <input type="text" name="calibration_certificate_number" x-model="calibrationModal.cert" placeholder="Contoh: KAN-CAL-2026/089"
-                               class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Catatan Toleransi & Hasil</label>
-                        <textarea name="calibration_notes" x-model="calibrationModal.notes" rows="2" placeholder="Contoh: Deviasi 0.002mm, kondisi spindle bersih."
-                                  class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3"></textarea>
-                    </div>
-                    <div class="flex items-center justify-end gap-2 pt-1">
-                        <button type="button" @click="calibrationModal.open = false" class="px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm">Simpan Sertifikat</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <template x-teleport="body">
+        <div x-show="calibrationModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="calibrationModal.open = false">
 
-    {{-- ═══ MODAL: LOG JAM POTONG ═══ --}}
-    <div x-show="toolLifeModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-        <div @click.away="toolLifeModal.open = false" class="cal-modal-bg bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden">
-            <div class="h-1 bg-gradient-to-r from-purple-500 to-indigo-500"></div>
-            <div class="p-6 space-y-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="cal-title text-base font-bold text-gray-900">Catat Jam Potong Pahat (Tool Life)</h3>
-                        <p class="cal-sub text-xs text-gray-400 mt-0.5" x-text="toolLifeModal.name"></p>
-                    </div>
-                    <button @click="toolLifeModal.open = false" class="text-gray-300 hover:text-gray-600 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <form :action="'{{ route($routePrefix . '.calibration.update-life', ':id') }}'.replace(':id', toolLifeModal.id)" method="POST" class="space-y-3.5">
-                    @csrf
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tambah Jam Pemotongan (+ Jam)</label>
-                        <input type="number" step="0.1" name="additional_hours" placeholder="Contoh: 3.5"
-                               class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 py-2.5 px-3">
-                        <p class="text-[11px] text-gray-400 mt-1">Akumulasi saat ini: <strong x-text="toolLifeModal.current_hours + ' jam'"></strong></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Batas Maksimal Usia Pakai (Jam)</label>
-                        <input type="number" step="0.5" name="max_tool_life_hours" x-model="toolLifeModal.max_hours"
-                               class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 py-2.5 px-3">
-                        <p class="text-[11px] text-gray-400 mt-1">Bahaya otomatis ditampilkan saat mencapai 80% dari batas ini.</p>
-                    </div>
-                    <div class="flex items-center justify-end gap-2 pt-1">
-                        <button type="button" @click="toolLifeModal.open = false" class="px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl shadow-sm">Simpan Jam Pakai</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+            <div x-show="calibrationModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="calibrationModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
 
-    {{-- ═══ MODAL: TIPE PERKAKAS ═══ --}}
-    <div x-show="toolTypeModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-        <div @click.away="toolTypeModal.open = false" class="cal-modal-bg bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden">
-            <div class="h-1 bg-gradient-to-r from-indigo-500 to-cyan-500"></div>
-            <div class="p-6 space-y-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="cal-title text-base font-bold text-gray-900">Klasifikasi Tipe Perkakas</h3>
-                        <p class="cal-sub text-xs text-gray-400 mt-0.5" x-text="toolTypeModal.name || 'Pilih item dari daftar'"></p>
-                    </div>
-                    <button @click="toolTypeModal.open = false" class="text-gray-300 hover:text-gray-600 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-                <form :action="'{{ route($routePrefix . '.calibration.update-type', ':id') }}'.replace(':id', toolTypeModal.id)" method="POST" class="space-y-3.5">
-                    @csrf
-                    <template x-if="!toolTypeModal.id">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Pilih Item Barang *</label>
-                            <select @change="toolTypeModal.id = $event.target.value" required class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                                <option value="">— Pilih Barang —</option>
-                                @foreach($allItems as $singleItem)
-                                    <option value="{{ $singleItem->id }}">{{ $singleItem->kode ? '['.$singleItem->kode.'] ' : '' }}{{ $singleItem->nama }}</option>
-                                @endforeach
-                            </select>
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="calibrationModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Update Sertifikat Kalibrasi</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5 truncate max-w-xs" x-text="calibrationModal.name"></p>
+                            </div>
                         </div>
-                    </template>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tipe Perkakas *</label>
-                        <select name="tool_type" x-model="toolTypeModal.current_type" required class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                            <option value="measuring_tool">Alat Ukur Presisi (Caliper, Micrometer, Dial)</option>
-                            <option value="cutting_tool">Alat Potong (Endmill, Carbide Insert, Pahat Bubut)</option>
-                            <option value="dies_mold">Cetakan / Dies & Mold</option>
-                            <option value="jig_fixture">Jig & Fixture Pengikat Benda Kerja</option>
-                            <option value="general">Barang / Alat Umum Standar</option>
-                        </select>
+                        <button type="button" @click="calibrationModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div x-show="toolTypeModal.current_type === 'measuring_tool'">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tanggal Kalibrasi Berikutnya</label>
-                        <input type="date" name="calibration_due_date" class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                    </div>
-                    <div x-show="toolTypeModal.current_type === 'cutting_tool'">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Batas Maksimal Jam Potong</label>
-                        <input type="number" step="1" name="max_tool_life_hours" x-model="toolTypeModal.max_hours" class="cal-input w-full text-xs rounded-xl border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 py-2.5 px-3">
-                    </div>
-                    <div class="flex items-center justify-end gap-2 pt-1">
-                        <button type="button" @click="toolTypeModal.open = false" class="px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm">Simpan Klasifikasi</button>
-                    </div>
-                </form>
+
+                    <form :action="'{{ route($routePrefix . '.calibration.update-cert', ':id') }}'.replace(':id', calibrationModal.id)" method="POST"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Tanggal Jatuh Tempo Kalibrasi <span class="text-rose-500">*</span></label>
+                                <input type="date" name="calibration_due_date" x-model="calibrationModal.date" required
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition font-mono">
+                                <p class="text-[11px] text-gray-400 mt-1">Jika lewat, alat otomatis terkunci dari peminjaman.</p>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300">Nomor Sertifikat (KAN / Metrologi)</label>
+                                    <button type="button" @click="generateCertNumber()"
+                                            class="text-[11px] font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 hover:underline inline-flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                        </svg>
+                                        ⚡ Generate Otomatis
+                                    </button>
+                                </div>
+                                <input type="text" name="calibration_certificate_number" x-model="calibrationModal.cert" placeholder="Contoh: KAN-CAL-2026/089 atau klik Generate Otomatis"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition font-mono">
+                                <p class="text-[11px] text-gray-400 mt-1">Isi sesuai sertifikat fisik KAN, atau klik <strong>Generate Otomatis</strong> untuk lab internal.</p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Catatan Toleransi & Hasil</label>
+                                <textarea name="calibration_notes" x-model="calibrationModal.notes" rows="3" placeholder="Contoh: Deviasi 0.002mm, kondisi spindle bersih."
+                                          class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="calibrationModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-95 rounded-xl shadow-md shadow-blue-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Simpan Sertifikat
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
+
+    <template x-teleport="body">
+        <div x-show="toolLifeModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="toolLifeModal.open = false">
+
+            <div x-show="toolLifeModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="toolLifeModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="toolLifeModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Catat Jam Potong Pahat (Tool Life)</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5 truncate max-w-xs" x-text="toolLifeModal.name"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="toolLifeModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form :action="'{{ route($routePrefix . '.calibration.update-life', ':id') }}'.replace(':id', toolLifeModal.id)" method="POST"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Tambah Jam Pemotongan (+ Jam)</label>
+                                <input type="number" step="0.1" name="additional_hours" placeholder="Contoh: 3.5"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                <p class="text-[11px] text-gray-400 mt-1">Akumulasi saat ini: <strong class="text-purple-600 dark:text-purple-400" x-text="toolLifeModal.current_hours + ' jam'"></strong></p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Batas Maksimal Usia Pakai (Jam)</label>
+                                <input type="number" step="0.5" name="max_tool_life_hours" x-model="toolLifeModal.max_hours"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                <p class="text-[11px] text-gray-400 mt-1">Bahaya otomatis ditampilkan saat mencapai 80% dari batas ini.</p>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="toolLifeModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 active:scale-95 rounded-xl shadow-md shadow-purple-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Simpan Jam Pakai
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template x-teleport="body">
+        <div x-show="toolTypeModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="toolTypeModal.open = false">
+
+            <div x-show="toolTypeModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="toolTypeModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="toolTypeModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Klasifikasi Tipe Perkakas</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5 truncate max-w-xs" x-text="toolTypeModal.name || 'Pilih item dari daftar'"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="toolTypeModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form :action="'{{ route($routePrefix . '.calibration.update-type', ':id') }}'.replace(':id', toolTypeModal.id)" method="POST"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <template x-if="!toolTypeModal.id">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Pilih Item Barang <span class="text-rose-500">*</span></label>
+                                    <select @change="toolTypeModal.id = $event.target.value" required
+                                            class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                        <option value="">— Pilih Barang —</option>
+                                        @foreach($allItems as $singleItem)
+                                            <option value="{{ $singleItem->id }}">{{ $singleItem->kode ? '['.$singleItem->kode.'] ' : '' }}{{ $singleItem->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </template>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Tipe Perkakas <span class="text-rose-500">*</span></label>
+                                <select name="tool_type" x-model="toolTypeModal.current_type" required
+                                        class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                    <option value="measuring_tool">Alat Ukur Presisi (Caliper, Micrometer, Dial)</option>
+                                    <option value="cutting_tool">Alat Potong (Endmill, Carbide Insert, Pahat Bubut)</option>
+                                    <option value="dies_mold">Cetakan / Dies & Mold</option>
+                                    <option value="jig_fixture">Jig & Fixture Pengikat Benda Kerja</option>
+                                    <option value="general">Barang / Alat Umum Standar</option>
+                                </select>
+                            </div>
+                            <div x-show="toolTypeModal.current_type === 'measuring_tool'">
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Tanggal Kalibrasi Berikutnya</label>
+                                <input type="date" name="calibration_due_date"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition font-mono">
+                            </div>
+                            <div x-show="toolTypeModal.current_type === 'cutting_tool'">
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Batas Maksimal Jam Potong</label>
+                                <input type="number" step="1" name="max_tool_life_hours" x-model="toolTypeModal.max_hours"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="toolTypeModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-md shadow-indigo-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Simpan Klasifikasi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
 
 </div>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {{-- Clean Header Section --}}
+
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
@@ -10,7 +10,7 @@
                     <p class="text-sm text-gray-600">Manage and organize your inventory items efficiently</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
-                    {{-- Scan Barcode Button --}}
+
                     <button onclick="openScannerModal()"
                         class="inline-flex items-center px-3 py-2 sm:px-4 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -38,7 +38,6 @@
             </div>
         </div>
 
-        {{-- Flash Message Banner --}}
         @if(session('success'))
         <div x-data="{ show: true }" x-show="show"
              x-transition:enter="transition ease-out duration-300"
@@ -66,7 +65,6 @@
         </div>
         @endif
 
-        {{-- Import Errors (from CSV import) --}}
         @if(session('import_errors') && count(session('import_errors')) > 0)
         <div x-data="{ show: true, expanded: false }" x-show="show"
              class="flex flex-col gap-1 bg-amber-50 border border-amber-200 text-amber-800 px-5 py-3.5 rounded-xl mb-6 shadow-sm">
@@ -146,9 +144,8 @@
         </div>
         @endif
 
-        {{-- Inventory Overview Cards --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6">
-            {{-- Total Items Card --}}
+
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -165,7 +162,6 @@
                 </div>
             </div>
 
-            {{-- Total Stock Card --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -182,7 +178,6 @@
                 </div>
             </div>
 
-            {{-- Low Stock Items Card --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -199,7 +194,6 @@
                 </div>
             </div>
 
-        {{-- Out of Stock Card --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -216,7 +210,6 @@
                 </div>
             </div>
 
-            {{-- Under Maintenance Card --}}
             <div class="bg-white rounded-xl shadow-sm border border-orange-100 p-4 sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -235,10 +228,8 @@
             </div>
         </div>
 
-        {{-- Filter & Search Section --}}
         <div x-data="inventoryFilter()" class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 overflow-visible">
 
-            {{-- Filter Header --}}
             <div class="px-6 py-4 border-b border-gray-100">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -256,7 +247,7 @@
                         <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
                             {{ $items->total() }} item
                         </span>
-                        {{-- Active filter indicators --}}
+
                         @if(request('search') || request('category_id') || request('supplier_id') || request('type') || request('availability'))
                             <a href="{{ route($routePrefix . '.inventory.index') }}"
                                class="text-xs text-red-500 hover:text-red-700 font-medium flex items-center gap-1 bg-red-50 px-2.5 py-1 rounded-full border border-red-100 transition-colors">
@@ -270,11 +261,9 @@
                 </div>
             </div>
 
-            {{-- Filter Body --}}
             <div class="p-5 overflow-visible">
                 <form method="GET" action="{{ route($routePrefix . '.inventory.index') }}" id="filterForm" class="overflow-visible">
 
-                    {{-- Search Bar --}}
                     <div class="relative mb-3">
 
                         <input type="text" name="search" id="search"
@@ -291,10 +280,8 @@
                         @endif
                     </div>
 
-                    {{-- Dropdown Filters --}}
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 overflow-visible">
 
-                        {{-- ── Category Searchable Dropdown ── --}}
                         <div class="space-y-1 overflow-visible">
                             <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Kategori</label>
                             <input type="hidden" name="category_id" :value="catId">
@@ -327,7 +314,7 @@
                                          style="transform-origin: top;">
                                     <div class="p-2 bg-gray-50 border-b border-gray-100">
                                         <div class="relative">
-                                           
+
                                             <input type="text" x-model="catSearch"
                                                    x-init="$watch('catOpen', v => v && $nextTick(() => $refs.catInput.focus()))"
                                                    x-ref="catInput"
@@ -364,7 +351,6 @@
                             </div>
                         </div>
 
-                        {{-- ── Supplier Searchable Dropdown ── --}}
                         <div class="space-y-1 overflow-visible">
                             <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Supplier</label>
                             <input type="hidden" name="supplier_id" :value="supId">
@@ -397,7 +383,7 @@
                                          style="transform-origin: top;">
                                     <div class="p-2 bg-gray-50 border-b border-gray-100">
                                         <div class="relative">
-                                            
+
                                             <input type="text" x-model="supSearch"
                                                    x-init="$watch('supOpen', v => v && $nextTick(() => $refs.supInput.focus()))"
                                                    x-ref="supInput"
@@ -434,7 +420,6 @@
                             </div>
                         </div>
 
-                    {{-- ── Item Type Pill Select ── --}}
                         <div class="space-y-1">
                             <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Tipe Item</label>
                             <input type="hidden" name="type" :value="typeVal">
@@ -459,9 +444,6 @@
 
                     </div>
 
-
-
-                    {{-- Action Buttons --}}
                     <div class="flex items-center justify-between pt-3 border-t border-gray-100">
                         <p class="text-xs text-gray-400">
                             Menampilkan <span class="font-semibold text-gray-600">{{ $items->total() }}</span> item
@@ -520,7 +502,6 @@
         }
         </script>
 
-        {{-- Clean Items Grid --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
@@ -533,10 +514,10 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
                     @foreach($items as $item)
                         <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
-                            {{-- Item Image --}}
+
                             <div class="relative h-48 bg-gray-50">
                                 @if($item->gambar)
-                                    <img src="{{ asset($item->gambar) }}" 
+                                    <img src="{{ asset($item->gambar) }}"
                                          alt="{{ $item->nama }}"
                                          class="w-full h-full object-cover">
                                 @else
@@ -547,7 +528,6 @@
                                     </div>
                                 @endif
 
-                                {{-- Type Badge --}}
                                 @if($item->type)
                                     <div class="absolute top-3 right-3">
                                         <span class="px-2.5 py-1 rounded-lg text-xs font-medium {{ $item->type->value === 'stok' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
@@ -556,7 +536,6 @@
                                     </div>
                                 @endif
 
-                                {{-- Stock Status --}}
                                 <div class="absolute top-3 left-3 flex flex-col gap-1">
                                     @if($item->stok_total == 0)
                                         <span class="px-2 py-1 rounded-lg text-xs font-medium bg-red-100 text-red-800">
@@ -574,7 +553,6 @@
                                 </div>
                             </div>
 
-                            {{-- Item Details --}}
                             <div class="p-4">
                                 <div class="mb-3">
                                     <div class="flex items-center justify-between mb-2">
@@ -600,7 +578,6 @@
                                         <span class="truncate">{{ $item->supplier->company_name ?? 'No Supplier' }}</span>
                                     </div>
 
-                                    {{-- Unit Price Display --}}
                                     @if($item->type->value === 'stok' && $item->harga > 0)
                                         <div class="flex items-center text-sm text-green-600 font-medium">
                                             <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -625,9 +602,8 @@
                                     @endif
                                 </div>
 
-                                {{-- Actions --}}
                                 <div class="space-y-2">
-                                    {{-- Print Label (full width, always visible) --}}
+
                                     <a href="{{ route($routePrefix . '.inventory.print-label', $item->id) }}" target="_blank"
                                         class="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg transition-colors duration-200">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -635,7 +611,7 @@
                                         </svg>
                                         Print Label QR
                                     </a>
-                                    {{-- View / Edit / Delete --}}
+
                                     <div class="flex gap-2">
                                         <a href="{{ route($routePrefix . '.inventory.show', $item->id) }}"
                                             class="flex-1 px-3 py-2 text-center text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
@@ -660,7 +636,6 @@
                     @endforeach
                 </div>
 
-                {{-- Clean Pagination --}}
                 <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
                     @if ($items->hasPages())
                         {{ $items->appends(request()->query())->links() }}
@@ -671,7 +646,7 @@
                     @endif
                 </div>
             @else
-                {{-- Clean Empty State --}}
+
                 <div class="text-center py-16 px-6">
                     <div class="max-w-sm mx-auto">
                         <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
@@ -705,7 +680,6 @@
     @include('admin.components.partials.import-items-modal')
 @endif
 
-{{-- Barcode Scanner Modal --}}
 @include('admin.components.partials.barcode-scanner-modal')
 
 @push('scripts')

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header Section -->
+
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div class="flex items-center">
@@ -32,10 +32,9 @@
             </div>
         </div>
     </div>
-    
-    <!-- Content Grid -->
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <!-- Basic Information Card -->
+
         <div class="lg:col-span-2">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div class="flex items-center mb-6">
@@ -46,7 +45,7 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900">Company Information</h2>
                 </div>
-                
+
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-3 border-b border-gray-100">
                         <span class="text-sm font-medium text-gray-500">Supplier ID</span>
@@ -90,7 +89,6 @@
             </div>
         </div>
 
-        <!-- Statistics Card -->
         <div class="lg:col-span-1">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div class="flex items-center mb-6">
@@ -101,11 +99,11 @@
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900">Statistics</h2>
                 </div>
-                
+
                 <div class="text-center">
                     <div class="text-4xl font-bold text-blue-600 mb-2">{{ $supplier->items->count() }}</div>
                     <p class="text-gray-500 mb-6">Total Items Supplied</p>
-                    
+
                     @if($supplier->items->count() > 0)
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                             <div class="flex items-center">
@@ -135,7 +133,7 @@
                             </div>
                         </div>
                     @endif
-                    
+
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div>
                             <div class="text-xs text-gray-500 mb-1">Created</div>
@@ -155,7 +153,6 @@
         </div>
     </div>
 
-    <!-- Items Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center">
@@ -167,7 +164,7 @@
                 <h2 class="text-lg font-semibold text-gray-900">Items from this Supplier ({{ $supplier->items->count() }})</h2>
             </div>
         </div>
-        
+
         <div class="p-6">
             @if($supplier->items->count() > 0)
                 <div class="overflow-x-auto">
@@ -256,5 +253,3 @@
     </div>
 </div>
 @endsection
-
-

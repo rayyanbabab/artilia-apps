@@ -3,7 +3,6 @@
 @section('content')
 <div class="space-y-6">
 
-    {{-- Header Section --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="mb-0">
@@ -29,7 +28,6 @@
         </div>
     </div>
 
-    {{-- Stats Cards --}}
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div class="flex items-center">
@@ -97,7 +95,6 @@
         </div>
     </div>
 
-    {{-- Locations Table --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-4 sm:px-6 py-4 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -135,7 +132,6 @@
             </div>
         </div>
 
-        {{-- Flash Messages --}}
         @if(session('success'))
             <div class="mx-6 mt-4 bg-green-50 border border-green-200 rounded-md p-4">
                 <div class="flex">
@@ -166,7 +162,6 @@
             </div>
         @endif
 
-        {{-- Table --}}
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -299,7 +294,6 @@
         </div>
     </div>
 
-    {{-- Pagination --}}
     @if($locations->hasPages())
     <div class="bg-white px-4 py-3 border border-gray-200 rounded-lg shadow-sm">
         {{ $locations->appends(request()->query())->links() }}

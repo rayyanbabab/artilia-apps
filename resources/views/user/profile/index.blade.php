@@ -3,7 +3,7 @@
 @section('user')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="space-y-8">
-        {{-- Header Section --}}
+
         <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-slate-100">My Profile</h1>
@@ -17,7 +17,6 @@
             </div>
         </div>
 
-        {{-- Success Message --}}
         @if(session('success'))
             <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
                 {{ session('success') }}
@@ -25,7 +24,7 @@
         @endif
 
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {{-- Profile Avatar Section --}}
+
             <div class="lg:col-span-1 space-y-6">
                 <div class="rounded-xl border border-white/20 dark:border-slate-700 bg-white/80 backdrop-blur-md p-6">
                     <h3 class="mb-4 text-lg font-medium text-gray-900 dark:text-slate-100">Profile Photo</h3>
@@ -62,7 +61,6 @@
                             @endif
                         </div>
 
-                        {{-- Profile Photo Upload Section --}}
                         <div class="w-full space-y-4">
                             <form action="{{ route('user.profile.update-photo') }}" method="POST" enctype="multipart/form-data" id="photoForm">
                                 @csrf
@@ -84,7 +82,6 @@
                         </div>
                     </div>
 
-                    {{-- Account Stats --}}
                     <div class="mt-6 border-t border-gray-200 dark:border-slate-700/50 pt-6">
                         <h4 class="mb-3 text-sm font-medium text-gray-900 dark:text-slate-100">Account Statistics</h4>
                         <div class="space-y-3">
@@ -114,7 +111,6 @@
                     </div>
                 </div>
 
-                {{-- QR Code Card --}}
                 @if(($user->role->value ?? 'user') === 'user')
                 <div class="rounded-xl border border-white/20 dark:border-indigo-500/30 bg-white/80 dark:bg-indigo-900/20 backdrop-blur-md p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -129,7 +125,6 @@
                         </div>
                     </div>
 
-                    {{-- QR Code Display --}}
                     <div class="flex flex-col items-center space-y-4">
                         <div class="relative group cursor-pointer" onclick="openQrModal()" title="Klik untuk perbesar">
                             <div class="bg-white rounded-xl p-3 shadow-md ring-2 ring-indigo-100 group-hover:ring-indigo-400 transition-all duration-200">
@@ -142,7 +137,6 @@
                             </div>
                         </div>
 
-                        {{-- User info label --}}
                         <div class="text-center">
                             <p class="text-xs font-mono text-indigo-700 dark:text-indigo-200 bg-indigo-100 dark:bg-indigo-500/30 rounded-md px-3 py-1 tracking-wider">
                                 ID #{{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }}
@@ -150,7 +144,6 @@
                             <p class="text-xs text-indigo-500 dark:text-indigo-300 mt-1.5">Tunjukkan ke admin/operator saat <br>meminjam atau mengambil barang</p>
                         </div>
 
-                        {{-- Action Buttons --}}
                         <div class="flex gap-2 w-full">
                             <button onclick="openQrModal()"
                                 class="flex-1 inline-flex items-center justify-center rounded-lg border border-indigo-300 dark:border-indigo-500/50 bg-white dark:bg-indigo-900/50 px-3 py-2 text-xs font-medium text-indigo-700 dark:text-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-800/50 transition-colors duration-150">
@@ -173,9 +166,8 @@
                 @endif
             </div>
 
-            {{-- Profile Form Section --}}
             <div class="space-y-6 lg:col-span-2">
-                {{-- Email Update --}}
+
                 <div class="rounded-xl border border-white/20 dark:border-slate-700 bg-white/80 backdrop-blur-md">
                     <div class="border-b border-gray-200 dark:border-slate-700/50 px-6 py-4 bg-transparent">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-slate-100">Email Address</h3>
@@ -226,7 +218,6 @@
                     </form>
                 </div>
 
-                {{-- Security Settings --}}
                 <div class="rounded-xl border border-white/20 dark:border-slate-700 bg-white/80 backdrop-blur-md">
                     <div class="border-b border-gray-200 dark:border-slate-700/50 px-6 py-4 bg-transparent">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-slate-100">Security</h3>
@@ -246,8 +237,8 @@
                                     <input type="password" id="current_password" name="current_password"
                                         class="block w-full rounded-md border-gray-300 dark:border-slate-600 bg-white/50 dark:bg-slate-900/60 text-gray-900 dark:text-slate-100 shadow-sm focus:border-gray-900 dark:focus:border-slate-400 focus:ring-gray-900 dark:focus:ring-slate-400 sm:text-sm pr-12 placeholder-gray-400 dark:placeholder-slate-400"
                                         placeholder="Enter current password">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('current_password')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -270,8 +261,8 @@
                                     <input type="password" id="password" name="password"
                                         class="block w-full rounded-md border-gray-300 dark:border-slate-600 bg-white/50 dark:bg-slate-900/60 text-gray-900 dark:text-slate-100 shadow-sm focus:border-gray-900 dark:focus:border-slate-400 focus:ring-gray-900 dark:focus:ring-slate-400 sm:text-sm pr-12 placeholder-gray-400 dark:placeholder-slate-400"
                                         placeholder="Enter new password">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -294,8 +285,8 @@
                                     <input type="password" id="password_confirmation" name="password_confirmation"
                                         class="block w-full rounded-md border-gray-300 dark:border-slate-600 bg-white/50 dark:bg-slate-900/60 text-gray-900 dark:text-slate-100 shadow-sm focus:border-gray-900 dark:focus:border-slate-400 focus:ring-gray-900 dark:focus:ring-slate-400 sm:text-sm pr-12 placeholder-gray-400 dark:placeholder-slate-400"
                                         placeholder="Confirm new password">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password_confirmation')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -320,7 +311,7 @@
                         </div>
                     </form>
                 </div>
-                {{-- WhatsApp Number --}}
+
                 <div class="rounded-xl border border-white/20 dark:border-slate-700 bg-white/80 backdrop-blur-md">
                     <div class="border-b border-green-100 dark:border-slate-700/50 px-6 py-4 bg-transparent">
                         <div class="flex items-center gap-3">
@@ -385,71 +376,79 @@
     </div>
 </div>
 
-{{-- QR Code Fullscreen Modal --}}
-<div id="qrModal" class="fixed inset-0 z-50 items-center justify-center p-4" style="display:none;" role="dialog" aria-modal="true">
-    {{-- Backdrop --}}
-    <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" onclick="closeQrModal()"></div>
+<div id="qrModal" class="fixed inset-0 z-[9999] overflow-y-auto" style="display:none;" role="dialog" aria-modal="true">
 
-    {{-- Modal Card --}}
-    <div class="relative z-10 w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden">
-        {{-- Header --}}
-        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center justify-between">
-            <div>
-                <h3 class="text-white font-bold text-lg">QR Code Identitas</h3>
-                <p class="text-indigo-200 text-xs mt-0.5">Scan untuk verifikasi peminjaman</p>
-            </div>
-            <button onclick="closeQrModal()" class="text-white/80 hover:text-white transition-colors">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
+    <div class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity" onclick="closeQrModal()"></div>
 
-        {{-- Body --}}
-        <div class="p-8 flex flex-col items-center space-y-5">
-            {{-- Big QR --}}
-            <div class="bg-white p-4 rounded-xl shadow-lg ring-2 ring-indigo-100">
-                <canvas id="qrcode-modal-canvas" width="220" height="220" style="display:block;"></canvas>
-            </div>
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+        <div class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-sm w-full flex flex-col max-h-[90vh] my-auto overflow-hidden animate-in">
 
-            {{-- User Info Block --}}
-            <div class="w-full bg-gray-50 rounded-xl p-4 space-y-2">
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500">Nama</span>
-                    <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+            <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold shadow-sm flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">QR Code Identitas</h3>
+                        <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">Scan untuk verifikasi peminjaman</p>
+                    </div>
                 </div>
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500">ID Pengguna</span>
-                    <span class="font-mono font-semibold text-indigo-600">#{{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }}</span>
-                </div>
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500">Email</span>
-                    <span class="text-gray-700 text-xs truncate max-w-[160px]">{{ $user->email }}</span>
-                </div>
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500">Peran</span>
-                    <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
-                        Regular User
-                    </span>
-                </div>
+                <button onclick="closeQrModal()" class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition" title="Tutup Modal (Esc)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
 
-            {{-- Instructions --}}
-            <div class="flex items-start gap-2 text-xs text-gray-500 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
-                <svg class="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Tunjukkan QR ini kepada admin atau operator saat proses <strong>peminjaman barang</strong> atau <strong>pengambilan barang keluar</strong>.</span>
+            <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1 flex flex-col items-center">
+
+                <div class="bg-white p-3 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
+                    <canvas id="qrcode-modal-canvas" width="200" height="200" style="display:block;"></canvas>
+                </div>
+
+                <div class="w-full bg-gray-50/80 dark:bg-slate-800/60 rounded-xl p-3.5 space-y-2 border border-gray-100 dark:border-slate-800 text-xs">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 dark:text-slate-400">Nama</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">{{ $user->name }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 dark:text-slate-400">ID Pengguna</span>
+                        <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400">#{{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 dark:text-slate-400">Email</span>
+                        <span class="text-gray-700 dark:text-slate-300 truncate max-w-[170px]">{{ $user->email }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 dark:text-slate-400">Peran</span>
+                        <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:text-blue-300">
+                            Regular User
+                        </span>
+                    </div>
+                </div>
+
+                <div class="w-full flex items-start gap-2 text-[11px] text-gray-600 dark:text-slate-400 bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40 rounded-xl p-3">
+                    <svg class="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Tunjukkan QR ini kepada petugas saat verifikasi peminjaman barang di laboratorium.</span>
+                </div>
             </div>
 
-            {{-- Download Button --}}
-            <button onclick="downloadQr()"
-                class="w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-indigo-200 transition-all duration-200">
-                <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                </svg>
-                Unduh QR Code
-            </button>
+            <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-between gap-2.5 flex-shrink-0">
+                <button onclick="closeQrModal()" class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                    Tutup
+                </button>
+                <button onclick="downloadQr()"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-md shadow-indigo-500/25 transition">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Unduh QR
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -459,7 +458,6 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script>
-    // ─── Data user (dari PHP) ─────────────────────────────────────────────────
     var userId    = {{ $user->id }};
     var userName  = @json($user->name);
     var userEmail = @json($user->email);
@@ -474,7 +472,6 @@
         app:   'artilia'
     });
 
-    // ─── Render QR kecil (160×160) langsung ke <canvas> di HTML ──────────────
     var cvSmall = document.getElementById('qrcode-canvas');
     if (cvSmall && typeof QRious !== 'undefined') {
         new QRious({
@@ -487,7 +484,6 @@
         });
     }
 
-    // ─── Render QR besar (220×220) untuk modal ────────────────────────────────
     var cvModal = document.getElementById('qrcode-modal-canvas');
     if (cvModal && typeof QRious !== 'undefined') {
         new QRious({
@@ -500,16 +496,19 @@
         });
     }
 
-    // ─── Modal helpers ────────────────────────────────────────────────────────
     function openQrModal() {
         var modal = document.getElementById('qrModal');
-        modal.style.display = 'flex';
+        if (!modal) return;
+        if (modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 
     function closeQrModal() {
         var modal = document.getElementById('qrModal');
-        modal.style.display = 'none';
+        if (modal) modal.style.display = 'none';
         document.body.style.overflow = '';
     }
 
@@ -517,7 +516,6 @@
         if (e.key === 'Escape') closeQrModal();
     });
 
-    // ─── Download QR PNG berbranding ──────────────────────────────────────────
     function downloadQr() {
         if (typeof QRious === 'undefined') { alert('Library QR belum dimuat.'); return; }
 
@@ -579,7 +577,6 @@
         document.body.removeChild(link);
     }
 
-    // ─── Photo upload ─────────────────────────────────────────────────────────
     function handlePhotoUpload(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -591,7 +588,6 @@
         }
     }
 
-    // ─── Toggle password visibility ───────────────────────────────────────────
     function togglePassword(inputId) {
         var input   = document.getElementById(inputId);
         var eyeIcon = document.getElementById(inputId + '_eye');

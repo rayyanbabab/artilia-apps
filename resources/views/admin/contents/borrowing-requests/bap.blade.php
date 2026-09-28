@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-/* ══ BAP Screen & Dark Mode Styles ══ */
+
 html.dark .bap-panel { background-color: #1e293b !important; border-color: #334155 !important; }
 html.dark .bap-title { color: #f1f5f9 !important; }
 html.dark .bap-sub   { color: #94a3b8 !important; }
@@ -16,30 +16,97 @@ html.dark .bap-table-val  { color: #f1f5f9 !important; }
 html.dark .bap-divider    { border-color: #334155 !important; }
 html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: #475569 !important; }
 
-/* ══ Print Stylesheet (Formal Document Output) ══ */
 @media print {
-    body * {
-        visibility: hidden !important;
+    @page {
+        size: A4 portrait;
+        margin: 6mm 8mm;
     }
-    #bap-printable, #bap-printable * {
-        visibility: visible !important;
-    }
-    #bap-printable {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
+
+    html, body {
         margin: 0 !important;
-        padding: 24px !important;
+        padding: 0 !important;
+    }
+
+    body * { visibility: hidden !important; }
+    #bap-printable, #bap-printable * { visibility: visible !important; }
+    .no-print { display: none !important; }
+
+    #bap-printable {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 194mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
         border: none !important;
         box-shadow: none !important;
         background: #ffffff !important;
         color: #111827 !important;
+
+        zoom: 0.70;
     }
-    .no-print {
-        display: none !important;
+
+    #bap-printable > div:first-child {
+        padding: 10px 16px 8px !important;
     }
+    #bap-printable .flex.items-center.justify-between.gap-4.pb-4 {
+        padding-bottom: 8px !important;
+    }
+    #bap-printable .w-16.h-16 {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    #bap-printable h2.text-sm { font-size: 10.5px !important; }
+    #bap-printable h3.text-base { font-size: 12px !important; }
+
+    #bap-printable .bap-doc-header {
+        padding: 8px 16px !important;
+    }
+    #bap-printable .bap-doc-title { font-size: 11px !important; letter-spacing: 0.06em !important; }
+
+    #bap-content-inner {
+        padding: 12px 16px !important;
+    }
+
+    #bap-content-inner > p:first-child {
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 10px !important;
+    }
+
+    #bap-printable table th,
+    #bap-printable table td {
+        padding: 5px 12px !important;
+        font-size: 10.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    #bap-printable .bg-gray-50\/75,
+    #bap-printable [class*="bg-gray-50"] {
+        padding: 10px 14px !important;
+        margin-top: 10px !important;
+    }
+    #bap-printable ol li {
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+        margin-bottom: 2px !important;
+    }
+
+    #bap-printable .grid.grid-cols-2 {
+        padding-top: 14px !important;
+        gap: 24px !important;
+        margin-top: 12px !important;
+    }
+    #bap-printable .h-20 { height: 56px !important; }
+    #bap-printable .space-y-1 > * + * { margin-top: 3px !important; }
+
+    #bap-printable .bg-emerald-50 {
+        padding: 8px 14px !important;
+        margin-top: 10px !important;
+    }
+
+    #bap-content-inner > * + * { margin-top: 10px !important; }
 }
 </style>
 
@@ -71,46 +138,46 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                 return { x: e.clientX - r.left, y: e.clientY - r.top };
             }
 
-            canvas.addEventListener('mousedown', (e) => { 
-                drawing = true; 
-                ctx.beginPath(); 
-                const p = getPos(e); 
-                ctx.moveTo(p.x, p.y); 
+            canvas.addEventListener('mousedown', (e) => {
+                drawing = true;
+                ctx.beginPath();
+                const p = getPos(e);
+                ctx.moveTo(p.x, p.y);
             });
-            canvas.addEventListener('mousemove', (e) => { 
-                if (!drawing) return; 
-                const p = getPos(e); 
-                ctx.lineTo(p.x, p.y); 
-                ctx.stroke(); 
-                hasMark = true; 
-                $data.hasMark = true; 
+            canvas.addEventListener('mousemove', (e) => {
+                if (!drawing) return;
+                const p = getPos(e);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+                hasMark = true;
+                $data.hasMark = true;
             });
             window.addEventListener('mouseup', () => drawing = false);
 
-            canvas.addEventListener('touchstart', (e) => { 
-                e.preventDefault(); 
-                drawing = true; 
-                ctx.beginPath(); 
-                const p = getPos(e); 
-                ctx.moveTo(p.x, p.y); 
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                drawing = true;
+                ctx.beginPath();
+                const p = getPos(e);
+                ctx.moveTo(p.x, p.y);
             }, { passive: false });
 
-            canvas.addEventListener('touchmove', (e) => { 
-                e.preventDefault(); 
-                if (!drawing) return; 
-                const p = getPos(e); 
-                ctx.lineTo(p.x, p.y); 
-                ctx.stroke(); 
-                hasMark = true; 
-                $data.hasMark = true; 
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!drawing) return;
+                const p = getPos(e);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+                hasMark = true;
+                $data.hasMark = true;
             }, { passive: false });
 
             window.addEventListener('touchend', () => drawing = false);
 
-            document.getElementById('btn-clear-sig')?.addEventListener('click', () => { 
-                ctx.clearRect(0, 0, canvas.width, canvas.height); 
-                hasMark = false; 
-                $data.hasMark = false; 
+            document.getElementById('btn-clear-sig')?.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hasMark = false;
+                $data.hasMark = false;
             });
 
             document.getElementById('btn-sign-submit')?.addEventListener('click', () => {
@@ -120,7 +187,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
         }
      ">
 
-    {{-- ════════════════════ PAGE HEADER (No Print) ════════════════════ --}}
     <div class="bap-panel bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 no-print">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center gap-3.5">
@@ -174,7 +240,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
         </div>
     </div>
 
-    {{-- Alerts --}}
     @if(session('success'))
         <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 no-print">
             <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,12 +257,10 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
 
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-        {{-- ════ BAP FORMAL DOCUMENT PREVIEW (2/3 width) ════ --}}
         <div class="xl:col-span-2 space-y-5">
 
             <div class="bap-doc bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" id="bap-printable">
-                
-                {{-- Formal Kop Surat --}}
+
                 <div class="p-6 sm:p-8 border-b-2 border-gray-800 bg-white">
                     <div class="flex items-center justify-between gap-4 pb-4">
                         <div class="w-16 h-16 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-sm flex-shrink-0">
@@ -223,7 +286,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                     <div class="border-t border-gray-400 mt-0.5"></div>
                 </div>
 
-                {{-- Document Title & Meta --}}
                 <div class="bap-doc-header px-6 py-5 text-center bg-gradient-to-r from-indigo-50/70 via-blue-50/50 to-indigo-50/70 border-b border-gray-100">
                     <h2 class="bap-doc-title text-base font-extrabold text-indigo-950 uppercase tracking-widest">
                         BERITA ACARA PEMINJAMAN ALAT & PERKAKAS
@@ -238,13 +300,11 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                     </p>
                 </div>
 
-                {{-- Document Content --}}
-                <div class="p-6 sm:p-8 space-y-6">
+                <div id="bap-content-inner" class="p-6 sm:p-8 space-y-6">
                     <p class="text-xs text-gray-700 leading-relaxed text-justify">
                         Pada hari ini, <strong>{{ now()->isoFormat('dddd, D MMMM YYYY') }}</strong>, telah disepakati dan diserahterimakan alat/perkakas laboratorium dari Penanggung Jawab Inventaris kepada pemohon peminjam dengan rincian data sebagai berikut:
                     </p>
 
-                    {{-- Data Table --}}
                     <div class="border border-gray-200 rounded-xl overflow-hidden">
                         <table class="w-full text-xs text-left">
                             <tbody class="divide-y divide-gray-200">
@@ -284,7 +344,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                         </table>
                     </div>
 
-                    {{-- Clauses --}}
                     <div class="bg-gray-50/75 rounded-xl p-4 border border-gray-200 text-[11px] text-gray-600 space-y-1.5">
                         <p class="font-bold text-gray-800 uppercase tracking-wide">Ketentuan & Tanggung Jawab:</p>
                         <ol class="list-decimal list-inside space-y-1 text-gray-600">
@@ -295,7 +354,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                         </ol>
                     </div>
 
-                    {{-- Signatures Side-by-side --}}
                     <div class="pt-4 grid grid-cols-2 gap-8 text-center text-xs">
                         <div class="space-y-1">
                             <p class="font-semibold text-gray-700">Pihak Peminjam,</p>
@@ -328,7 +386,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                         </div>
                     </div>
 
-                    {{-- Verification Seal (if signed) --}}
                     @if($borrowingRequest->isSigned())
                     <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between gap-3 text-xs">
                         <div class="flex items-center gap-2.5">
@@ -348,11 +405,10 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
             </div>
         </div>
 
-        {{-- ════ RIGHT PANEL: Signature Pad or QR Actions (No Print) ════ --}}
         <div class="space-y-5 no-print">
 
             @if(! $borrowingRequest->isSigned())
-                {{-- Digital Signature Pad --}}
+
                 <div class="bap-panel bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-4">
                     <div class="flex items-center justify-between pb-3 border-b border-gray-100">
                         <div>
@@ -366,7 +422,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                         </div>
                     </div>
 
-                    {{-- Canvas Box --}}
                     <div class="rounded-xl border-2 border-dashed border-gray-300 bg-slate-50 relative overflow-hidden" style="height: 170px;">
                         <canvas id="sig-canvas"
                                 style="width: 100%; height: 170px; cursor: crosshair; touch-action: none; display: block;">
@@ -416,7 +471,6 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                     </form>
                 </div>
 
-                {{-- Advisory Box --}}
                 <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-start gap-2.5">
                     <svg class="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -428,7 +482,7 @@ html.dark .bap-sig-box    { background-color: #1e293b !important; border-color: 
                 </div>
 
             @else
-                {{-- Verified QR Panel --}}
+
                 <div class="bap-panel bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-4">
                     <div class="flex items-center justify-between pb-3 border-b border-gray-100">
                         <div>

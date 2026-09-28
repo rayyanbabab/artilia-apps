@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-    {{-- Header --}}
+
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -10,18 +10,17 @@
                     <h1 class="text-2xl font-bold text-gray-900">Tambah Barang Keluar</h1>
                     <p class="text-sm text-gray-600 mt-1">Catat barang yang keluar dari inventory</p>
                 </div>
-                <a href="{{ route($routePrefix . '.outgoing.index') }}" 
+                <a href="{{ route($routePrefix . '.outgoing.index') }}"
                    class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    â† Kembali
+                    Kembali
                 </a>
             </div>
         </div>
     </div>
 
-    {{-- Form --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <form action="{{ route($routePrefix . '.outgoing.store') }}" method="POST">
             @csrf
@@ -32,7 +31,6 @@
 
             <div class="px-6 py-6 space-y-6">
 
-                {{-- User Searchable --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Pilih User <span class="text-red-500">*</span>
@@ -46,7 +44,7 @@
                             </button>
                             <div class="ssd-dropdown" id="user-ssd-dropdown">
                                 <div class="ssd-search-wrap">
-                                    <input type="text" class="ssd-search" placeholder="ðŸ” Ketik nama atau email user..." autocomplete="off">
+                                    <input type="text" class="ssd-search" placeholder="Ketik nama atau email user..." autocomplete="off">
                                 </div>
                                 <div class="ssd-options">
                                     <div class="ssd-option" data-value="">-- Pilih User --</div>
@@ -56,13 +54,13 @@
                                              data-name="{{ $user->name }}"
                                              data-email="{{ $user->email }}">
                                             {{ $user->name }}
-                                            <span style="color:#9ca3af;font-size:0.75rem"> Â· ID:{{ $user->id }} Â· {{ $user->email }}</span>
+                                            <span style="color:#9ca3af;font-size:0.75rem"> &bull; ID:{{ $user->id }} &bull; {{ $user->email }}</span>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
-                        {{-- QR Scan Button --}}
+
                         <button type="button" onclick="openQrScanner('outgoing')"
                             title="Scan QR Code User"
                             class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-150 shadow-sm"
@@ -77,7 +75,6 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
 
-                    {{-- Selected user info card --}}
                     <div id="selected_user_info" class="hidden mt-3 bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <h4 class="text-sm font-medium text-blue-900 mb-2">User Terpilih</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -90,7 +87,6 @@
                     <input type="hidden" name="user_id_input" id="user_id_input">
                 </div>
 
-                {{-- Item List --}}
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <label class="block text-sm font-medium text-gray-700">
@@ -141,7 +137,7 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        âœ“ Simpan Barang Keluar
+                        Simpan Barang Keluar
                     </button>
                 </div>
             </div>
@@ -151,7 +147,7 @@
 
 @push('styles')
 <style>
-/* === Searchable Select Dropdown === */
+
 .ssd-wrapper { position: relative; width: 100%; }
 .ssd-display {
     display: flex; align-items: center; justify-content: space-between;
@@ -196,7 +192,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-   
     function initSSD(wrapper, onSelect) {
         const display    = wrapper.querySelector('.ssd-display');
         const dropdown   = wrapper.querySelector('.ssd-dropdown');
@@ -206,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const hiddenInp  = wrapper.querySelector('input[type="hidden"]');
 
         function openDropdown() {
-            // Close all others
             document.querySelectorAll('.ssd-dropdown.open').forEach(d => {
                 d.classList.remove('open');
                 d.closest('.ssd-wrapper').querySelector('.ssd-display').classList.remove('open');
@@ -225,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.classList.contains('open') ? closeDropdown() : openDropdown();
         });
 
-        // Search filter
         function filterOpts(q) {
             q = q.toLowerCase();
             let any = false;
@@ -247,14 +240,12 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInp.addEventListener('click', e => e.stopPropagation());
         }
 
-        // Click option
         optsArea.querySelectorAll('.ssd-option').forEach(opt => {
             opt.addEventListener('click', function() {
                 const val = this.dataset.value || '';
                 hiddenInp.value = val;
 
                 if (val) {
-                    // Build display label: first text node only
                     const textNode = [...this.childNodes].find(n => n.nodeType === 3);
                     displayTxt.textContent = textNode ? textNode.textContent.trim() : this.textContent.trim();
                     displayTxt.classList.remove('ssd-placeholder');
@@ -272,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close on outside click
     document.addEventListener('click', e => {
         if (!e.target.closest('.ssd-wrapper')) {
             document.querySelectorAll('.ssd-dropdown.open').forEach(d => {
@@ -282,10 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
-    /* =====================================================
-       User SSD
-    ===================================================== */
     const userWrapper = document.getElementById('user-ssd-wrapper');
     const userInfoCard = document.getElementById('selected_user_info');
 
@@ -303,10 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
-    /* =====================================================
-       Item Rows
-    ===================================================== */
     const itemsContainer = document.getElementById('itemsContainer');
     const summarySection = document.getElementById('summarySection');
     const elTotalItems    = document.getElementById('totalItems');
@@ -363,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </button>
                             <div class="ssd-dropdown">
                                 <div class="ssd-search-wrap">
-                                    <input type="text" class="ssd-search" placeholder="ðŸ” Ketik nama barang, kode, atau supplier..." autocomplete="off">
+                                    <input type="text" class="ssd-search" placeholder="Ketik nama barang, kode, atau supplier..." autocomplete="off">
                                 </div>
                                 <div class="ssd-options">
                                     <div class="ssd-option" data-value="">-- Pilih Barang --</div>
@@ -379,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                              data-location-label="${item.location_label}"
                                              data-location-kode="${item.location_kode}">
                                             ${item.name}
-                                            <span style="color:#9ca3af;font-size:0.75rem"> Â· ${item.code} Â· Stok: ${item.stock} Â· ${item.supplier}</span>
+                                            <span style="color:#9ca3af;font-size:0.75rem"> &bull; ${item.code} &bull; Stok: ${item.stock} &bull; ${item.supplier}</span>
                                         </div>
                                     `).join('')}
                                 </div>
@@ -400,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <input type="number" name="items[${cnt}][quantity]"
                            class="quantity-input block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                            data-counter="${cnt}" min="1" placeholder="0" required>
-                    <p class="stock-warning-${cnt} mt-1 text-sm text-red-600 hidden">âš  Melebihi stok tersedia!</p>
+                    <p class="stock-warning-${cnt} mt-1 text-sm text-red-600 hidden">Melebihi stok tersedia!</p>
                 </div>
             </div>
 
@@ -427,7 +409,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         itemsContainer.appendChild(div);
 
-        // Init item SSD
         const itemWrapper = div.querySelector('.item-ssd-wrapper');
         const hiddenInp   = div.querySelector('.item-hidden-input');
 
@@ -464,7 +445,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector(`.item-stock-${cnt}`).textContent  = itemData.stock + ' unit';
             document.querySelector(`.item-price-${cnt}`).textContent  = itemData.price > 0 ? 'Rp ' + itemData.price.toLocaleString('id-ID') : 'Rp 0';
 
-            // Location badge
             const locRow = document.querySelector(`.item-location-row-${cnt}`);
             if (itemData.locationLabel) {
                 document.querySelector(`.item-location-${cnt}`).textContent      = itemData.locationLabel;
@@ -533,14 +513,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-{{-- QR Scanner Modal --}}
 @include('admin.components.partials.qr-scanner-modal')
 
 @push('scripts')
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 window.onQrUserFound = function(userData) {
-    // Find the option in the outgoing user SSD
     var userWrapper = document.getElementById('user-ssd-wrapper');
     var opts = userWrapper.querySelectorAll('.ssd-options .ssd-option[data-value]');
     var found = null;
@@ -557,14 +535,10 @@ window.onQrUserFound = function(userData) {
 @endpush
 @endsection
 
-
-{{-- Item Barcode Scanner Modal --}}
 @include('admin.components.partials.item-scan-modal')
 
 <script>
-/**
- * Callback: pilih item di SSD dropdown outgoing (item-ssd-wrapper-N)
- */
+
 window._isSelectCallback = function(item, cnt) {
     var wrapper = document.getElementById('item-ssd-wrapper-' + cnt);
     if (!wrapper) return;

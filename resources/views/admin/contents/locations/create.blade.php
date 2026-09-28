@@ -31,7 +31,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
 </style>
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
 
-    {{-- Header --}}
     <div class="flex items-center justify-between">
         <div>
             <div class="loc-breadcrumb flex items-center gap-2 text-xs text-gray-400 mb-1">
@@ -51,7 +50,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
         </a>
     </div>
 
-    {{-- Errors --}}
     @if($errors->any())
         <div class="rounded-xl bg-red-50 border border-red-200 p-4">
             <div class="flex items-start gap-3">
@@ -70,10 +68,8 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
         </div>
     @endif
 
-    {{-- Form --}}
     <div class="loc-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
-        {{-- Form Header --}}
         <div class="loc-card-header px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center gap-3">
             <div class="loc-icon-wrap w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center">
                 <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -92,7 +88,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
 
             <div class="px-6 py-5 space-y-5">
 
-                {{-- Nama --}}
                 <div class="space-y-1.5">
                     <label for="name" class="loc-label block text-sm font-semibold text-gray-700">
                         Nama Lokasi <span class="text-red-500">*</span>
@@ -109,23 +104,40 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
                     @enderror
                 </div>
 
-                {{-- Kode --}}
                 <div class="space-y-1.5">
-                    <label for="kode" class="loc-label block text-sm font-semibold text-gray-700">
-                        Kode Singkat
-                        <span class="loc-label-hint text-xs font-normal text-gray-400">(opsional — auto-generate dari nama)</span>
-                    </label>
+                    <div class="flex items-center justify-between">
+                        <label for="kode" class="loc-label block text-sm font-semibold text-gray-700">
+                            Kode Singkat (Kode Rak)
+                            <span class="loc-label-hint text-xs font-normal text-gray-400">— otomatis digenerate tanpa perlu diketik</span>
+                        </label>
+                        <span id="autoBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Auto-Generate Aktif
+                        </span>
+                    </div>
                     <div class="relative">
                         <input type="text" id="kode" name="kode" value="{{ old('kode') }}"
-                               placeholder="cth: LSV"
+                               placeholder="cth: RP"
                                maxlength="20"
-                               oninput="kodeManuallyEdited = true"
-                               class="w-full px-3 py-2.5 pr-20 text-sm font-mono border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition @error('kode') border-red-300 bg-red-50 @enderror">
-                        <button type="button" onclick="resetKodeAuto()"
-                                class="loc-auto-btn absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded-md transition-colors">
-                            ↺ Auto
-                        </button>
+                               readonly
+                               class="w-full px-3.5 py-2.5 pr-28 text-sm font-mono font-bold bg-slate-50 dark:bg-slate-800/60 text-blue-600 dark:text-blue-400 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none transition cursor-not-allowed select-all @error('kode') border-red-300 bg-red-50 @enderror">
+                        <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                            <button type="button" id="refreshKodeBtn" onclick="refreshKodeAuto()"
+                                    title="Generate ulang kode dari nama"
+                                    class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="toggleManualBtn" onclick="toggleManualMode()"
+                                    class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 px-2.5 py-1 rounded-lg transition-colors cursor-pointer shadow-xs">
+                                Ubah
+                            </button>
+                        </div>
                     </div>
+                    <p id="kodeHelpText" class="text-[11px] text-gray-400 dark:text-gray-500">
+                        Kode rak akan terisi otomatis saat Anda mengetikkan Nama Lokasi di atas.
+                    </p>
                     @error('kode')
                         <p class="text-xs text-red-600 flex items-center gap-1">
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
@@ -134,7 +146,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
                     @enderror
                 </div>
 
-                {{-- Parent --}}
                 <div class="space-y-1.5">
                     <label for="parent_id" class="loc-label block text-sm font-semibold text-gray-700">
                         Lokasi Induk
@@ -154,7 +165,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
                     @enderror
                 </div>
 
-                {{-- Deskripsi --}}
                 <div class="space-y-1.5">
                     <label for="deskripsi" class="loc-label block text-sm font-semibold text-gray-700">
                         Deskripsi
@@ -165,7 +175,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
                               class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">{{ old('deskripsi') }}</textarea>
                 </div>
 
-                {{-- Status --}}
                 <div class="space-y-2">
                     <label class="loc-label block text-sm font-semibold text-gray-700">Status <span class="text-red-500">*</span></label>
                     <div class="flex gap-3">
@@ -184,7 +193,6 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
 
             </div>
 
-            {{-- Footer --}}
             <div class="loc-card-footer flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-100">
                 <a href="{{ route($routePrefix . '.locations.index') }}"
                    class="loc-btn-cancel inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 rounded-xl transition-colors">
@@ -204,9 +212,11 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
 </div>
 
 <script>
-    let kodeManuallyEdited = {{ old('kode') ? 'true' : 'false' }};
+    let isAutoMode = true;
+    let debounceTimer = null;
+    const ajaxUrl = "{{ route($routePrefix . '.locations.generate-kode') }}";
 
-    function generateKode(nama) {
+    function clientGenerateKode(nama) {
         if (!nama || !nama.trim()) return '';
         const words = nama.trim().split(/\s+/).filter(w => w.length > 0);
         if (words.length === 1) {
@@ -218,9 +228,7 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
             for (let i = 0; i < letters.length && picked.length < 3; i++) {
                 if (i === 0 || !vowels.test(letters[i])) picked += letters[i];
             }
-            for (let i = 1; i < letters.length && picked.length < 3; i++) {
-                if (!picked.includes(letters[i])) picked += letters[i];
-            }
+            if (picked.length < 2) picked = letters.substring(0, 3);
             return (picked + digits).toUpperCase().substring(0, 6);
         }
         let code = '';
@@ -237,15 +245,66 @@ html.dark .loc-card-header-sub { color: #64748b !important; }
     }
 
     function autoKode(val) {
-        if (kodeManuallyEdited) return;
-        document.getElementById('kode').value = generateKode(val);
+        if (!isAutoMode) return;
+        const kodeInput = document.getElementById('kode');
+        if (!val || !val.trim()) {
+            kodeInput.value = '';
+            return;
+        }
+        kodeInput.value = clientGenerateKode(val);
+
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            fetch(`${ajaxUrl}?name=${encodeURIComponent(val)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (isAutoMode && data.kode) {
+                        kodeInput.value = data.kode;
+                    }
+                })
+                .catch(() => {});
+        }, 200);
     }
 
-    function resetKodeAuto() {
-        kodeManuallyEdited = false;
+    function toggleManualMode() {
+        isAutoMode = !isAutoMode;
+        const input = document.getElementById('kode');
+        const badge = document.getElementById('autoBadge');
+        const btn = document.getElementById('toggleManualBtn');
+        const help = document.getElementById('kodeHelpText');
+
+        if (isAutoMode) {
+            input.readOnly = true;
+            input.classList.add('cursor-not-allowed', 'bg-slate-50', 'dark:bg-slate-800/60');
+            badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800';
+            badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Generate Aktif';
+            btn.textContent = 'Ubah';
+            help.textContent = 'Kode rak akan terisi otomatis saat Anda mengetikkan Nama Lokasi di atas.';
+            refreshKodeAuto();
+        } else {
+            input.readOnly = false;
+            input.classList.remove('cursor-not-allowed', 'bg-slate-50', 'dark:bg-slate-800/60');
+            badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
+            badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Mode Manual';
+            btn.textContent = 'Otomatiskan';
+            help.textContent = 'Mode manual aktif. Anda dapat mengetik kode sendiri atau klik Otomatiskan.';
+            input.focus();
+        }
+    }
+
+    function refreshKodeAuto() {
         const nama = document.getElementById('name').value;
-        document.getElementById('kode').value = generateKode(nama);
-        document.getElementById('kode').focus();
+        const kodeInput = document.getElementById('kode');
+        if (!nama || !nama.trim()) return;
+        kodeInput.value = clientGenerateKode(nama);
+        fetch(`${ajaxUrl}?name=${encodeURIComponent(nama)}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.kode) {
+                    kodeInput.value = data.kode;
+                }
+            })
+            .catch(() => {});
     }
 </script>
 @endsection

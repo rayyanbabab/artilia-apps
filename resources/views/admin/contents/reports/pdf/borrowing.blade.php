@@ -14,9 +14,6 @@
             line-height: 1.4;
         }
 
-        /* ══════════════════════════════════════════
-           KOP SURAT
-        ══════════════════════════════════════════ */
         .kop {
             display: table;
             width: 100%;
@@ -52,9 +49,6 @@
         }
         .kop-nomor-box .label { color: #9ca3af; font-size: 7.5px; }
 
-        /* ══════════════════════════════════════════
-           JUDUL LAPORAN
-        ══════════════════════════════════════════ */
         .report-heading {
             text-align: center;
             margin: 10px 0 4px;
@@ -73,9 +67,6 @@
         }
         .divider-thin { border: none; border-top: 1px solid #e5e7eb; margin: 6px 0; }
 
-        /* ══════════════════════════════════════════
-           INFO PERIODE
-        ══════════════════════════════════════════ */
         .info-bar {
             display: table;
             width: 100%;
@@ -86,9 +77,6 @@
         .info-bar-right { display: table-cell; text-align: right; color: #374151; }
         .info-bar span  { color: #9ca3af; margin-right: 3px; }
 
-        /* ══════════════════════════════════════════
-           RINGKASAN STATISTIK
-        ══════════════════════════════════════════ */
         .summary-title {
             font-size: 8px;
             font-weight: bold;
@@ -121,9 +109,6 @@
         .s-cancelled { background: #f9fafb; }           .s-cancelled .stat-val { color: #6b7280; } .s-cancelled .stat-lbl { color: #6b7280; }
         .s-overdue   { background: #fff7ed; }           .s-overdue .stat-val   { color: #c2410c; } .s-overdue .stat-lbl   { color: #c2410c; }
 
-        /* ══════════════════════════════════════════
-           TABEL DATA
-        ══════════════════════════════════════════ */
         .section-title {
             font-size: 8px;
             font-weight: bold;
@@ -169,7 +154,6 @@
         .item-name   { font-weight: bold; font-size: 8px; color: #1a1a2e; }
         .item-sub    { font-size: 7px; color: #9ca3af; margin-top: 1px; }
 
-        /* Status badges */
         .badge {
             display: inline-block;
             padding: 2px 6px;
@@ -188,9 +172,6 @@
 
         .overdue-mark { color: #dc2626; font-weight: bold; }
 
-        /* ══════════════════════════════════════════
-           LEMBAR PENGESAHAN
-        ══════════════════════════════════════════ */
         .sig-section { margin-top: 20px; page-break-inside: avoid; }
         .sig-section-title {
             font-size: 8px;
@@ -242,9 +223,6 @@
         .sig-name-line { font-size: 8px; color: #374151; }
         .sig-nip       { font-size: 7px; color: #9ca3af; margin-top: 2px; }
 
-        /* ══════════════════════════════════════════
-           FOOTER
-        ══════════════════════════════════════════ */
         .footer-wrap {
             margin-top: 12px;
             border-top: 1px solid #e5e7eb;
@@ -256,13 +234,11 @@
         .footer-right { display: table-cell; font-size: 7.5px; color: #9ca3af; text-align: right; }
         .footer-left strong { color: #6b7280; }
 
-        /* Empty state */
         .empty-row td { padding: 20px; text-align: center; color: #9ca3af; font-style: italic; }
     </style>
 </head>
 <body>
 
-    {{-- ══ KOP SURAT ══ --}}
     <div class="kop">
         <div class="kop-logo">
             @if(!empty($logoBase64))
@@ -291,7 +267,6 @@
         </div>
     </div>
 
-    {{-- ══ JUDUL ══ --}}
     <div class="report-heading">
         <div class="title">{{ strtoupper($title) }}</div>
         <div class="subtitle">
@@ -306,7 +281,6 @@
     </div>
     <hr class="divider-thin">
 
-    {{-- ══ RINGKASAN ══ --}}
     <div class="summary-title">Ringkasan Data</div>
     <table class="stats-table">
         <tr>
@@ -341,7 +315,6 @@
         </tr>
     </table>
 
-    {{-- ══ TABEL DATA ══ --}}
     <div class="section-title">Detail Peminjaman</div>
     <table class="data-table">
         <thead>
@@ -416,7 +389,6 @@
         </tbody>
     </table>
 
-    {{-- ══ LEMBAR PENGESAHAN ══ --}}
     <div class="sig-section">
         <div class="sig-section-title">Lembar Pengesahan</div>
         <div class="sig-date">{{ $company['address'] ? $company['address'] . ', ' : '' }}{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
@@ -456,7 +428,6 @@
         </table>
     </div>
 
-    {{-- ══ FOOTER ══ --}}
     <div class="footer-wrap">
         <div class="footer-left">
             <strong>{{ $company['name'] }}</strong>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form mx-auto space-y-4 p-4 max-w-4xl">
-        {{-- Header Section --}}
+
         <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900">Create New User</h1>
@@ -20,7 +20,6 @@
             </div>
         </div>
 
-        {{-- Error Messages --}}
         @if ($errors->any())
             <div class="rounded-md bg-red-50 p-4 border border-red-200">
                 <div class="flex">
@@ -44,7 +43,6 @@
             </div>
         @endif
 
-        {{-- Main Form --}}
         <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
             <form action="{{ route($routePrefix . '.content.savedatausers') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -53,11 +51,9 @@
                     <h3 class="text-lg font-semibold text-gray-900">User Information</h3>
                 </div>
 
-                {{-- Form Content --}}
                 <div class="space-y-4 p-4">
                     <div class="space-y-4">
 
-                        {{-- User Details --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="name" class="block text-sm font-medium text-gray-700">
@@ -86,12 +82,11 @@
                             </div>
                         </div>
 
-                        {{-- Bio Field --}}
                         <div class="space-y-2">
                             <label for="bio" class="block text-sm font-medium text-gray-700">
                                 Bio (Optional)
                             </label>
-                            <textarea id="bio" name="bio" rows="3" class="input-form" 
+                            <textarea id="bio" name="bio" rows="3" class="input-form"
                                 placeholder="Enter a brief description about the user...">{{ old('bio') }}</textarea>
                             @error('bio')
                                 <p class="flex items-center text-sm text-red-600">
@@ -104,7 +99,6 @@
                             @enderror
                         </div>
 
-                        {{-- WhatsApp Number Field --}}
                         <div class="space-y-2">
                             <label for="whatsapp_number" class="block text-sm font-medium text-gray-700">
                                 Nomor WhatsApp
@@ -117,9 +111,9 @@
                                         <path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.107 1.523 5.832L.051 23.999l6.333-1.462A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 01-5.001-1.368l-.359-.214-3.721.975.993-3.62-.234-.371A9.818 9.818 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818 5.418 0 9.818 4.4 9.818 9.818 0 5.419-4.4 9.818-9.818 9.818z"/>
                                     </svg>
                                 </span>
-                                <input type="text" id="whatsapp_number" name="whatsapp_number" 
+                                <input type="text" id="whatsapp_number" name="whatsapp_number"
                                     value="{{ old('whatsapp_number') }}"
-                                    class="input-form pl-9" 
+                                    class="input-form pl-9"
                                     placeholder="Contoh: 08123456789 atau 628123456789">
                             </div>
                             @error('whatsapp_number')
@@ -127,7 +121,6 @@
                             @enderror
                         </div>
 
-                        {{-- Profile Photo Field --}}
                         <div class="space-y-2">
                             <label for="profil" class="block text-sm font-medium text-gray-700">
                                 Profile Photo (Optional)
@@ -156,7 +149,6 @@
                             @enderror
                         </div>
 
-                        {{-- Status Field --}}
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-700">
                                 Account Status
@@ -182,7 +174,6 @@
 
                     <div class="space-y-4">
 
-                        {{-- Password Fields --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label for="password" class="block text-sm font-medium text-gray-700">
@@ -191,8 +182,8 @@
                                 <div class="relative">
                                     <input type="password" id="password" name="password" required class="input-form pr-12"
                                         placeholder="Create a secure password">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -214,8 +205,8 @@
                                 <div class="relative">
                                     <input type="password" id="password_confirmation" name="password_confirmation" required class="input-form pr-12"
                                         placeholder="Confirm your password">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onclick="togglePassword('password_confirmation')"
                                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
@@ -293,7 +284,6 @@
 
                 </div>
 
-                {{-- Form Footer --}}
                 <div class="rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3">
                     <div class="flex items-center justify-between">
                         <a href="{{ route($routePrefix . '.content.listusers') }}"
@@ -344,21 +334,19 @@
             const fileInput = document.getElementById('profil');
             const photoPreview = document.getElementById('photo-preview');
             const nameInput = document.getElementById('name');
-            
-            // Update preview when file is selected
+
             fileInput.addEventListener('change', function(e) {
                 if (e.target.files && e.target.files[0]) {
                     const reader = new FileReader();
-                    
+
                     reader.onload = function(event) {
                         photoPreview.src = event.target.result;
                     }
-                    
+
                     reader.readAsDataURL(e.target.files[0]);
                 }
             });
-            
-            // Update avatar seed when name changes
+
             nameInput.addEventListener('input', function(e) {
                 if (!fileInput.files || !fileInput.files[0]) {
                     const name = e.target.value || 'New User';
@@ -366,11 +354,11 @@
                 }
             });
         });
-        
+
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const eyeIcon = document.getElementById(inputId + '_eye');
-            
+
             if (input.type === 'password') {
                 input.type = 'text';
                 eyeIcon.innerHTML = `

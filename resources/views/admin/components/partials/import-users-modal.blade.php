@@ -1,15 +1,9 @@
-{{-- ============================================================
-     Import Users Modal
-     Include di: admin/contents/user/ListUsers.blade.php
-============================================================ --}}
-
 <div id="importUsersModal"
-     style="display:none; position:fixed; inset:0; z-index:9500; background:rgba(15,23,42,0.7); backdrop-filter:blur(4px);"
+     style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(3,7,18,0.6); backdrop-filter:blur(4px);"
      class="flex items-center justify-center p-4">
 
     <div style="background:#fff; border-radius:20px; width:100%; max-width:520px; overflow:hidden; box-shadow:0 25px 60px rgba(0,0,0,0.3);">
 
-        {{-- Header --}}
         <div style="background:linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%); padding:20px 24px; display:flex; align-items:center; justify-content:space-between;">
             <div>
                 <h3 style="color:#fff; font-weight:700; font-size:16px; margin:0;">Import Data User</h3>
@@ -25,7 +19,6 @@
 
         <div style="padding:24px;">
 
-            {{-- Download template --}}
             <div style="background:#faf5ff; border:1px solid #ddd6fe; border-radius:12px; padding:14px 16px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
                 <div>
                     <p style="font-size:13px; font-weight:600; color:#4c1d95; margin:0;">Download Template CSV</p>
@@ -40,7 +33,6 @@
                 </a>
             </div>
 
-            {{-- Format info --}}
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:20px;">
                 <p style="font-size:12px; font-weight:600; color:#475569; margin:0 0 8px;">Kolom CSV yang didukung:</p>
                 <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px;">
@@ -54,7 +46,6 @@
                 <p style="font-size:11px; color:#dc2626; margin:6px 0 0;">⚠ Email yang sudah terdaftar akan dilewati secara otomatis.</p>
             </div>
 
-            {{-- Upload form --}}
             <form action="{{ route('admin.import.users') }}" method="POST" enctype="multipart/form-data" id="importUsersForm">
                 @csrf
                 <div id="importUsersDropzone"
@@ -100,7 +91,12 @@
 
 <script>
 function openImportUsersModal() {
-    document.getElementById('importUsersModal').style.display = 'flex';
+    var el = document.getElementById('importUsersModal');
+    if (!el) return;
+    if (el.parentElement !== document.body) {
+        document.body.appendChild(el);
+    }
+    el.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 function showUsersFileName(input) {

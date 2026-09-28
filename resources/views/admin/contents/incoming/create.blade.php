@@ -2,7 +2,6 @@
 @section('content')
 <div class="space-y-6">
 
-    {{-- Header --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -15,13 +14,12 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    â† Kembali
+                    Kembali
                 </a>
             </div>
         </div>
     </div>
 
-    {{-- Form --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <form id="incomingForm" action="{{ route($routePrefix . '.incoming.store') }}" method="POST">
             @csrf
@@ -32,7 +30,6 @@
 
             <div class="px-6 py-6 space-y-6">
 
-                {{-- Item list --}}
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <label class="block text-sm font-medium text-gray-700">
@@ -49,7 +46,6 @@
 
                     <div id="itemsContainer" class="space-y-4"></div>
 
-                    {{-- Summary --}}
                     <div id="summarySection" class="hidden bg-green-50 border border-green-200 rounded-lg p-4">
                         <h4 class="text-sm font-medium text-green-900 mb-3">Ringkasan</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -60,7 +56,6 @@
                     </div>
                 </div>
 
-                {{-- Keterangan --}}
                 <div>
                     <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan (Opsional)</label>
                     <textarea name="keterangan" id="keterangan" rows="3"
@@ -97,7 +92,7 @@
 
 @push('styles')
 <style>
-/* ===== Searchable Dropdown ===== */
+
 .ssd-wrapper { position: relative; width: 100%; }
 .ssd-display {
     display: flex; align-items: center; justify-content: space-between;
@@ -135,7 +130,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ===== Item data from server ===== */
     const itemsData = {!! json_encode($items->map(function($item) {
         return [
             'id'               => $item->id,
@@ -162,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const elTotalQty      = document.getElementById('totalQuantity');
     const elGrandTotal    = document.getElementById('grandTotal');
 
-    /* ===== Generic SSD initializer ===== */
     function initSSD(wrapper, onSelect) {
         const display  = wrapper.querySelector('.ssd-display');
         const dropdown = wrapper.querySelector('.ssd-dropdown');
@@ -225,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /* ===== Close on outside click ===== */
     document.addEventListener('click', e => {
         if (!e.target.closest('.ssd-wrapper')) {
             document.querySelectorAll('.ssd-dropdown.open').forEach(d => {
@@ -235,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ===== Add item row ===== */
     document.getElementById('addItemBtn').addEventListener('click', addItemRow);
 
     function addItemRow() {
@@ -247,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
         div.className = 'bg-white border border-gray-200 rounded-lg p-4';
         div.id = rowId;
 
-        // Build options HTML from itemsData
         const optionsHtml = itemsData.map(item => `
             <div class="ssd-option"
                  data-value="${item.id}"
@@ -262,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  data-code="${item.code}"
                  data-location-label="${item.location_label}"
                  data-location-kode="${item.location_kode}">
-                ${item.name} <span style="color:#9ca3af;font-size:0.75rem">Â· ${item.code} Â· ${item.type === 'stok' ? '[STOK]' : '[PEMINJAMAN]'} Â· ${item.supplier}</span>
+                ${item.name} <span style="color:#9ca3af;font-size:0.75rem">&bull; ${item.code} &bull; ${item.type === 'stok' ? '[STOK]' : '[PEMINJAMAN]'} &bull; ${item.supplier}</span>
             </div>
         `).join('');
 
@@ -290,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </button>
                             <div class="ssd-dropdown">
                                 <div class="ssd-search-wrap">
-                                    <input type="text" class="ssd-search" placeholder="ðŸ” Ketik nama barang, kode, atau supplier..." autocomplete="off">
+                                    <input type="text" class="ssd-search" placeholder="Ketik nama barang, kode, atau supplier..." autocomplete="off">
                                 </div>
                                 <div class="ssd-options">
                                     <div class="ssd-option" data-value="">-- Pilih Barang --</div>
@@ -340,7 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         itemsContainer.appendChild(div);
 
-        // Init SSD for this row
         const wrapper = div.querySelector('.ssd-wrapper');
         initSSD(wrapper, (val, dataset) => handleItemSelect(cnt, val, dataset));
 
@@ -382,7 +371,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector(`.item-price-${cnt}`).textContent = 'N/A';
             }
 
-            // Show location if available
             const locRow = document.querySelector(`.item-location-row-${cnt}`);
             if (itemData.location_label) {
                 document.querySelector(`.item-location-${cnt}`).textContent      = itemData.location_label;
@@ -443,10 +431,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Start with one row
     addItemRow();
 
-    // Submit with spinner
     const form         = document.getElementById('incomingForm');
     const submitButton = document.getElementById('submitButton');
     const submitText   = document.getElementById('submitText');
@@ -472,16 +458,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 @endsection
 
-{{-- Item Barcode Scanner Modal --}}
 @include('admin.components.partials.item-scan-modal')
 
 <script>
-/**
- * Callback: pilih item di SSD dropdown incoming (item-ssd-N)
- */
+
 window._isSelectCallback = function(item, cnt) {
     var opt = document.querySelector('#item-ssd-' + cnt + ' .ssd-option[data-value="' + item.id + '"]');
     if (opt) { opt.click(); }
 };
 </script>
-

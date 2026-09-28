@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    @if(file_exists(public_path('build/manifest.json')) || app()->environment('local'))
+        @vite(['resources/css/app.css'])
+    @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -24,7 +27,6 @@
 </head>
 <body class="bg-slate-900 min-h-screen text-slate-800 antialiased flex items-center justify-center p-4 sm:p-6 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-    {{-- Ambient background glowing orbs --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden no-print">
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
         <div class="absolute top-1/2 -right-40 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl"></div>
@@ -33,7 +35,6 @@
 
     <div class="relative w-full max-w-xl my-6">
 
-        {{-- Top Brand Indicator --}}
         <div class="text-center mb-6 no-print">
             <div class="inline-flex items-center gap-2 bg-slate-800/80 backdrop-blur-md border border-slate-700/60 px-4 py-1.5 rounded-full shadow-lg">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -41,12 +42,10 @@
             </div>
         </div>
 
-        {{-- Verification Card Container --}}
         <div class="verify-card bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden backdrop-blur-xl">
 
             @if($valid && $borrowingRequest)
 
-                {{-- Banner Success --}}
                 <div class="bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 text-white p-6 sm:p-8 text-center relative overflow-hidden">
                     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
                     <div class="relative z-10">
@@ -60,10 +59,8 @@
                     </div>
                 </div>
 
-                {{-- Body Content --}}
                 <div class="p-6 sm:p-8 space-y-6">
 
-                    {{-- Token Certificate Hash --}}
                     <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Kunci Digital (Token SHA)</p>
@@ -74,7 +71,6 @@
                         </span>
                     </div>
 
-                    {{-- Main Document Data --}}
                     <div class="space-y-3">
                         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Rincian Dokumen BAP</h2>
                         <div class="divide-y divide-slate-100 border border-slate-100 rounded-2xl overflow-hidden bg-white text-xs">
@@ -109,7 +105,6 @@
                         </div>
                     </div>
 
-                    {{-- Signer Information --}}
                     <div class="space-y-3">
                         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Otorisasi & Tanda Tangan</h2>
                         <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -126,7 +121,6 @@
                         </div>
                     </div>
 
-                    {{-- Action Button --}}
                     <div class="pt-2 no-print flex gap-3">
                         <button onclick="window.print()" class="flex-1 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold text-center shadow-md transition-all flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
@@ -138,7 +132,6 @@
 
             @else
 
-                {{-- Banner Error / Invalid --}}
                 <div class="bg-gradient-to-br from-red-600 via-rose-600 to-red-700 text-white p-6 sm:p-8 text-center relative overflow-hidden">
                     <div class="w-16 h-16 rounded-2xl bg-white/20 border border-white/40 backdrop-blur-md flex items-center justify-center mx-auto mb-3.5 shadow-inner">
                         <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -160,7 +153,6 @@
 
             @endif
 
-            {{-- Footer --}}
             <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 text-center text-[11px] text-slate-400">
                 &copy; {{ date('Y') }} Artilia Inventory Management System &bull; Dokumen Elektronik Terotentikasi
             </div>

@@ -4,7 +4,6 @@
 @endphp
 @section('content')
 
-{{-- ═══ Background Orbs ═══ --}}
 <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
     <div class="absolute top-[10%] left-[10%] w-96 h-96 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
     <div class="absolute bottom-[10%] right-[10%] w-96 h-96 bg-indigo-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
@@ -25,7 +24,7 @@
 
     <form action="{{ route($routePrefix . '.stock-opnames.store') }}" method="POST" class="bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl p-6">
         @csrf
-        
+
         <div class="space-y-5">
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Catatan (Opsional)</label>

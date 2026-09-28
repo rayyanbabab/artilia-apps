@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-/* ══ BAP Index — Premium UI ══ */
+
 .bap-card { transition: box-shadow 0.2s; }
 html.dark .bap-card { background-color: #1e293b !important; border-color: #334155 !important; }
 html.dark .bap-title { color: #f1f5f9 !important; }
@@ -19,9 +19,8 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
 
-    {{-- ═══ PAGE HEADER ═══ --}}
     <div class="bap-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {{-- Decorative top bar --}}
+
         <div class="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600"></div>
         <div class="p-5 sm:p-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -52,7 +51,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
         </div>
     </div>
 
-    {{-- Alert --}}
     @if(session('success'))
         <div class="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
             <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -60,9 +58,8 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
         </div>
     @endif
 
-    {{-- ═══ KPI STAT CARDS ═══ --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {{-- Total --}}
+
         <div class="bap-card relative bg-white rounded-2xl border border-gray-100 shadow-sm p-5 overflow-hidden group hover:shadow-md">
             <div class="absolute inset-0 bg-gradient-to-br from-slate-50 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div class="relative flex items-center gap-4">
@@ -79,7 +76,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
             </div>
         </div>
 
-        {{-- Menunggu TTD --}}
         <div class="bap-card relative bg-white rounded-2xl border border-amber-100 shadow-sm p-5 overflow-hidden group hover:shadow-md">
             <div class="absolute top-0 right-0 w-16 h-16 bg-amber-50 rounded-bl-3xl opacity-60"></div>
             <div class="relative flex items-center gap-4">
@@ -101,7 +97,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
             @endif
         </div>
 
-        {{-- Sudah TTD --}}
         <div class="bap-card relative bg-white rounded-2xl border border-emerald-100 shadow-sm p-5 overflow-hidden group hover:shadow-md">
             <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-50 rounded-bl-3xl opacity-60"></div>
             <div class="relative flex items-center gap-4">
@@ -119,7 +114,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
         </div>
     </div>
 
-    {{-- ═══ FILTER & SEARCH ═══ --}}
     <div class="bap-card bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
         <form method="GET" action="{{ route($routePrefix . '.bap.index') }}" class="flex flex-col md:flex-row items-center gap-3">
             <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
@@ -144,7 +138,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
         </form>
     </div>
 
-    {{-- ═══ MAIN TABLE ═══ --}}
     <div class="bap-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-100 text-left text-xs">
@@ -161,7 +154,7 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                 <tbody class="divide-y divide-gray-100">
                     @forelse($bapRequests as $req)
                     <tr class="bap-tr hover:bg-indigo-50/30 transition-colors duration-150">
-                        {{-- Peminjam --}}
+
                         <td class="px-5 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-xl {{ $req->isSigned() ? 'bg-emerald-100 border border-emerald-200' : 'bg-amber-100 border border-amber-200' }} flex items-center justify-center flex-shrink-0">
@@ -177,7 +170,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                             </div>
                         </td>
 
-                        {{-- Item --}}
                         <td class="px-4 py-4">
                             <p class="bap-td-text font-bold text-indigo-900 leading-tight">{{ $req->item->nama }}</p>
                             <p class="bap-td-sub text-[11px] text-gray-400 mt-0.5">
@@ -185,7 +177,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                             </p>
                         </td>
 
-                        {{-- BAP Number --}}
                         <td class="px-4 py-4">
                             @if($req->bap_number)
                                 <p class="font-mono font-bold text-gray-900">{{ $req->bap_number }}</p>
@@ -195,7 +186,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                             @endif
                         </td>
 
-                        {{-- Status --}}
                         <td class="px-4 py-4">
                             @if($req->isSigned())
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
@@ -208,7 +198,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                             @endif
                         </td>
 
-                        {{-- Signer --}}
                         <td class="px-4 py-4">
                             @if($req->isSigned())
                                 <p class="bap-td-text font-semibold text-gray-900 leading-tight">{{ $req->signed_by_name }}</p>
@@ -218,7 +207,6 @@ html.dark .bap-banner  { background: linear-gradient(135deg, rgba(99,102,241,0.1
                             @endif
                         </td>
 
-                        {{-- Actions --}}
                         <td class="px-5 py-4 text-right">
                             @if($req->isSigned())
                                 <a href="{{ route($routePrefix . '.borrowing-requests.bap', $req->id) }}"

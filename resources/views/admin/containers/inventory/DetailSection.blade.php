@@ -12,13 +12,13 @@
                         Reset All
                     </button>
                 </div>
-                
+
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <div>
                         <label for="search" class="block text-xs font-medium text-gray-700 mb-1">Search</label>
-                        <input type="text" 
-                               id="search" 
-                               name="search" 
+                        <input type="text"
+                               id="search"
+                               name="search"
                                value="{{ request('search') }}"
                                placeholder="Search items..."
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
@@ -79,7 +79,7 @@
                 @if ($items->isEmpty())
                     <x-empty-states />
                 @else
-                    {{-- Grid List Item --}}
+
                     <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
                         <table class="table-next">
                             <thead class="bg-gray-50">
@@ -109,7 +109,7 @@
                                             @php
                                                 $displayImage = $item->gambar;
                                             @endphp
-                                            
+
                                             @if ($displayImage)
                                                 <img class="size-10 rounded-full object-cover" src="{{ asset($displayImage) }}"
                                                     alt="{{ $item->nama }}">
@@ -187,7 +187,7 @@
                                                         Reguler: {{ $item->stok_reguler ?? 0 }}
                                                     </span>
                                                 @endif
-                                                
+
                                                 <span class="text-xs text-gray-500">
                                                     Total: {{ $item->stok_total ?? $item->stok ?? 0 }}
                                                 </span>
@@ -215,7 +215,6 @@
                                         <td class="td-next">{{ $item->keterangan ?? '-' }}</td>
                                         <td class="td-next">
                                             <div class="flex w-full items-center justify-center gap-2">
-                                               
 
                                                 <a href="{{ route($routePrefix . '.inventory.show', $item->id) }}"
                                                     class="rounded-md border border-green-500 px-2 py-1 text-sm text-green-600 hover:bg-green-50">
@@ -278,13 +277,13 @@
             document.getElementById('type').value = '';
             document.getElementById('category_id').value = '';
             document.getElementById('supplier_id').value = '';
-            
+
             window.location.href = '{{ route("admin.inventory.tab.detail") }}';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             const filterInputs = ['type', 'category_id', 'supplier_id'];
-            
+
             filterInputs.forEach(function(inputId) {
                 const input = document.getElementById(inputId);
                 if (input) {
@@ -301,7 +300,7 @@
                     clearTimeout(timeout);
                     timeout = setTimeout(() => {
                         this.form.submit();
-                    }, 500); 
+                    }, 500);
                 });
             }
         });

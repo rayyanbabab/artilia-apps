@@ -3,7 +3,6 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
 
-    {{-- Page Header (Sembunyikan di mobile agar scanner lebih ke tengah atas) --}}
     <div class="mb-4 sm:mb-8 hidden sm:flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
@@ -15,11 +14,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
-        {{-- ─── Scanner Card ─── --}}
         <div class="lg:col-span-3">
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
 
-                {{-- Card Header --}}
                 <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
                         <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -32,21 +29,20 @@
                     </div>
                 </div>
 
-                {{-- Camera Viewport --}}
                 <div class="p-4">
                     <div id="reader"
                          class="w-full rounded-xl overflow-hidden bg-gray-900 relative"
                          style="min-height: 300px;">
-                        {{-- Scan overlay frame --}}
+
                         <div id="scan-overlay" class="absolute inset-0 hidden">
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="relative w-52 h-52">
-                                    {{-- Corners --}}
+
                                     <span class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-indigo-400 rounded-tl-lg"></span>
                                     <span class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-indigo-400 rounded-tr-lg"></span>
                                     <span class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-indigo-400 rounded-bl-lg"></span>
                                     <span class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-indigo-400 rounded-br-lg"></span>
-                                    {{-- Scanning line animation --}}
+
                                     <div id="scan-line" class="absolute left-2 right-2 h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent opacity-80"
                                          style="animation: scanLine 2s ease-in-out infinite; top: 50%;">
                                     </div>
@@ -55,7 +51,6 @@
                         </div>
                     </div>
 
-                    {{-- Status & Controls --}}
                     <div class="mt-4 text-center">
                         <p id="scan-status" class="text-sm text-gray-500 dark:text-gray-400 mb-4">Tekan "Mulai Scanner" untuk mengaktifkan kamera.</p>
                         <div class="flex justify-center gap-3">
@@ -79,10 +74,8 @@
             </div>
         </div>
 
-        {{-- ─── Manual Input Card ─── --}}
         <div class="lg:col-span-2 flex flex-col gap-6">
 
-            {{-- Manual Code Input --}}
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
@@ -113,7 +106,6 @@
                 </div>
             </div>
 
-            {{-- How-to Card --}}
             <div class="bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-indigo-900/20 dark:to-violet-900/20 border border-indigo-100 dark:border-indigo-800/40 rounded-2xl p-5">
                 <h3 class="text-sm font-bold text-indigo-800 dark:text-indigo-300 mb-3 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -178,7 +170,6 @@
                 startBtn.classList.remove("hidden");
                 stopBtn.classList.add("hidden");
 
-                // Navigate to scan result
                 if (decodedText.startsWith('http')) {
                     window.location.href = decodedText;
                 } else {
@@ -197,7 +188,7 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: { width: 250, height: 250 } },
                 onScanSuccess,
-                () => {} // frame error — ignore
+                () => {}
             ).then(() => {
                 isScanning = true;
                 startBtn.classList.add("hidden");

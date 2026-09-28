@@ -17,7 +17,6 @@
             margin: 0; padding: 0;
         }
 
-        /* ── HEADER ── */
         .header { margin-bottom: 18px; border-bottom: 2.5px solid #dc2626; padding-bottom: 12px; }
         .header-table { display: table; width: 100%; }
         .header-logo-cell { display: table-cell; width: 60px; vertical-align: middle; }
@@ -35,14 +34,12 @@
         }
         .report-meta { font-size: 9px; color: #7f8c8d; margin-bottom: 14px; }
 
-        /* ── FILTER ── */
         .filter-info {
             background-color: #fef2f2; padding: 8px; border-radius: 4px;
             margin-bottom: 15px; font-size: 9px; border-left: 4px solid #dc2626;
         }
         .filter-info strong { color: #991b1b; }
 
-        /* ── SUMMARY ── */
         .summary-section {
             background-color: #fef2f2; padding: 12px; border-radius: 6px;
             margin-bottom: 20px; border: 1px solid #fecaca;
@@ -56,7 +53,6 @@
         .summary-label { font-size: 8px; color: #991b1b; text-transform: uppercase; font-weight: bold; margin-bottom: 4px; letter-spacing: 0.5px; }
         .summary-value { font-size: 14px; font-weight: bold; color: #7f1d1d; }
 
-        /* ── TABLE ── */
         .table-container { margin-top: 15px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         th {
@@ -67,7 +63,6 @@
         td { padding: 6px; border: 1px solid #fecaca; font-size: 9px; vertical-align: middle; }
         tr:nth-child(even) { background-color: #fef2f2; }
 
-        /* Status badges */
         .status-badge { padding: 3px 6px; border-radius: 10px; font-size: 8px; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
         .status-sold        { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
         .status-damaged     { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
@@ -81,7 +76,6 @@
         .font-bold   { font-weight: bold; }
         .currency    { font-family: 'Courier New', monospace; }
 
-        /* ── SIGNATURE ── */
         .signature-section { margin-top: 26px; page-break-inside: avoid; }
         .sig-label {
             font-size: 8px; color: #6c757d; text-transform: uppercase; font-weight: bold;
@@ -97,7 +91,6 @@
         .sig-name { font-size: 9px; font-weight: 800; color: #2c3e50; }
         .sig-nip  { font-size: 8px; color: #6c757d; margin-top: 2px; }
 
-        /* ── FOOTER ── */
         .footer {
             margin-top: 14px; padding-top: 7px; border-top: 1px solid #fecaca;
             font-size: 8px; color: #6c757d; display: table; width: 100%;
@@ -108,7 +101,6 @@
 </head>
 <body>
 
-    {{-- HEADER --}}
     <div class="header">
         <div class="header-table">
             <div class="header-logo-cell">
@@ -213,7 +205,6 @@
         </table>
     </div>
 
-    {{-- SIGNATURE --}}
     <div class="signature-section">
         <div class="sig-label">Lembar Pengesahan</div>
         <div class="sig-date-row">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>

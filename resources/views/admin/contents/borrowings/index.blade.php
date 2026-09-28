@@ -7,7 +7,7 @@
                     <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Active Borrowings</h1>
                     <p class="text-sm text-gray-600 mt-0.5">List of items currently in active borrowing status</p>
                 </div>
-                <a href="{{ route($routePrefix . '.borrowings.create') }}" 
+                <a href="{{ route($routePrefix . '.borrowings.create') }}"
                    class="self-start sm:self-auto inline-flex items-center px-3 py-2 sm:px-4 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -40,13 +40,13 @@
 
                     <div>
                         <label for="date_from" class="block text-sm font-medium text-gray-700 mb-2">From Date</label>
-                        <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}" 
+                        <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}"
                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
 
                     <div>
                         <label for="date_to" class="block text-sm font-medium text-gray-700 mb-2">To Date</label>
-                        <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}" 
+                        <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}"
                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
                 </div>
@@ -72,7 +72,7 @@
         <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-medium text-gray-900">Borrowing Data</h3>
         </div>
-        
+
         @if($borrowings->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -119,7 +119,7 @@
                                     @if($isOverdue)
                                         <div class="text-xs text-red-600 font-medium">Overdue</div>
                                     @else
-                                   
+
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -141,13 +141,13 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                     <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
-                                    
+
                                     <button type="button" class="text-green-600 hover:text-green-900" onclick="openModal('ret-bor-{{ $borrowing->id }}')">
                                         Return
                                     </button>
-                                    
+
                                     <a href="{{ route($routePrefix . '.borrowings.edit', $borrowing) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    
+
                                     <button type="button" class="text-red-600 hover:text-red-900" onclick="openModal('del-bor-{{ $borrowing->id }}')">
                                         Delete
                                     </button>
@@ -157,7 +157,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="px-6 py-4 border-t border-gray-200">
                 {{ $borrowings->links() }}
             </div>

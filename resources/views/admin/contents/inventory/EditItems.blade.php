@@ -3,7 +3,6 @@
 @section('content')
 <div class="form mx-auto space-y-4 p-4 max-w-4xl">
 
-    {{-- Header Section --}}
     <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Edit Item</h1>
@@ -20,7 +19,6 @@
         </div>
     </div>
 
-    {{-- Error Messages --}}
     @if ($errors->any())
         <div class="rounded-md bg-red-50 p-4 border border-red-200">
             <div class="flex">
@@ -44,7 +42,6 @@
         </div>
     @endif
 
-    {{-- Main Form --}}
     <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
         <form id="update-form-{{ $item->id }}" method="POST"
               action="{{ route($routePrefix . '.inventory.update', $item->id) }}"
@@ -54,14 +51,12 @@
             @method('PUT')
             <input type="hidden" name="item_id" value="{{ $item->id }}">
 
-            {{-- ── Section: Item Information ── --}}
             <div class="border-b border-gray-200 px-4 py-3">
                 <h3 class="text-lg font-semibold text-gray-900">Item Information</h3>
             </div>
 
             <div class="space-y-4 p-4">
 
-                {{-- Name & Type --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label for="nama" class="block text-sm font-medium text-gray-700">
@@ -91,10 +86,8 @@
                     </div>
                 </div>
 
-                {{-- Category & Supplier --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                    {{-- ── CATEGORY DROPDOWN ── --}}
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label class="block text-sm font-medium text-gray-700">
@@ -198,7 +191,6 @@
                         @enderror
                     </div>
 
-                    {{-- ── SUPPLIER DROPDOWN ── --}}
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label class="block text-sm font-medium text-gray-700">
@@ -304,7 +296,6 @@
 
                 </div>
 
-                {{-- Location (optional) --}}
                 <div class="space-y-1.5" x-data="{
                     locOpen: false,
                     locId: {{ Js::from(old('location_id', $item->location_id ?? '')) }},
@@ -397,7 +388,6 @@
                     @enderror
                 </div>
 
-                {{-- Price --}}
                 <div x-show="selectedType === 'stok'" x-transition class="space-y-2">
                     <label for="harga" class="block text-sm font-medium text-gray-700">
                         Price <span class="text-red-500">*</span>
@@ -417,7 +407,6 @@
                     @enderror
                 </div>
 
-                {{-- Description --}}
                 <div class="space-y-2">
                     <label for="keterangan" class="block text-sm font-medium text-gray-700">
                         Description <span class="text-gray-400 font-normal text-xs">(optional)</span>
@@ -429,7 +418,6 @@
 
             </div>
 
-            {{-- ── Section: Product Image ── --}}
             <div class="border-t border-b border-gray-200 px-4 py-3">
                 <h3 class="text-lg font-semibold text-gray-900">Product Image</h3>
                 <p class="text-sm text-gray-500 mt-0.5">Upload a new image to replace the current one</p>
@@ -437,7 +425,7 @@
 
             <div class="p-4 space-y-3">
                 <div class="flex items-start gap-5">
-                    {{-- Current Image --}}
+
                     @if($item->gambar)
                         <div class="flex-shrink-0">
                             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Current Image</p>
@@ -479,7 +467,6 @@
                 </div>
             </div>
 
-            {{-- Form Footer --}}
             <div class="rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3">
                 <div class="flex items-center justify-between">
                     <a href="{{ route($routePrefix . '.inventory.index') }}"

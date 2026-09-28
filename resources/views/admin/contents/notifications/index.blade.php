@@ -2,7 +2,7 @@
 
 @push('styles')
 <style>
-    /* ── Filter Tabs ── */
+
     .ntab {
         display: inline-flex; align-items: center; gap: 5px;
         padding: 0.3rem 0.8rem;
@@ -23,7 +23,6 @@
         line-height: 1.4;
     }
 
-    /* ── Notification rows ── */
     .nrow {
         position: relative;
         display: flex; align-items: flex-start; gap: 0.8rem;
@@ -35,13 +34,11 @@
     .nrow.unread { background: rgba(239,246,255,.5); }
     .nrow:not(.unread):hover { background: rgba(249,250,251,.7); }
 
-    /* Left colored bar for unread */
     .nrow-bar {
         position: absolute; left: 0; top: 10px; bottom: 10px;
         width: 3px; border-radius: 0 3px 3px 0;
     }
 
-    /* Icon bubble */
     .nrow-icon {
         flex-shrink: 0; width: 34px; height: 34px;
         border-radius: 9px;
@@ -49,7 +46,6 @@
         margin-top: 1px;
     }
 
-    /* Show action links only on hover */
     .nrow-actions { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.4rem; }
     .nrow-actions a, .nrow-actions button {
         font-size: 11px; font-weight: 600;
@@ -62,7 +58,6 @@
     .nrow-actions button:hover { color: #6b7280; }
     .nrow-actions .sep { color: #e5e7eb; font-size: 10px; }
 
-    /* Type pill */
     .npill {
         display: inline-flex; align-items: center;
         padding: 1px 7px; border-radius: 4px;
@@ -102,7 +97,6 @@
 
 <div class="max-w-3xl mx-auto space-y-4">
 
-    {{-- ── HEADER ── --}}
     <div class="flex items-center justify-between gap-4">
         <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -134,16 +128,14 @@
         @endif
     </div>
 
-    {{-- ── FILTER TABS ── --}}
     <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5" style="scrollbar-width:none;">
-        {{-- Semua --}}
+
         <a href="{{ request()->fullUrlWithQuery(['filter'=>'all','type'=>'']) }}"
            class="ntab {{ ($activeFilter==='all'&&!$typeFilter)?'on':'off' }}">
             Semua
             <span class="ntab-count {{ ($activeFilter==='all'&&!$typeFilter)?'bg-white/20 text-white':'bg-gray-100 text-gray-500' }}">{{ $allCount }}</span>
         </a>
 
-        {{-- Belum Dibaca --}}
         <a href="{{ request()->fullUrlWithQuery(['filter'=>'unread','type'=>'']) }}"
            class="ntab {{ $activeFilter==='unread'?'on':'off' }}">
             Belum Dibaca
@@ -162,7 +154,6 @@
         @endforeach
     </div>
 
-    {{-- ── NOTIFICATION LIST ── --}}
     <div class="rounded-2xl overflow-hidden border border-white/70"
          style="background:rgba(255,255,255,0.72);backdrop-filter:blur(20px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.85),0 4px 24px rgba(0,0,0,0.06);">
 
@@ -176,19 +167,17 @@
             @endphp
 
             <div class="nrow {{ $isUnread?'unread':'' }}">
-                {{-- Unread bar --}}
+
                 @if($isUnread)
                     <div class="nrow-bar {{ $meta['bar'] }}"></div>
                 @endif
 
-                {{-- Icon --}}
                 <div class="nrow-icon {{ $meta['bg'] }}">
                     <svg class="{{ $meta['icon-c'] }}" style="width:15px;height:15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="{{ $meta['icon'] }}"/>
                     </svg>
                 </div>
 
-                {{-- Body --}}
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between gap-2 mb-0.5">
                         <div class="flex items-center gap-1.5 flex-wrap">
@@ -264,7 +253,6 @@
         @endforelse
     </div>
 
-    {{-- ── PAGINATION ── --}}
     @if($notifications->hasPages())
         <div class="flex justify-center">
             {{ $notifications->appends(request()->query())->links() }}

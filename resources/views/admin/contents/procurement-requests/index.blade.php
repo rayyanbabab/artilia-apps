@@ -3,7 +3,6 @@
 @section('content')
 <div class="space-y-6">
 
-    {{-- Header --}}
     <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 sm:p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
@@ -18,7 +17,6 @@
         </div>
     </div>
 
-    {{-- Stats --}}
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
             <div class="flex items-center gap-3">
@@ -66,13 +64,12 @@
         </div>
     </div>
 
-    {{-- Filters + Table --}}
     <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        {{-- Filter bar --}}
+
         <div class="px-5 py-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center gap-3">
             <h3 class="text-sm font-semibold text-gray-900 flex-1">Daftar Permintaan</h3>
             <form method="GET" action="{{ route('admin.procurement-requests.index') }}" class="flex items-center gap-2" id="filterForm">
-                {{-- Status filter --}}
+
                 <select name="status" onchange="document.getElementById('filterForm').submit()"
                         class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent">
                     <option value="">Semua Status</option>
@@ -80,7 +77,7 @@
                     <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Disetujui</option>
                     <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
                 </select>
-                {{-- Search --}}
+
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="Cari barang / user..."
                        class="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent w-44">
@@ -94,7 +91,6 @@
             </form>
         </div>
 
-        {{-- Table --}}
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
@@ -179,7 +175,6 @@
             </table>
         </div>
 
-        {{-- Pagination --}}
         @if($procurements->hasPages())
             <div class="px-5 py-4 border-t border-gray-100">
                 {{ $procurements->appends(request()->query())->links() }}

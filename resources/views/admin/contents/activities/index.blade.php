@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{-- ── PAGE HEADER ─────────────────────────────────────────── --}}
 <div class="mb-8">
     <div class="flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -19,7 +18,6 @@
     </div>
 </div>
 
-{{-- ── TABS ─────────────────────────────────────────────────── --}}
 <div class="mb-6 border-b border-gray-200">
     <nav class="-mb-px flex space-x-6" aria-label="Tabs">
         <a href="{{ route($routePrefix . '.activities.index', array_merge(request()->except('tab','page'), ['tab' => 'audit'])) }}"
@@ -49,10 +47,8 @@
     </nav>
 </div>
 
-{{-- ══════════════════════════════════ AUDIT LOG TAB ══════ --}}
 @if($tab === 'audit')
 
-    {{-- STATS --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         @foreach([
             ['label' => 'Total Aksi',  'value' => $auditStats['total'],      'color' => 'indigo', 'icon' => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5...'],
@@ -86,7 +82,6 @@
         @endforeach
     </div>
 
-    {{-- FILTER BAR --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h3 class="text-sm font-semibold text-gray-700 flex items-center">
@@ -150,7 +145,6 @@
         </form>
     </div>
 
-    {{-- AUDIT LOG TABLE --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <div>
@@ -204,7 +198,7 @@
             @endphp
             <div class="px-6 py-4 hover:bg-gray-50 transition-colors group" x-data="{ open: false }">
                 <div class="flex items-start gap-4">
-                    {{-- Action Icon --}}
+
                     <div class="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center mt-0.5"
                          style="background-color:{{ $ai['bg'] }};">
                         <svg style="width:16px;height:16px;color:{{ $ai['color'] }};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,7 +206,6 @@
                         </svg>
                     </div>
 
-                    {{-- Content --}}
                     <div class="flex-1 min-w-0">
                         <div class="flex flex-wrap items-center gap-2 mb-1">
                             <span class="text-xs font-semibold px-2 py-0.5 rounded-full {{ $mc['badge'] }}">
@@ -256,7 +249,6 @@
                             @endif
                         </div>
 
-                        {{-- Expandable Properties --}}
                         @if($log->properties)
                         <div x-show="open" x-collapse class="mt-3">
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
@@ -297,9 +289,7 @@
     </div>
 
 @else
-{{-- ══════════════════════════════════ LOGIN LOG TAB ═══════ --}}
 
-    {{-- STATS --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         @php
             $loginStats = [
@@ -327,7 +317,6 @@
         @endforeach
     </div>
 
-    {{-- FILTER BAR --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h3 class="text-sm font-semibold text-gray-700">Filter Login Log</h3>
@@ -374,7 +363,6 @@
         </form>
     </div>
 
-    {{-- LOGIN LIST --}}
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <div>
@@ -442,7 +430,6 @@
 
 @push('scripts')
 <script>
-// x-collapse polyfill for Alpine if not installed
 document.addEventListener('alpine:init', () => {
     if (!Alpine.directive('collapse')) {
         Alpine.directive('collapse', (el, { modifiers, expression }, { effect, cleanup }) => {
@@ -467,7 +454,6 @@ document.addEventListener('alpine:init', () => {
                     });
                 }
             };
-            // Initial state handled by x-show
         });
     }
 });

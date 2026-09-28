@@ -4,10 +4,10 @@
 
 @section('user')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header -->
+
     <div class="mb-8">
         <div class="flex items-center space-x-4">
-            <a href="{{ route('user.borrowing.index') }}" 
+            <a href="{{ route('user.borrowing.index') }}"
                class="text-gray-600 hover:text-gray-900 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -20,14 +20,13 @@
         </div>
     </div>
 
-    <!-- Content -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-            {{-- Image Section --}}
+
             <div class="space-y-4">
                 <div class="aspect-square w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
                     @if($item->gambar)
-                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama }}" 
+                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama }}"
                              class="h-full w-full object-cover">
                     @else
                         <div class="flex h-full w-full items-center justify-center">
@@ -45,9 +44,8 @@
                 </div>
             </div>
 
-            {{-- Details Section --}}
             <div class="space-y-6">
-                {{-- Title and Stock --}}
+
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $item->nama }}</h2>
                     <div class="flex flex-wrap items-center gap-2">
@@ -60,7 +58,6 @@
                     </div>
                 </div>
 
-                {{-- Item Information --}}
                 <div class="space-y-4">
                     <div class="bg-gray-50 rounded-lg p-4">
                         <h3 class="text-lg font-semibold text-gray-900 mb-3">Item Information</h3>
@@ -69,7 +66,7 @@
                                 <span class="text-gray-600">Available Stock:</span>
                                 <span class="font-medium text-green-600">{{ $item->stok_peminjaman }} unit</span>
                             </div>
-                            
+
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Added:</span>
                                 <span class="font-medium text-gray-900">{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d M Y') }}</span>
@@ -77,7 +74,6 @@
                         </div>
                     </div>
 
-                    {{-- Description --}}
                     @if($item->keterangan)
                         <div class="bg-gray-50 rounded-lg p-4">
                             <h3 class="text-lg font-semibold text-gray-900 mb-3">Description</h3>
@@ -86,10 +82,9 @@
                     @endif
                 </div>
 
-                {{-- Action Buttons --}}
                 <div class="space-y-3 pt-6 border-t border-gray-200">
                     @if($item->stok_peminjaman > 0)
-                        <a href="{{ route('user.borrowing.create', $item->id) }}" 
+                        <a href="{{ route('user.borrowing.create', $item->id) }}"
                            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg text-center inline-block transition-colors duration-200 font-medium">
                             <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -104,8 +99,8 @@
                             Stock Not Available
                         </div>
                     @endif
-                    
-                    <a href="{{ route('user.borrowing.index') }}" 
+
+                    <a href="{{ route('user.borrowing.index') }}"
                        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-lg text-center inline-block transition-colors duration-200 font-medium">
                         <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -117,7 +112,6 @@
         </div>
     </div>
 
-    {{-- Related Items or Additional Info --}}
     <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Borrowing Information</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -130,7 +124,7 @@
                 <h4 class="font-medium text-gray-900 mb-1">Submit Request</h4>
                 <p class="text-sm text-gray-600">Fill out the borrowing form completely</p>
             </div>
-            
+
             <div class="text-center p-4 bg-yellow-50 rounded-lg">
                 <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,7 +134,7 @@
                 <h4 class="font-medium text-gray-900 mb-1">Pending Approval</h4>
                 <p class="text-sm text-gray-600">Admin will review your request</p>
             </div>
-            
+
             <div class="text-center p-4 bg-green-50 rounded-lg">
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

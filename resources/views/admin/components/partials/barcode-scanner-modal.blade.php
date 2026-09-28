@@ -1,14 +1,8 @@
-{{-- ════════════════════════════════════════════
-     Barcode/QR Scanner Modal — Item Lookup
-     Full-screen camera design
-════════════════════════════════════════════ --}}
-
 <div id="scannerModal"
      style="display:none; position:fixed; inset:0; z-index:9100; background:rgba(15,23,42,0.85); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:12px; box-sizing:border-box;">
 
     <div style="background:#0f172a; border-radius:24px; width:100%; max-width:480px; height:calc(100dvh - 24px); max-height:680px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6);">
 
-        {{-- Header --}}
         <div style="background:linear-gradient(135deg,#6d28d9 0%,#4f46e5 100%); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div>
                 <h3 style="color:#fff; font-weight:700; font-size:15px; margin:0;">📷 Scan Barcode / QR Barang</h3>
@@ -21,12 +15,11 @@
             </button>
         </div>
 
-        {{-- Camera — fills all remaining space --}}
         <div style="position:relative; flex:1; overflow:hidden; background:#000;">
             <div id="smReaderContainer" style="width:100%; height:100%; position:relative; overflow:hidden;">
                 <div id="smReader" style="width:100%; height:100%;"></div>
             </div>
-            {{-- Corner bracket overlay --}}
+
             <div id="smOverlayFrame" style="position:absolute; inset:0; pointer-events:none; display:flex; align-items:center; justify-content:center;">
                 <div style="width:220px; height:220px; position:relative;">
                     <div style="position:absolute; top:0; left:0; width:40px; height:40px; border-top:3px solid #a5b4fc; border-left:3px solid #a5b4fc; border-radius:4px 0 0 0;"></div>
@@ -34,29 +27,28 @@
                     <div style="position:absolute; bottom:0; left:0; width:40px; height:40px; border-bottom:3px solid #a5b4fc; border-left:3px solid #a5b4fc; border-radius:0 0 0 4px;"></div>
                     <div style="position:absolute; bottom:0; right:0; width:40px; height:40px; border-bottom:3px solid #a5b4fc; border-right:3px solid #a5b4fc; border-radius:0 0 4px 0;"></div>
                     <div style="position:absolute; left:6px; right:6px; height:2px; background:linear-gradient(90deg,transparent,#818cf8,transparent); border-radius:2px; animation:smScanMove 1.8s ease-in-out infinite; top:0;"></div>
-                    {{-- Vignette --}}
+
                     <div style="position:absolute; inset:-300px -400px; box-shadow: inset 0 0 0 400px rgba(0,0,0,0.5); pointer-events:none;"></div>
                 </div>
             </div>
-            {{-- Hint text --}}
+
             <div id="smHintText" style="position:absolute; bottom:12px; left:0; right:0; text-align:center; pointer-events:none;">
                 <span style="font-size:12px; color:rgba(255,255,255,0.6); background:rgba(0,0,0,0.4); padding:4px 12px; border-radius:20px;">Posisikan barcode di dalam bingkai</span>
             </div>
         </div>
 
-        {{-- Bottom controls panel --}}
         <div style="background:#1e293b; padding:14px 16px; flex-shrink:0;">
-            {{-- Scanning --}}
+
             <div id="smStateScanning" style="display:flex; align-items:center; gap:8px; padding:9px 12px; background:#0f172a; border-radius:10px; border:1px solid #334155; margin-bottom:10px;">
                 <span style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; animation:smBlink 1s ease-in-out infinite; flex-shrink:0;"></span>
                 <span style="font-size:13px; color:#94a3b8;">Menunggu kode...</span>
             </div>
-            {{-- Error --}}
+
             <div id="smStateError" style="display:none; padding:9px 12px; background:#450a0a; border:1px solid #7f1d1d; border-radius:10px; margin-bottom:10px;">
                 <p id="smErrMsg" style="font-size:13px; color:#fca5a5; margin:0;"></p>
                 <button onclick="smResetScan()" style="margin-top:5px; font-size:12px; color:#818cf8; background:none; border:none; cursor:pointer; font-weight:600; padding:0;">↩ Coba lagi</button>
             </div>
-            {{-- Success Result --}}
+
             <div id="smStateResult" style="display:none; padding:10px 12px; background:#052e16; border:1px solid #166534; border-radius:10px; margin-bottom:10px;">
                 <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
                     <div style="width:32px; height:32px; border-radius:8px; overflow:hidden; background:#1e293b; border:1px solid #334155; flex-shrink:0;">
@@ -104,7 +96,7 @@
                 </div>
                 <p id="smResKet" style="display:none;"></p>
             </div>
-            {{-- Manual input --}}
+
             <div style="display:flex; gap:8px; margin-bottom:10px;">
                 <input id="smManualInput" type="text" placeholder="Input kode manual (ITM-XXXX)" autocomplete="off"
                     style="flex:1; padding:9px 12px; border:1px solid #334155; border-radius:10px; font-size:13px; font-family:monospace; outline:none; text-transform:uppercase; background:#0f172a; color:#e2e8f0;"
@@ -112,7 +104,7 @@
                 <button onclick="smDoLookup(document.getElementById('smManualInput').value)"
                     style="padding:9px 16px; background:#6d28d9; color:#fff; border:none; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; flex-shrink:0;">Cari</button>
             </div>
-            {{-- Footer buttons --}}
+
             <div style="display:flex; gap:8px;">
                 <button onclick="closeScannerModal()"
                         style="flex:1; padding:10px; border:1px solid #334155; border-radius:10px; background:#0f172a; font-size:13px; font-weight:600; color:#94a3b8; cursor:pointer;">
@@ -131,7 +123,6 @@
 @keyframes smScanMove { 0%,100%{top:8px} 50%{top:calc(100% - 10px)} }
 @keyframes smBlink    { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-/* ── Hide ALL html5-qrcode internal UI ── */
 #smReader > img,
 #smReader > div[style*="text-align"],
 #smReader button, #smReader select, #smReader span,
@@ -142,7 +133,6 @@
 #smReader__filescan_input,
 #smReader__scan_region > div:not(video) { display: none !important; }
 
-/* ── Video fills camera area completely ── */
 #smReader, #smReader__scan_region {
     width: 100% !important; height: 100% !important;
     border: none !important; padding: 0 !important; margin: 0 !important;
@@ -165,7 +155,6 @@
     var _smLookupUrl = "{{ route('inventory.lookup.shared') }}";
 
     window.openScannerModal = function() {
-        // Escape any CSS transform parent — move to body root
         var modal = document.getElementById('scannerModal');
         if (modal.parentElement !== document.body) document.body.appendChild(modal);
 

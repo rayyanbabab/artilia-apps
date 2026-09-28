@@ -3,7 +3,6 @@
 @section('content')
 <div class="space-y-6">
 
-    {{-- Header --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -22,7 +21,6 @@
         </div>
     </div>
 
-    {{-- Form --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <form id="update-form-{{ $outgoingItem->id }}" action="{{ route($routePrefix . '.outgoing.update', $outgoingItem->id) }}" method="POST">
             @csrf
@@ -34,7 +32,6 @@
 
             <div class="px-6 py-6 space-y-6">
 
-                {{-- ============ Searchable: User ============ --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Diambil Oleh <span class="text-red-500">*</span>
@@ -76,7 +73,6 @@
                     @enderror
                 </div>
 
-                {{-- ============ Searchable: Item ============ --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Pilih Barang <span class="text-red-500">*</span>
@@ -127,7 +123,6 @@
                     @enderror
                 </div>
 
-                {{-- Item detail card --}}
                 <div id="itemDetails" class="{{ $selItem ? '' : 'hidden' }} bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 class="text-sm font-medium text-blue-900 mb-3">Detail Barang</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
@@ -144,7 +139,6 @@
                     </div>
                 </div>
 
-                {{-- Quantity --}}
                 <div>
                     <label for="jumlah" class="block text-sm font-medium text-gray-700 mb-2">
                         Jumlah Keluar <span class="text-red-500">*</span>
@@ -159,7 +153,6 @@
                     <p id="stockWarning" class="mt-1 text-sm text-red-600 hidden">⚠ Jumlah melebihi stok yang tersedia!</p>
                 </div>
 
-                {{-- Keterangan --}}
                 <div>
                     <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan (Opsional)</label>
                     <textarea name="keterangan" id="keterangan" rows="3"
@@ -231,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentStock = 0;
     let currentPrice = 0;
 
-    /* ========= Generic SSD init ========= */
     function initSSD(wrapperId, onSelect) {
         const wrapper  = document.getElementById(wrapperId);
         const display  = wrapper.querySelector('.ssd-display');
@@ -243,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         display.addEventListener('click', () => {
             const isOpen = dropdown.classList.contains('open');
-            // close all
             document.querySelectorAll('.ssd-dropdown.open').forEach(d => {
                 d.classList.remove('open');
                 d.closest('.ssd-wrapper').querySelector('.ssd-display').classList.remove('open');
@@ -295,14 +286,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // init on load
         if (hidden.value) {
             const pre = opts.querySelector(`.ssd-option[data-value="${hidden.value}"]`);
             if (pre && onSelect) onSelect(hidden.value, pre.dataset);
         }
     }
 
-    // Close on outside click
     document.addEventListener('click', e => {
         if (!e.target.closest('.ssd-wrapper')) {
             document.querySelectorAll('.ssd-dropdown.open').forEach(d => {
@@ -312,10 +301,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ========= User SSD ========= */
-    initSSD('user-ssd-wrapper', null); // no extra logic needed for user
+    initSSD('user-ssd-wrapper', null);
 
-    /* ========= Item SSD ========= */
     initSSD('item-ssd-wrapper', function(val, dataset) {
         const detailsDiv = document.getElementById('itemDetails');
         if (!val) {
@@ -331,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('categoryName').textContent  = dataset.category || 'N/A';
         document.getElementById('itemDescription').textContent = dataset.description || 'Tidak ada deskripsi';
 
-        // Available stock (add back original qty if same item)
         let stock = parseInt(dataset.stock) || 0;
         if (val == originalItemId) stock += originalQuantity;
         currentStock = stock;
@@ -346,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
         validateQty();
     });
 
-    /* ========= Quantity ========= */
     document.getElementById('jumlah').addEventListener('input', () => {
         calculateTotal(); validateQty();
     });
@@ -367,7 +352,6 @@ document.addEventListener('DOMContentLoaded', function() {
         inp.classList.toggle('border-gray-300', !over);
     }
 
-    // Trigger total on load if item already selected
     calculateTotal();
 });
 </script>

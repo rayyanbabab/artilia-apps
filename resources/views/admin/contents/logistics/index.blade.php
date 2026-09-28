@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-/* ══ Logistics — Premium UI ══ */
+
 html.dark .log-card  { background-color: #1e293b !important; border-color: #334155 !important; }
 html.dark .log-title { color: #f1f5f9 !important; }
 html.dark .log-sub   { color: #94a3b8 !important; }
@@ -28,7 +28,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         }
      }">
 
-    {{-- ═══ PAGE HEADER ═══ --}}
     <div class="log-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-500"></div>
         <div class="p-5 sm:p-6">
@@ -57,7 +56,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                 </a>
             </div>
 
-            {{-- Formula Banner --}}
             <div class="log-banner mt-5 p-3.5 rounded-xl bg-gradient-to-r from-teal-50 via-cyan-50/60 to-indigo-50 border border-teal-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-2.5">
                 <div class="flex items-center gap-2.5">
                     <div class="w-6 h-6 rounded-full bg-teal-600 text-white text-[11px] font-extrabold flex items-center justify-center flex-shrink-0">i</div>
@@ -78,7 +76,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         </div>
     </div>
 
-    {{-- Alert --}}
     @if(session('success'))
         <div class="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
             <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -86,7 +83,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         </div>
     @endif
 
-    {{-- ═══ KPI CARDS ═══ --}}
     <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
         <div class="log-card bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-3 hover:shadow-md transition-shadow">
             <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
@@ -139,7 +135,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         </div>
     </div>
 
-    {{-- ═══ FILTER & SEARCH ═══ --}}
     <div class="log-card bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
         <form method="GET" action="{{ route($routePrefix . '.logistics.index') }}" class="flex flex-col md:flex-row items-center gap-3">
             <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
@@ -172,7 +167,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         </form>
     </div>
 
-    {{-- ═══ MAIN TABLE ═══ --}}
     <div class="log-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-100 text-left text-xs">
@@ -195,12 +189,12 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                         $abc = $abcMap[$item->id] ?? 'C';
                     @endphp
                     <tr class="log-tr hover:bg-teal-50/20 transition-colors duration-150 {{ $isLow ? 'bg-red-50/30' : '' }}">
-                        {{-- Name & Bin --}}
+
                         <td class="px-5 py-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     @if($item->gambar)
-                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
                                     @else
                                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                     @endif
@@ -222,7 +216,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                             </div>
                         </td>
 
-                        {{-- ABC --}}
                         <td class="px-4 py-4">
                             @if($abc === 'A')
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
@@ -240,7 +233,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                             <p class="log-td-sub text-[10px] text-gray-400 mt-1">Rp {{ number_format($item->valuation, 0, ',', '.') }}</p>
                         </td>
 
-                        {{-- Stock vs ROP --}}
                         <td class="px-4 py-4">
                             <div class="flex items-baseline gap-1.5">
                                 <span class="text-sm font-extrabold {{ $isLow ? 'text-red-600' : 'log-td-text text-gray-900' }}">{{ $item->stok_total }}</span>
@@ -255,13 +247,11 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                             @endif
                         </td>
 
-                        {{-- Parameters --}}
                         <td class="px-4 py-4">
                             <p class="log-td-text text-gray-700 text-xs">Lead Time: <strong class="text-gray-900">{{ $item->lead_time_days }} hari</strong></p>
                             <p class="log-td-sub text-[11px] text-gray-400 mt-0.5">Konsumsi: <strong class="log-td-text text-gray-700">{{ $item->daily_usage_rate }}</strong> u/hari · SS: {{ $item->safety_stock }}</p>
                         </td>
 
-                        {{-- EOQ --}}
                         <td class="px-4 py-4">
                             <div class="inline-flex items-baseline gap-1 bg-teal-50 border border-teal-200 px-3 py-1.5 rounded-xl">
                                 <span class="text-xs text-teal-600 font-medium">Optimal:</span>
@@ -271,7 +261,6 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
                             <p class="log-td-sub text-[10px] text-gray-400 mt-1">Biaya simpan & pesan minimal</p>
                         </td>
 
-                        {{-- Actions --}}
                         <td class="px-5 py-4 text-right">
                             <div class="flex items-center justify-end gap-2">
                                 @if($isLow)
@@ -310,60 +299,113 @@ html.dark .log-banner   { background: linear-gradient(to right, rgba(13,148,136,
         @endif
     </div>
 
-    {{-- ═══ MODAL: EDIT PARAMETER ═══ --}}
-    <div x-show="paramModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-        <div @click.away="paramModal.open = false" class="log-modal-bg bg-white rounded-2xl shadow-2xl border border-gray-100 max-w-lg w-full overflow-hidden">
-            <div class="h-1 bg-gradient-to-r from-teal-500 to-cyan-500"></div>
-            <div class="p-6 space-y-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="log-title text-base font-bold text-gray-900">Parameter Logistik & Bin Rack</h3>
-                        <p class="log-sub text-xs text-gray-400 mt-0.5" x-text="paramModal.name"></p>
+    <template x-teleport="body">
+        <div x-show="paramModal.open"
+             x-cloak
+             class="fixed inset-0 z-[9999] overflow-y-auto"
+             role="dialog" aria-modal="true"
+             @keydown.escape.window="paramModal.open = false">
+
+            <div x-show="paramModal.open"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="paramModal.open = false"
+                 class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 text-center">
+                <div x-show="paramModal.open"
+                     x-transition:enter="ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave="ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 scale-95 translate-y-2 sm:translate-y-0"
+                     @click.stop
+                     class="relative transform text-left bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-800 max-w-lg w-full flex flex-col max-h-[85vh] my-auto overflow-hidden">
+
+                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between flex-shrink-0 bg-gray-50/70 dark:bg-slate-850">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center font-bold text-white shadow-sm flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight">Parameter Logistik & Bin Rack</h3>
+                                <p class="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5 truncate max-w-xs" x-text="paramModal.name"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="paramModal.open = false"
+                                class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+                                title="Tutup Modal (Esc)">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
                     </div>
-                    <button @click="paramModal.open = false" class="text-gray-300 hover:text-gray-600 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
+
+                    <form :action="'{{ route($routePrefix . '.logistics.update-param', ':id') }}'.replace(':id', paramModal.id)" method="POST"
+                          class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                        @csrf
+                        <div class="p-5 sm:p-6 overflow-y-auto min-h-0 space-y-4 flex-1">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Alamat Slot / Bin Rack <span class="text-rose-500">*</span></label>
+                                <input type="text" name="bin_rack" x-model="paramModal.bin_rack" placeholder="Contoh: RAK-A / TKT-2 / BIN-05"
+                                       class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 uppercase focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition font-mono">
+                                <p class="text-[11px] text-gray-400 mt-1">Memandu teknisi/operator langsung ke titik penyimpanan.</p>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Lead Time (Hari) <span class="text-rose-500">*</span></label>
+                                    <input type="number" name="lead_time_days" x-model="paramModal.lead_time" min="1" required
+                                           class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">Laju Pemakaian (Unit/Hari) <span class="text-rose-500">*</span></label>
+                                    <input type="number" step="0.1" name="daily_usage_rate" x-model="paramModal.daily_usage" min="0.01" required
+                                           class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-3 focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2.5">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1 truncate" title="Safety Stock">Safety Stock *</label>
+                                    <input type="number" name="safety_stock" x-model="paramModal.safety_stock" min="0" required
+                                           class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-2.5 text-center font-bold focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1 truncate" title="Biaya Simpan / Thn (H)">Biaya Simpan (H)</label>
+                                    <input type="number" name="holding_cost" x-model="paramModal.holding_cost" min="0"
+                                           class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-2.5 text-center focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1 truncate" title="Biaya Pesan (S)">Biaya Pesan (S)</label>
+                                    <input type="number" name="order_cost" x-model="paramModal.order_cost" min="0"
+                                           class="w-full text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800 text-gray-900 dark:text-white py-2 px-2.5 text-center focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-850 flex items-center justify-end gap-2.5 flex-shrink-0">
+                            <button type="button" @click="paramModal.open = false"
+                                    class="px-4 py-2 text-xs font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200/60 dark:hover:bg-slate-800 rounded-xl transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 active:scale-95 rounded-xl shadow-md shadow-teal-500/25 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Simpan Parameter
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form :action="'{{ route($routePrefix . '.logistics.update-param', ':id') }}'.replace(':id', paramModal.id)" method="POST" class="space-y-3.5">
-                    @csrf
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1.5">Alamat Slot / Bin Rack *</label>
-                        <input type="text" name="bin_rack" x-model="paramModal.bin_rack" placeholder="Contoh: RAK-A / TKT-2 / BIN-05"
-                               class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        <p class="text-[11px] text-gray-400 mt-1">Memandu teknisi/operator langsung ke titik penyimpanan.</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Lead Time (Hari) *</label>
-                            <input type="number" name="lead_time_days" x-model="paramModal.lead_time" min="1" required class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Laju Pemakaian (Unit/Hari) *</label>
-                            <input type="number" step="0.1" name="daily_usage_rate" x-model="paramModal.daily_usage" min="0.01" required class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Safety Stock *</label>
-                            <input type="number" name="safety_stock" x-model="paramModal.safety_stock" min="0" required class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Biaya Simpan / Thn (H)</label>
-                            <input type="number" name="holding_cost" x-model="paramModal.holding_cost" min="0" class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Biaya Pesan (S)</label>
-                            <input type="number" name="order_cost" x-model="paramModal.order_cost" min="0" class="log-input w-full text-xs rounded-xl border-gray-200 focus:ring-teal-500 focus:border-teal-500 py-2.5 px-3">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-end gap-2 pt-1">
-                        <button type="button" @click="paramModal.open = false" class="px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-xl shadow-sm">Simpan Parameter</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

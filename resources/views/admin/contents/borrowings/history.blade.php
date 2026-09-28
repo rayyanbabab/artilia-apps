@@ -16,7 +16,7 @@
                         </svg>
                         <span class="text-sm font-medium text-green-800">{{ $borrowings->total() }} Transactions</span>
                     </div>
-                    <a href="{{ route($routePrefix . '.borrowings.index') }}" 
+                    <a href="{{ route($routePrefix . '.borrowings.index') }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
@@ -28,7 +28,6 @@
         </div>
     </div>
 
-    <!-- Filters -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-medium text-gray-900">Filter</h3>
@@ -47,7 +46,7 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <div>
                         <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                         <select name="status" id="status" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
@@ -57,18 +56,18 @@
                             <option value="terlambat" {{ request('status') == 'terlambat' ? 'selected' : '' }}>Overdue</option>
                         </select>
                     </div>
-                    
+
                     <div>
                         <label for="date_from" class="block text-sm font-medium text-gray-700 mb-2">Borrow Date (From)</label>
                         <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
-                    
+
                     <div>
                         <label for="date_to" class="block text-sm font-medium text-gray-700 mb-2">Borrow Date (To)</label>
                         <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}" class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     </div>
                 </div>
-                
+
                 <div class="flex items-center justify-between">
                     <div>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 border border-transparent rounded-lg font-medium text-sm text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
@@ -204,7 +203,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                 <a href="{{ route($routePrefix . '.borrowings.show', $borrowing) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
-                                
+
                                 <button type="button" class="text-red-600 hover:text-red-900" onclick="openModal('del-bor-hist-{{ $borrowing->id }}')">
                                     Delete
                                 </button>
@@ -226,7 +225,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         @if($borrowings->hasPages())
             <div class="px-6 py-4 border-t border-gray-200">
                 {{ $borrowings->links() }}

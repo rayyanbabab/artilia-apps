@@ -3,7 +3,6 @@
 @section('content')
 <div class="space-y-6">
 
-    {{-- Header --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -39,7 +38,6 @@
         </div>
     </div>
 
-    {{-- Stats --}}
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         @php
         $statCards = [
@@ -64,7 +62,6 @@
         @endforeach
     </div>
 
-    {{-- Filter --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-medium text-gray-900">Filter</h3>
@@ -121,7 +118,6 @@
         </div>
     </div>
 
-    {{-- Table --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <h3 class="text-lg font-medium text-gray-900">Data Peminjaman</h3>

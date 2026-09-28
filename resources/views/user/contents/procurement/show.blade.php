@@ -5,16 +5,14 @@
 @section('user')
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-    {{-- Breadcrumb --}}
     <div class="flex items-center gap-2 text-xs text-gray-400 mb-4">
         <a href="{{ route('user.procurement.index') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Permintaan Pengadaan</a>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <span class="text-gray-600 dark:text-slate-400 font-medium">Detail #{{ $procurement->id }}</span>
     </div>
 
-    {{-- Status Card --}}
     <div class="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 dark:border-slate-700/50 shadow-sm overflow-hidden mb-4">
-        {{-- Top gradient bar based on status --}}
+
         <div class="h-1.5 w-full
             @if($procurement->status === 'pending')  bg-gradient-to-r from-yellow-400 to-amber-400
             @elseif($procurement->status === 'approved') bg-gradient-to-r from-emerald-400 to-green-400
@@ -37,7 +35,6 @@
                     </div>
                 </div>
 
-                {{-- Status --}}
                 @if($procurement->status === 'pending')
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 flex-shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
@@ -56,7 +53,6 @@
                 @endif
             </div>
 
-            {{-- Alasan --}}
             @if($procurement->alasan)
                 <div class="mt-5 pt-5 border-t border-gray-100 dark:border-slate-700/50">
                     <p class="text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-2">Alasan / Keperluan</p>
@@ -66,7 +62,6 @@
         </div>
     </div>
 
-    {{-- Admin Response (if reviewed) --}}
     @if($procurement->status !== 'pending')
         <div class="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 dark:border-slate-700/50 shadow-sm p-5 mb-4">
             <p class="text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-3">Tanggapan Admin</p>
@@ -85,7 +80,6 @@
                 </div>
             </div>
 
-            {{-- If approved: show linked item --}}
             @if($procurement->status === 'approved' && $procurement->item)
                 <div class="mt-4 pt-4 border-t border-gray-100 dark:border-slate-700/50">
                     <p class="text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-2">Barang yang Ditambahkan</p>
@@ -103,7 +97,6 @@
         </div>
     @endif
 
-    {{-- Actions --}}
     <div class="flex items-center justify-between">
         <a href="{{ route('user.procurement.index') }}"
            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-xl transition-colors">
