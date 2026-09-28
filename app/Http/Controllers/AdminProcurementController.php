@@ -79,7 +79,8 @@ class AdminProcurementController extends Controller
             if ($validated['action_type'] === 'existing') {
                 // Use existing item
                 $item = Item::lockForUpdate()->findOrFail($validated['item_id']);
-                $stockType = $item->type->value === 'stok' ? 'reguler' : 'peminjaman';
+                $itemTypeValue = $item->type instanceof \App\Enums\ItemType ? $item->type->value : (string) ($item->type ?? 'stok');
+                $stockType = $itemTypeValue === 'stok' ? 'reguler' : 'peminjaman';
 
                 // Add stock
                 $item->addStok($jumlah, $stockType);

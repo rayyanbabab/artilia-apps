@@ -52,7 +52,8 @@ class AccessController extends Controller
 
     public function showDashboard(Request $request)
     {
-        $userRole = Auth::user()->role->value ?? 'user';
+        $role = Auth::user()->role;
+        $userRole = $role instanceof \App\Enums\UsersRole ? $role->value : (string) ($role ?? 'user');
 
         // ── Operator: Maintenance-focused dashboard ──────────────────────
         if ($userRole === 'operator') {
@@ -75,6 +76,7 @@ class AccessController extends Controller
                 'completedTotal'     => $completedTotal,
                 'scrappedTotal'      => $scrappedTotal,
                 'recentMaintenances' => $recentMaintenances,
+                'routePrefix'        => 'staff',
             ]);
         }
 

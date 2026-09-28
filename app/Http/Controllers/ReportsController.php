@@ -159,7 +159,7 @@ class ReportsController extends Controller
             'overdue'   => $borrowings->filter(fn($b) =>
                 $b->status === 'approved' &&
                 $b->tanggal_kembali_rencana &&
-                $b->tanggal_kembali_rencana->isPast()
+                $b->tanggal_kembali_rencana->lt(today())
             )->count(),
         ];
 
@@ -698,7 +698,7 @@ class ReportsController extends Controller
             foreach ($borrowings as $i => $b) {
                 $isOverdue = $b->status === 'approved'
                     && $b->tanggal_kembali_rencana
-                    && $b->tanggal_kembali_rencana->isPast();
+                    && $b->tanggal_kembali_rencana->lt(today());
                 [$stLabel, $stColor] = $isOverdue
                     ? ['Terlambat', '#8B3000']
                     : ($statusMap[$b->status] ?? [ucfirst($b->status ?? '-'), '#555']);

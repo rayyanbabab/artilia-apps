@@ -91,6 +91,10 @@ class CalibrationController extends Controller
             'calibration_notes'              => 'nullable|string|max:500',
         ]);
 
+        if (empty($validated['calibration_certificate_number'])) {
+            $validated['calibration_certificate_number'] = 'CAL-LAB/' . date('Ym') . '/' . str_pad($item->id, 4, '0', STR_PAD_LEFT);
+        }
+
         $item->calibration_due_date           = $validated['calibration_due_date'];
         $item->calibration_certificate_number = $validated['calibration_certificate_number'];
         $item->calibration_notes              = $validated['calibration_notes'];
