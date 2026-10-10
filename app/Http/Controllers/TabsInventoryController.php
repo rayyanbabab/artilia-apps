@@ -49,7 +49,7 @@ class TabsInventoryController extends Controller
 
     public function History()
     {
-        $histories = Inventory::with(['item', 'item.supplier'])->latest()->get();
+        $histories = Inventory::with(['item.supplier', 'item.category', 'user'])->latest()->get();
 
         return view('admin.containers.inventory.HistorySection', [
             'histories' => $histories,
@@ -65,12 +65,12 @@ class TabsInventoryController extends Controller
             abort(404);
         }
 
-        $histories = Inventory::with(['item', 'item.supplier'])
+        $histories = Inventory::with(['item.supplier', 'item.category', 'user'])
             ->where('status', $status)
             ->latest()
             ->get();
 
-        return view('admin.containers.inventory.HistoryByStatus', [
+        return view('admin.containers.inventory.HistorySection', [
             'histories' => $histories,
             'status' => $status,
             'filter' => $status,
