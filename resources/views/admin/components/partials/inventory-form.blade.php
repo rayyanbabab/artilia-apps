@@ -1,67 +1,64 @@
-﻿@extends('admin.layouts.dashboard')
+@php
+    $rp = $routePrefix ?? (auth()->user()?->role instanceof \App\Enums\UsersRole ? (auth()->user()->role->value === 'operator' ? 'staff' : 'admin') : ((string)(auth()->user()?->role ?? '') === 'operator' ? 'staff' : 'admin'));
+@endphp
 
-@section('content')
-    <div class="form min-h-screen space-y-6">
-        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-            <x-heading-section title="Inventory" subtitle="View and control inventory item information in detail" />
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <!-- Top Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 transition-colors">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                        Inventaris Bengkel
+                    </span>
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Logistik & Peralatan</span>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">Manajemen Inventaris</h1>
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5">Pantau ketersediaan stok, spesifikasi teknis barang, dan catatan log mutasi inventaris</p>
+            </div>
 
-            <div class="flex items-center gap-2">
-                <x-search placeholder="Search items..." />
-                <a href="{{ route($routePrefix . '.inventory.add') }}" class="link-primary py-2 text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-300">
-                        <path
-                            d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
-                        <path d="m7.5 4.27 9 5.15" />
-                        <polyline points="3.29 7 12 12 20.71 7" />
-                        <line x1="12" x2="12" y1="22" y2="12" />
-                        <path d="M16 16h6" />
-                        <path d="M19 13v6" />
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="{{ route($rp . '.inventory.add') }}"
+                   class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-medium rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
-                    Add Item
+                    Tambah Barang
                 </a>
             </div>
         </div>
 
-        <x-tabs>
-            <x-tab-links route="admin.inventory.index">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                </svg>
-                Inventory
-            </x-tab-links>
+        <!-- Navigation Tabs -->
+        <div class="mt-6 border-b border-gray-200 dark:border-gray-700">
+            <nav class="flex space-x-2 -mb-px overflow-x-auto pb-1 sm:pb-0" aria-label="Tabs Inventaris">
+                <x-tab-links :route="$rp . '.inventory.index'" :active="$rp . '.inventory.index'">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    Daftar Inventaris
+                </x-tab-links>
 
-            <x-tab-links route="admin.inventory.tab.detail">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-                Detail
-            </x-tab-links>
-        </x-tabs>
+                <x-tab-links :route="$rp . '.inventory.tab.detail'" :active="$rp . '.inventory.tab.detail'">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    Detail & Spesifikasi
+                </x-tab-links>
 
-        <x-alert type="success" />
-
-        <div class="rounded-lg bg-white shadow-sm">
-            {{ $slot }}
+                <x-tab-links :route="$rp . '.inventory.tab.history'" :active="$rp . '.inventory.tab.history*'">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Riwayat Mutasi
+                </x-tab-links>
+            </nav>
         </div>
     </div>
 
-    <style>
-        .line-clamp-1 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+    <x-alert type="success" />
 
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-    </style>
-@endsection
+    <!-- Tab Content Slot -->
+    <div class="transition-colors">
+        {{ $slot }}
+    </div>
+</div>
